@@ -51,6 +51,8 @@ const Navbar = () => {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => play("click")}
+                onMouseEnter={() => play("hover")}
                 className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors"
               >
                 {item.label}
@@ -59,7 +61,7 @@ const Navbar = () => {
               <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => handleHashNav(e, item.href)}
+                onClick={(e) => { play("click"); handleHashNav(e, item.href); }}
                 className={`font-heading text-[10px] tracking-widest uppercase transition-colors ${
                   location.pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-primary"
                 }`}
