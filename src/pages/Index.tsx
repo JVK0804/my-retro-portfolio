@@ -8,13 +8,11 @@ import PhilosophySection from "@/components/PhilosophySection";
 import AboutMeSection from "@/components/AboutMeSection";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
-import SketchFilter from "@/components/SketchFilter";
 
 const Index = () => {
   return (
     <LoadingScreen>
       <div className="noise-overlay min-h-screen bg-background">
-        <SketchFilter />
         <Navbar />
         <HeroSection />
         <StatsBar />
