@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useSound } from "@/contexts/SoundContext";
 
 const caseStudies = [
   {

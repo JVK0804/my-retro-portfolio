@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useSound } from "@/contexts/SoundContext";
 
 const logos = [
   { name: "Slack", url: "https://framerusercontent.com/images/Y1BLUOFjSoTgGkUdTbXiGf240.png?width=1600&height=572" },
@@ -7,6 +8,8 @@ const logos = [
 ];
 
 const HeroSection = () => {
+  const { play } = useSound();
+
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
       <motion.p
@@ -77,12 +80,16 @@ const HeroSection = () => {
       >
         <a
           href="#letsconnect"
+          onClick={() => play("click")}
+          onMouseEnter={() => play("hover")}
           className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase"
         >
           Let's Connect
         </a>
         <a
           href="/about"
+          onClick={() => play("whoosh")}
+          onMouseEnter={() => play("hover")}
           className="glass-card px-8 py-3 font-heading text-xs font-bold text-foreground hover:text-primary transition-colors tracking-wider uppercase"
         >
           About me →
