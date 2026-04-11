@@ -10,34 +10,34 @@ const HeroSection = () => {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="font-body text-muted-foreground text-lg mb-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="font-body text-foreground/60 text-lg mb-6"
       >
         Hi there, I'm <span className="teal-shimmer font-bold">Kaushik</span>
       </motion.p>
 
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-2"
+        transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-3"
       >
         Designing Simple,
       </motion.h1>
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.8 }}
-        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-2"
+        transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-3"
       >
         Scalable,
       </motion.h1>
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
+        transition={{ delay: 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl"
       >
         & <span className="teal-shimmer">Human Experiences</span>
@@ -47,16 +47,16 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="font-body text-muted-foreground text-sm mt-12 mb-6"
+        className="font-body text-foreground/50 text-sm mt-14 mb-6"
       >
         Previously designed for
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="flex items-center gap-8 flex-wrap justify-center opacity-60"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
+        className="flex items-center gap-8 flex-wrap justify-center opacity-50"
       >
         {logos.map((logo) => (
           <img
@@ -70,10 +70,10 @@ const HeroSection = () => {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
-        className="flex gap-4 mt-12"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.6, duration: 0.6 }}
+        className="flex gap-4 mt-14"
       >
         <a
           href="#letsconnect"
