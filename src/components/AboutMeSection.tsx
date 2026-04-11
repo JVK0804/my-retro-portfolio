@@ -16,7 +16,7 @@ const AboutMeSection = () => {
             About Me
           </p>
           <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-8 max-w-3xl">
-            A Zillennial Designer Who Codes
+            A Designer Who Codes & Connects
           </h2>
         </motion.div>
 
@@ -28,7 +28,7 @@ const AboutMeSection = () => {
             transition={{ delay: 0.2, duration: 0.7 }}
           >
             <p className="font-body text-lg text-foreground/80 leading-relaxed mb-6">
-              I'm <span className="teal-shimmer font-bold">Kaushik JV</span>, a Principal Design Engineer at Apple with 6+ years crafting digital experiences that bridge the gap between human intuition and technical precision.
+              I'm <span className="teal-shimmer font-bold">Kaushik JV</span>, a Product Designer & Design Engineer with 6+ years crafting digital experiences that bridge the gap between human intuition and technical precision.
             </p>
             <p className="font-body text-lg text-foreground/70 leading-relaxed">
               My journey from rewinding cassette tapes to designing cloud-native interfaces shaped a unique perspective — where analog warmth meets digital clarity.

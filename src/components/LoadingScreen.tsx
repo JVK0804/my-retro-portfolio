@@ -94,7 +94,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
               transition={{ delay: 1, duration: 0.6 }}
               className="font-body text-[10px] tracking-[0.4em] uppercase text-muted-foreground mt-4 z-20"
             >
-              Principal Design Engineer
+              Product Designer / Design Engineer
             </motion.p>
 
             {/* Loading bar — retro style */}

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import SoundToggle from "./SoundToggle";
 
 const navItems = [
   { label: "Work", href: "/#work" },
@@ -65,11 +66,13 @@ const Navbar = () => {
               </a>
             )
           )}
+          <SoundToggle />
           <ThemeToggle />
         </div>
 
         {/* Mobile toggle */}
         <div className="flex items-center gap-3 md:hidden">
+          <SoundToggle />
           <ThemeToggle />
           <button
             className="text-foreground"
