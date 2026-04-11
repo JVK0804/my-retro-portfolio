@@ -34,7 +34,7 @@ const chapters = [
     title: "Streaming",
     year: "2012–Present",
     image: eraStreaming,
-    text: "Now everything is everywhere, instantly. The challenge shifted from access to attention. As a Principal Design Engineer at Apple, I design for a world where the medium is invisible — only the experience remains.",
+    text: "Now everything is everywhere, instantly. The challenge shifted from access to attention. As a Product Designer & Design Engineer, I design for a world where the medium is invisible — only the experience remains.",
   },
 ];
 

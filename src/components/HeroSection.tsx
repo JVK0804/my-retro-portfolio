@@ -15,7 +15,7 @@ const HeroSection = () => {
         transition={{ delay: 0.2, duration: 0.6 }}
         className="font-body text-foreground/60 text-base mb-6 tracking-wide"
       >
-        Hi there, I'm <span className="teal-shimmer font-bold">Kaushik</span>
+        Hey! I'm <span className="teal-shimmer font-bold">Kaushik</span> — welcome to my corner of the internet
       </motion.p>
 
       <motion.h1
