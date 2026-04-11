@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["'Orbitron'", "'Share Tech Mono'", "monospace"],
-        body: ["'Rajdhani'", "-apple-system", "BlinkMacSystemFont", "'SF Pro Text'", "'Helvetica Neue'", "sans-serif"],
-        display: ["'Orbitron'", "'Share Tech Mono'", "monospace"],
+        heading: ["'Abril Fatface'", "'Courier Prime'", "serif"],
+        body: ["'Space Mono'", "'Courier Prime'", "monospace"],
+        display: ["'Abril Fatface'", "'Courier Prime'", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,10 +53,14 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         cream: "hsl(var(--heritage-cream))",
-        teal: {
-          DEFAULT: "hsl(var(--teal-vibrant))",
-          glow: "hsl(var(--teal-glow))",
-          muted: "hsl(var(--teal-muted))",
+        warm: {
+          DEFAULT: "hsl(var(--accent-warm))",
+          glow: "hsl(var(--accent-glow))",
+          muted: "hsl(var(--accent-muted))",
+        },
+        steel: {
+          DEFAULT: "hsl(var(--steel-blue))",
+          light: "hsl(var(--steel-blue-light))",
         },
         ink: {
           DEFAULT: "hsl(var(--ink-deep))",
