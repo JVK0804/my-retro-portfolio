@@ -6,67 +6,66 @@
 
 @layer base {
   :root {
-    --background: 225 25% 7%;
-    --foreground: 38 35% 80%;
+    --background: 38 30% 92%;
+    --foreground: 225 25% 12%;
 
-    --card: 225 22% 11%;
-    --card-foreground: 38 35% 80%;
+    --card: 38 25% 88%;
+    --card-foreground: 225 25% 12%;
 
-    --popover: 225 22% 9%;
-    --popover-foreground: 38 35% 80%;
+    --popover: 38 25% 90%;
+    --popover-foreground: 225 25% 12%;
 
-    --primary: 25 80% 55%;
-    --primary-foreground: 225 25% 7%;
+    --primary: 25 80% 50%;
+    --primary-foreground: 38 30% 95%;
 
-    --secondary: 210 25% 18%;
-    --secondary-foreground: 38 35% 80%;
+    --secondary: 210 18% 78%;
+    --secondary-foreground: 225 25% 12%;
 
-    --muted: 225 18% 14%;
-    --muted-foreground: 225 12% 45%;
+    --muted: 38 20% 85%;
+    --muted-foreground: 225 12% 40%;
 
     --accent: 210 30% 45%;
-    --accent-foreground: 38 35% 80%;
+    --accent-foreground: 225 25% 12%;
 
-    --destructive: 0 60% 55%;
+    --destructive: 0 60% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 18% 16%;
-    --input: 225 18% 16%;
-    --ring: 25 80% 55%;
+    --border: 38 18% 78%;
+    --input: 38 18% 78%;
+    --ring: 25 80% 50%;
 
     --radius: 0.25rem;
 
-    /* Custom tokens — retro warm palette */
-    --heritage-cream: 38 35% 80%;
-    --accent-warm: 25 80% 55%;
-    --accent-glow: 30 85% 65%;
-    --accent-muted: 20 50% 42%;
-    --steel-blue: 210 30% 45%;
-    --steel-blue-light: 210 35% 58%;
-    --ink-deep: 225 25% 7%;
-    --ink-medium: 225 12% 35%;
-    --glass-bg: 225 22% 11% / 0.85;
-    --glass-border: 225 18% 20% / 0.8;
-    --glass-shadow: 0 0% 0% / 0.4;
-    --scanline-opacity: 0.05;
+    /* Custom tokens — light warm palette */
+    --heritage-cream: 38 30% 92%;
+    --accent-warm: 25 80% 50%;
+    --accent-glow: 30 85% 60%;
+    --accent-muted: 20 50% 38%;
+    --steel-blue: 210 30% 40%;
+    --steel-blue-light: 210 35% 52%;
+    --ink-deep: 225 25% 12%;
+    --ink-medium: 225 12% 50%;
+    --glass-bg: 38 25% 88% / 0.85;
+    --glass-border: 38 18% 75% / 0.8;
+    --glass-shadow: 225 10% 60% / 0.15;
+    --scanline-opacity: 0.03;
 
-    /* Legacy teal aliases → now warm orange */
-    --teal-vibrant: 25 80% 55%;
-    --teal-glow: 30 85% 65%;
-    --teal-muted: 20 50% 42%;
+    --teal-vibrant: 25 80% 50%;
+    --teal-glow: 30 85% 60%;
+    --teal-muted: 20 50% 38%;
 
     --font-heading: 'Abril Fatface', 'Courier Prime', serif;
     --font-body: 'Space Mono', 'Courier Prime', monospace;
     --font-display: 'Abril Fatface', 'Courier Prime', serif;
 
-    --sidebar-background: 225 22% 7%;
-    --sidebar-foreground: 38 35% 80%;
-    --sidebar-primary: 38 35% 80%;
-    --sidebar-primary-foreground: 225 25% 7%;
-    --sidebar-accent: 225 18% 14%;
-    --sidebar-accent-foreground: 38 35% 80%;
-    --sidebar-border: 225 18% 14%;
-    --sidebar-ring: 25 80% 55%;
+    --sidebar-background: 38 25% 90%;
+    --sidebar-foreground: 225 25% 12%;
+    --sidebar-primary: 225 25% 12%;
+    --sidebar-primary-foreground: 38 30% 92%;
+    --sidebar-accent: 38 20% 85%;
+    --sidebar-accent-foreground: 225 25% 12%;
+    --sidebar-border: 38 18% 80%;
+    --sidebar-ring: 25 80% 50%;
   }
 
   .dark {
