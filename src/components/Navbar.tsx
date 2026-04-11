@@ -17,6 +17,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { play } = useSound();
 
   const handleHashNav = (e: React.MouseEvent, href: string) => {
     const [path, hash] = href.split("#");
