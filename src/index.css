@@ -245,12 +245,13 @@ svg.sketch-filters {
     animation-play-state: paused;
   }
 
-  /* ===== MONO HEADING — retro-futuristic ===== */
+  /* ===== MONO HEADING — retro-futuristic sketch ===== */
   .mono-heading {
     font-family: var(--font-heading);
     letter-spacing: 0.1em;
     line-height: 1.15;
     text-transform: uppercase;
+    filter: url(#sketch-text);
   }
 
   /* ===== TEAL SHIMMER ===== */
@@ -268,7 +269,7 @@ svg.sketch-filters {
     background-clip: text;
   }
 
-  /* ===== RETRO DIVIDER ===== */
+  /* ===== RETRO DIVIDER — sketch style ===== */
   .retro-divider {
     height: 2px;
     background: linear-gradient(
@@ -279,14 +280,31 @@ svg.sketch-filters {
       hsl(var(--teal-vibrant) / 0.4) 80%,
       transparent 100%
     );
+    filter: url(#sketch-heavy);
   }
 
-  /* ===== RETRO TAG / BADGE ===== */
+  /* ===== RETRO TAG / BADGE — sketch ===== */
   .retro-tag {
     @apply font-heading text-[10px] px-3 py-1 uppercase tracking-wider;
     border: 1px solid hsl(var(--teal-vibrant) / 0.3);
     background: hsl(var(--teal-vibrant) / 0.08);
     color: hsl(var(--teal-vibrant));
+    filter: url(#sketch-wobble);
+  }
+
+  /* ===== SKETCH SECTION BORDERS ===== */
+  .sketch-section {
+    border-style: solid;
+    border-color: hsl(var(--border));
+    filter: url(#sketch-wobble);
+  }
+
+  /* ===== SKETCH UNDERLINE ===== */
+  .sketch-underline {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: hsl(var(--teal-vibrant) / 0.4);
+    text-underline-offset: 4px;
   }
 }
 
