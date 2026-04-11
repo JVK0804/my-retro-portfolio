@@ -20,12 +20,13 @@ const PhotographyGrid = () => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
         >
-          <p className="font-heading text-xs text-primary mb-3 tracking-widest uppercase">
+          <p className="font-heading text-[10px] text-primary mb-3 tracking-widest uppercase">
             The Lens → The Interface
           </p>
-          <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
             Photography
           </h2>
+          <div className="retro-divider w-24 mb-6" />
           <p className="font-body text-foreground/60 max-w-lg">
             Street and landscape photography inform my UI layout decisions — composition, negative space, and visual hierarchy transfer directly from lens to screen.
           </p>
@@ -44,7 +45,8 @@ const PhotographyGrid = () => {
               <img
                 src={src}
                 alt={`Photography work ${i + 1}`}
-                className="w-full rounded-lg object-cover"
+                className="w-full object-cover border-2 border-border"
+                style={{ borderRadius: "var(--radius)" }}
                 loading="lazy"
               />
             </motion.div>

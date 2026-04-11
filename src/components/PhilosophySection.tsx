@@ -21,7 +21,7 @@ const pillars = [
 
 const PhilosophySection = () => {
   return (
-    <section className="py-24 px-6 border-t border-border">
+    <section className="py-24 px-6 border-t-2 border-border">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -29,12 +29,13 @@ const PhilosophySection = () => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
         >
-          <p className="font-heading text-xs text-primary mb-3 tracking-widest uppercase">
+          <p className="font-heading text-[10px] text-primary mb-3 tracking-widest uppercase">
             Living Document
           </p>
-          <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
             Design Philosophy
           </h2>
+          <div className="retro-divider w-24 mb-6" />
           <p className="font-body text-foreground/60 max-w-lg mb-16">
             Three pillars that guide every decision — from SmartAlign's AI systems to enterprise healthcare workflows.
           </p>
@@ -50,10 +51,10 @@ const PhilosophySection = () => {
               transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="glass-card p-8"
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
-                <pillar.icon size={22} className="text-primary" />
+              <div className="w-10 h-10 flex items-center justify-center mb-6 border border-primary/30">
+                <pillar.icon size={18} className="text-primary" />
               </div>
-              <h3 className="mono-heading text-xl font-bold text-foreground mb-3">
+              <h3 className="mono-heading text-lg font-bold text-foreground mb-3">
                 {pillar.title}
               </h3>
               <p className="font-body text-sm text-foreground/60 leading-relaxed">

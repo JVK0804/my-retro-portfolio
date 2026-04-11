@@ -31,9 +31,10 @@ const CaseStudyTiles = () => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
         >
-          <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
             Selected Work
           </h2>
+          <div className="retro-divider w-24 mb-6" />
           <p className="font-body text-foreground/60 mb-16 max-w-lg">
             Case studies spanning healthcare, AI, and enterprise — where craft meets complexity.
           </p>
@@ -50,10 +51,10 @@ const CaseStudyTiles = () => {
               className="glass-card p-8 flex flex-col justify-between min-h-[320px] group cursor-pointer"
             >
               <div>
-                <p className="font-heading text-xs text-primary mb-3 tracking-wider uppercase">
+                <p className="font-heading text-[10px] text-primary mb-3 tracking-widest uppercase">
                   {study.subtitle}
                 </p>
-                <h3 className="mono-heading text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                <h3 className="mono-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {study.title}
                 </h3>
                 <p className="font-body text-foreground/60 text-sm leading-relaxed">
@@ -62,10 +63,7 @@ const CaseStudyTiles = () => {
               </div>
               <div className="flex flex-wrap gap-2 mt-6">
                 {study.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="font-heading text-[10px] px-3 py-1 rounded-full bg-secondary text-secondary-foreground uppercase tracking-wider"
-                  >
+                  <span key={tag} className="retro-tag">
                     {tag}
                   </span>
                 ))}
