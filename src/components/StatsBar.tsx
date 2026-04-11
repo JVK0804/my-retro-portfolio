@@ -1,0 +1,34 @@
+import { motion } from "framer-motion";
+
+const stats = [
+  { value: "1M+", label: "Global Users" },
+  { value: "300+", label: "Tasks Resolved" },
+  { value: "15+", label: "Projects" },
+  { value: "6+", label: "Years Experience" },
+];
+
+const StatsBar = () => {
+  return (
+    <section className="py-16 px-6 border-t border-b border-border">
+      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+        {stats.map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+            className="text-center"
+          >
+            <p className="mono-heading text-3xl md:text-4xl font-bold teal-shimmer mb-1">
+              {stat.value}
+            </p>
+            <p className="font-body text-sm text-muted-foreground">{stat.label}</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default StatsBar;
