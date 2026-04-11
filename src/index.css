@@ -150,7 +150,7 @@ svg.sketch-filters {
     left: -50%;
     width: 200%;
     height: 200%;
-    opacity: 0.22;
+    opacity: 0.25;
     z-index: 50;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -179,7 +179,12 @@ svg.sketch-filters {
     );
   }
 
-  /* ===== RETRO GLASS CARD — heavier, more tactile ===== */
+  /* ===== SKETCH EFFECT — hand-drawn wobbly borders ===== */
+  .sketch-border {
+    filter: url(#sketch-wobble);
+  }
+
+  /* ===== RETRO GLASS CARD — sketch style ===== */
   .glass-card {
     @apply relative overflow-hidden;
     background: hsl(var(--glass-bg));
@@ -188,41 +193,47 @@ svg.sketch-filters {
     -webkit-backdrop-filter: blur(12px) saturate(1.2);
     box-shadow:
       0 2px 0 hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(0 0% 100% / 0.08);
-    border-radius: var(--radius);
+      inset 0 1px 0 hsl(0 0% 100% / 0.08),
+      3px 3px 0 hsl(var(--glass-shadow));
+    border-radius: 2px;
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
                 border-color 0.3s ease;
+    filter: url(#sketch-wobble);
   }
   .glass-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) rotate(-0.3deg);
     border-color: hsl(var(--teal-vibrant) / 0.4);
     box-shadow:
       0 4px 0 hsl(var(--glass-shadow)),
       0 0 20px hsl(var(--teal-vibrant) / 0.08),
-      inset 0 1px 0 hsl(0 0% 100% / 0.1);
+      inset 0 1px 0 hsl(0 0% 100% / 0.1),
+      4px 4px 0 hsl(var(--glass-shadow));
   }
 
-  /* ===== GLASS TOGGLE — retro button ===== */
+  /* ===== GLASS TOGGLE — sketch button ===== */
   .glass-toggle {
     @apply inline-flex items-center justify-center;
     background: hsl(var(--glass-bg));
     border: 2px solid hsl(var(--glass-border));
     backdrop-filter: blur(12px) saturate(1.2);
     -webkit-backdrop-filter: blur(12px) saturate(1.2);
-    border-radius: var(--radius);
+    border-radius: 2px;
     box-shadow:
       0 2px 0 hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(0 0% 100% / 0.06);
+      inset 0 1px 0 hsl(0 0% 100% / 0.06),
+      2px 2px 0 hsl(var(--glass-shadow));
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: url(#sketch-wobble);
   }
   .glass-toggle:hover {
     background: hsl(var(--teal-vibrant) / 0.12);
     border-color: hsl(var(--teal-vibrant) / 0.5);
-    transform: translateY(-1px);
+    transform: translateY(-1px) rotate(0.5deg);
     box-shadow:
       0 3px 0 hsl(var(--glass-shadow)),
-      0 0 16px hsl(var(--teal-vibrant) / 0.12);
+      0 0 16px hsl(var(--teal-vibrant) / 0.12),
+      3px 3px 0 hsl(var(--glass-shadow));
   }
 
   /* ===== TICKER ===== */
