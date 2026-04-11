@@ -1,0 +1,95 @@
+import { motion } from "framer-motion";
+
+const logos = [
+  { name: "Slack", url: "https://framerusercontent.com/images/Y1BLUOFjSoTgGkUdTbXiGf240.png?width=1600&height=572" },
+  { name: "Anthem", url: "https://framerusercontent.com/images/KfD31x5VYV55hirSEkUW5j4Vg.png?width=2853&height=512" },
+  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Deloitte.svg/200px-Deloitte.svg.png" },
+];
+
+const HeroSection = () => {
+  return (
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="font-body text-muted-foreground text-lg mb-4"
+      >
+        Hi there, I'm <span className="teal-shimmer font-bold">Kaushik</span>
+      </motion.p>
+
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-2"
+      >
+        Designing Simple,
+      </motion.h1>
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-2"
+      >
+        Scalable,
+      </motion.h1>
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl"
+      >
+        & <span className="teal-shimmer">Human Experiences</span>
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="font-body text-muted-foreground text-sm mt-12 mb-6"
+      >
+        Previously designed for
+      </motion.p>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
+        className="flex items-center gap-8 flex-wrap justify-center opacity-60"
+      >
+        {logos.map((logo) => (
+          <img
+            key={logo.name}
+            src={logo.url}
+            alt={logo.name}
+            className="h-8 md:h-10 object-contain grayscale"
+            loading="lazy"
+          />
+        ))}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6 }}
+        className="flex gap-4 mt-12"
+      >
+        <a
+          href="#letsconnect"
+          className="glass-card px-8 py-3 font-mono text-sm font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity"
+        >
+          Let's Connect
+        </a>
+        <a
+          href="/about"
+          className="glass-card px-8 py-3 font-mono text-sm font-bold text-foreground hover:text-primary transition-colors"
+        >
+          About me →
+        </a>
+      </motion.div>
+    </section>
+  );
+};
+
+export default HeroSection;
