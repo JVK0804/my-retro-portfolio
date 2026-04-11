@@ -21,7 +21,7 @@ const pillars = [
 
 const PhilosophySection = () => {
   return (
-    <section className="py-24 px-6 border-t-2 border-border" style={{ filter: 'url(#sketch-wobble)' }}>
+    <section className="py-24 px-6 border-t-2 border-border">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
