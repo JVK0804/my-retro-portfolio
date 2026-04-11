@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-3rem)] max-w-3xl">
       <div className="glass-card px-6 py-3 flex items-center justify-between">
-        <Link to="/" className="heading-font text-lg font-bold tracking-wider text-foreground">
+        <Link to="/" className="heading-font text-sm font-bold tracking-[0.25em] uppercase text-foreground">
           JVK
         </Link>
 
@@ -48,7 +48,7 @@ const Navbar = () => {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-sm text-muted-foreground hover:text-primary transition-colors"
+                className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors"
               >
                 {item.label}
               </a>
@@ -57,7 +57,7 @@ const Navbar = () => {
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleHashNav(e, item.href)}
-                className={`font-body text-sm transition-colors ${
+                className={`font-heading text-[10px] tracking-widest uppercase transition-colors ${
                   location.pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-primary"
                 }`}
               >
@@ -76,7 +76,7 @@ const Navbar = () => {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
@@ -97,7 +97,7 @@ const Navbar = () => {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-body text-sm text-muted-foreground"
+                  className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
@@ -107,7 +107,7 @@ const Navbar = () => {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleHashNav(e, item.href)}
-                  className="font-body text-sm text-muted-foreground"
+                  className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground"
                 >
                   {item.label}
                 </a>

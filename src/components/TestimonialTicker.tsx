@@ -29,27 +29,27 @@ const TestimonialTicker = () => {
   const doubled = [...testimonials, ...testimonials];
 
   return (
-    <section className="py-16 overflow-hidden border-t border-b border-border">
-      <p className="font-heading text-xs text-primary text-center mb-8 tracking-widest uppercase">
+    <section className="py-16 overflow-hidden border-t-2 border-b-2 border-border">
+      <p className="font-heading text-[10px] text-primary text-center mb-8 tracking-widest uppercase">
         What colleagues say
       </p>
       <div className="ticker-scroll">
         {doubled.map((t, i) => (
           <div
             key={`${t.name}-${i}`}
-            className="flex-shrink-0 w-[380px] mx-4 glass-card p-6"
+            className="flex-shrink-0 w-[360px] mx-4 glass-card p-6"
           >
             <div className="flex items-center gap-3 mb-4">
               <img
                 src={t.avatar}
                 alt={t.name}
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-9 h-9 rounded-full object-cover border border-border"
                 loading="lazy"
-                width={40}
-                height={40}
+                width={36}
+                height={36}
               />
               <div>
-                <p className="font-heading text-sm font-bold text-foreground">{t.name}</p>
+                <p className="font-heading text-[10px] tracking-wider uppercase font-bold text-foreground">{t.name}</p>
                 <p className="font-body text-xs text-muted-foreground">{t.role}</p>
               </div>
             </div>

@@ -13,7 +13,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        className="font-body text-foreground/60 text-lg mb-6"
+        className="font-body text-foreground/60 text-base mb-6 tracking-wide"
       >
         Hi there, I'm <span className="teal-shimmer font-bold">Kaushik</span>
       </motion.p>
@@ -22,7 +22,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-3"
+        className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl mb-2"
       >
         Designing Simple,
       </motion.h1>
@@ -30,7 +30,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl mb-3"
+        className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl mb-2"
       >
         Scalable,
       </motion.h1>
@@ -38,7 +38,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center max-w-5xl"
+        className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl"
       >
         & <span className="teal-shimmer">Human Experiences</span>
       </motion.h1>
@@ -47,7 +47,7 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="font-body text-foreground/50 text-sm mt-14 mb-6"
+        className="font-body text-foreground/50 text-sm mt-14 mb-6 tracking-widest uppercase"
       >
         Previously designed for
       </motion.p>
@@ -56,14 +56,14 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.4, duration: 0.6 }}
-        className="flex items-center gap-8 flex-wrap justify-center opacity-50"
+        className="flex items-center gap-8 flex-wrap justify-center opacity-40"
       >
         {logos.map((logo) => (
           <img
             key={logo.name}
             src={logo.url}
             alt={logo.name}
-            className="h-8 md:h-10 object-contain grayscale"
+            className="h-7 md:h-9 object-contain grayscale"
             loading="lazy"
           />
         ))}
@@ -77,13 +77,13 @@ const HeroSection = () => {
       >
         <a
           href="#letsconnect"
-          className="glass-card px-8 py-3 font-heading text-sm font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity"
+          className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase"
         >
           Let's Connect
         </a>
         <a
           href="/about"
-          className="glass-card px-8 py-3 font-heading text-sm font-bold text-foreground hover:text-primary transition-colors"
+          className="glass-card px-8 py-3 font-heading text-xs font-bold text-foreground hover:text-primary transition-colors tracking-wider uppercase"
         >
           About me →
         </a>

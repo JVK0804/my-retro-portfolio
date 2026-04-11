@@ -9,7 +9,7 @@ const stats = [
 
 const StatsBar = () => {
   return (
-    <section className="py-16 px-6 border-t border-b border-border">
+    <section className="py-16 px-6 border-t-2 border-b-2 border-border">
       <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {stats.map((stat, i) => (
           <motion.div
@@ -20,10 +20,10 @@ const StatsBar = () => {
             transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-center"
           >
-            <p className="mono-heading text-3xl md:text-4xl font-bold teal-shimmer mb-1">
+            <p className="mono-heading text-2xl md:text-3xl font-bold teal-shimmer mb-1">
               {stat.value}
             </p>
-            <p className="font-body text-sm text-foreground/60">{stat.label}</p>
+            <p className="font-body text-xs text-foreground/50 tracking-wider uppercase">{stat.label}</p>
           </motion.div>
         ))}
       </div>
