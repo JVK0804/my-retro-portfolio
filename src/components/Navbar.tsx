@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { label: "Work", href: "/#work" },
@@ -13,11 +14,28 @@ const navItems = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleHashNav = (e: React.MouseEvent, href: string) => {
+    const [path, hash] = href.split("#");
+    if (hash) {
+      e.preventDefault();
+      if (location.pathname === (path || "/")) {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate(path || "/");
+        setTimeout(() => {
+          document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+        }, 300);
+      }
+      setMobileOpen(false);
+    }
+  };
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-3rem)] max-w-3xl">
       <div className="glass-card px-6 py-3 flex items-center justify-between">
-        <Link to="/" className="font-mono text-lg font-bold tracking-tight text-foreground">
+        <Link to="/" className="heading-font text-lg font-bold tracking-wider text-foreground">
           JVK
         </Link>
 
@@ -35,27 +53,32 @@ const Navbar = () => {
                 {item.label}
               </a>
             ) : (
-              <Link
+              <a
                 key={item.label}
-                to={item.href}
+                href={item.href}
+                onClick={(e) => handleHashNav(e, item.href)}
                 className={`font-body text-sm transition-colors ${
                   location.pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-primary"
                 }`}
               >
                 {item.label}
-              </Link>
+              </a>
             )
           )}
+          <ThemeToggle />
         </div>
 
         {/* Mobile toggle */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <button
+            className="text-foreground"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -80,14 +103,14 @@ const Navbar = () => {
                   {item.label}
                 </a>
               ) : (
-                <Link
+                <a
                   key={item.label}
-                  to={item.href}
+                  href={item.href}
+                  onClick={(e) => handleHashNav(e, item.href)}
                   className="font-body text-sm text-muted-foreground"
-                  onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
-                </Link>
+                </a>
               )
             )}
           </motion.div>

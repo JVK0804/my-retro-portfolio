@@ -6,19 +6,22 @@ import TestimonialTicker from "@/components/TestimonialTicker";
 import PhotographyGrid from "@/components/PhotographyGrid";
 import PhilosophySection from "@/components/PhilosophySection";
 import Footer from "@/components/Footer";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const Index = () => {
   return (
-    <div className="noise-overlay min-h-screen bg-background">
-      <Navbar />
-      <HeroSection />
-      <StatsBar />
-      <CaseStudyTiles />
-      <TestimonialTicker />
-      <PhotographyGrid />
-      <PhilosophySection />
-      <Footer />
-    </div>
+    <LoadingScreen>
+      <div className="noise-overlay min-h-screen bg-background">
+        <Navbar />
+        <HeroSection />
+        <StatsBar />
+        <CaseStudyTiles />
+        <TestimonialTicker />
+        <PhotographyGrid />
+        <PhilosophySection />
+        <Footer />
+      </div>
+    </LoadingScreen>
   );
 };
 
