@@ -6,45 +6,45 @@
 
 @layer base {
   :root {
-    --background: 45 10% 95%;
-    --foreground: 220 20% 10%;
+    --background: 42 12% 93%;
+    --foreground: 220 12% 25%;
 
-    --card: 45 8% 92%;
+    --card: 42 10% 89%;
     --card-foreground: 220 20% 10%;
 
     --popover: 45 8% 92%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 220 12% 25%;
 
-    --primary: 174 72% 36%;
-    --primary-foreground: 45 10% 95%;
+    --primary: 174 50% 38%;
+    --primary-foreground: 42 12% 93%;
 
-    --secondary: 220 8% 85%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 40 8% 83%;
+    --secondary-foreground: 220 12% 25%;
 
-    --muted: 220 8% 88%;
-    --muted-foreground: 220 10% 40%;
+    --muted: 40 8% 86%;
+    --muted-foreground: 220 8% 48%;
 
-    --accent: 174 72% 36%;
-    --accent-foreground: 45 10% 95%;
+    --accent: 174 50% 38%;
+    --accent-foreground: 42 12% 93%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 60% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 78%;
-    --input: 220 10% 78%;
-    --ring: 174 72% 36%;
+    --border: 40 8% 80%;
+    --input: 40 8% 80%;
+    --ring: 174 50% 38%;
 
     --radius: 0.5rem;
 
     /* Custom tokens */
-    --heritage-cream: 45 10% 95%;
-    --teal-vibrant: 174 72% 36%;
-    --teal-glow: 174 80% 50%;
-    --teal-muted: 174 30% 60%;
-    --ink-deep: 220 20% 10%;
-    --ink-medium: 220 10% 30%;
-    --glass-bg: 45 8% 90% / 0.8;
-    --glass-border: 220 10% 70% / 0.6;
+    --heritage-cream: 42 12% 93%;
+    --teal-vibrant: 174 50% 38%;
+    --teal-glow: 174 60% 48%;
+    --teal-muted: 174 25% 55%;
+    --ink-deep: 220 12% 25%;
+    --ink-medium: 220 8% 40%;
+    --glass-bg: 42 10% 88% / 0.75;
+    --glass-border: 40 8% 72% / 0.5;
     --glass-shadow: 220 20% 10% / 0.12;
     --scanline-opacity: 0.03;
 
@@ -138,16 +138,17 @@
   .noise-overlay::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.15;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    opacity: 0.22;
     z-index: 50;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
-    background-size: 256px 256px;
+    background-size: 200px 200px;
+    animation: grain-shift 0.5s steps(3) infinite;
   }
 
   /* ===== SCANLINES — CRT retro effect ===== */
@@ -287,4 +288,11 @@
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-2%, -3%); }
+  66% { transform: translate(1%, 2%); }
+  100% { transform: translate(3%, -1%); }
 }
