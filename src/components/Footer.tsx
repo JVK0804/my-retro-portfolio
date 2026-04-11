@@ -8,7 +8,7 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer id="letsconnect" className="relative py-24 px-6 border-t-2 border-border" style={{ filter: 'url(#sketch-wobble)' }}>
+    <footer id="letsconnect" className="relative py-24 px-6 border-t-2 border-border">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
           Let's Talk

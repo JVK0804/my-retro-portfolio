@@ -212,7 +212,6 @@ svg.sketch-filters {
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
                 border-color 0.3s ease;
-    filter: url(#sketch-wobble);
   }
   .glass-card:hover {
     transform: translateY(-2px) rotate(-0.3deg);
@@ -237,7 +236,6 @@ svg.sketch-filters {
       inset 0 1px 0 hsl(0 0% 100% / 0.06),
       2px 2px 0 hsl(var(--glass-shadow));
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    filter: url(#sketch-wobble);
   }
   .glass-toggle:hover {
     background: hsl(var(--accent-warm) / 0.12);
@@ -264,7 +262,7 @@ svg.sketch-filters {
     letter-spacing: 0.04em;
     line-height: 1.2;
     text-transform: none;
-    filter: url(#sketch-text);
+    
   }
 
   /* ===== WARM SHIMMER (was teal) ===== */
@@ -293,7 +291,7 @@ svg.sketch-filters {
       hsl(var(--accent-warm) / 0.4) 80%,
       transparent 100%
     );
-    filter: url(#sketch-heavy);
+    
   }
 
   /* ===== RETRO TAG / BADGE — sketch ===== */
@@ -302,7 +300,6 @@ svg.sketch-filters {
     border: 1px solid hsl(var(--steel-blue) / 0.4);
     background: hsl(var(--steel-blue) / 0.1);
     color: hsl(var(--steel-blue-light));
-    filter: url(#sketch-wobble);
     text-transform: none;
     font-family: var(--font-body);
     font-size: 11px;

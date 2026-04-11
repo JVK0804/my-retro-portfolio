@@ -9,7 +9,7 @@ const stats = [
 
 const StatsBar = () => {
   return (
-    <section className="py-16 px-6 border-t-2 border-b-2 border-border" style={{ filter: 'url(#sketch-wobble)' }}>
+    <section className="py-16 px-6 border-t-2 border-b-2 border-border">
       <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {stats.map((stat, i) => (
           <motion.div
