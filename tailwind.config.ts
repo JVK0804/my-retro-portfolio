@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["'Michroma'", "'Rajdhani'", "sans-serif"],
+        heading: ["'Orbitron'", "'Share Tech Mono'", "monospace"],
         body: ["'Rajdhani'", "-apple-system", "BlinkMacSystemFont", "'SF Pro Text'", "'Helvetica Neue'", "sans-serif"],
-        display: ["'Michroma'", "'Rajdhani'", "sans-serif"],
+        display: ["'Orbitron'", "'Share Tech Mono'", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
