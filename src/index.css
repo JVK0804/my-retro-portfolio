@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,110 +6,110 @@
 
 @layer base {
   :root {
-    --background: 42 12% 93%;
-    --foreground: 220 12% 25%;
+    --background: 220 20% 8%;
+    --foreground: 40 30% 85%;
 
-    --card: 42 10% 89%;
-    --card-foreground: 220 20% 10%;
+    --card: 220 18% 12%;
+    --card-foreground: 40 30% 85%;
 
-    --popover: 45 8% 92%;
-    --popover-foreground: 220 12% 25%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 40 30% 85%;
 
-    --primary: 174 50% 38%;
-    --primary-foreground: 42 12% 93%;
+    --primary: 40 35% 78%;
+    --primary-foreground: 220 20% 8%;
 
-    --secondary: 40 8% 83%;
-    --secondary-foreground: 220 12% 25%;
+    --secondary: 220 15% 16%;
+    --secondary-foreground: 40 30% 85%;
 
-    --muted: 40 8% 86%;
-    --muted-foreground: 220 8% 48%;
+    --muted: 220 15% 14%;
+    --muted-foreground: 220 10% 50%;
 
-    --accent: 174 50% 38%;
-    --accent-foreground: 42 12% 93%;
+    --accent: 40 35% 78%;
+    --accent-foreground: 220 20% 8%;
 
     --destructive: 0 60% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 8% 80%;
-    --input: 40 8% 80%;
-    --ring: 174 50% 38%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 40 35% 78%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
     /* Custom tokens */
-    --heritage-cream: 42 12% 93%;
-    --teal-vibrant: 174 50% 38%;
-    --teal-glow: 174 60% 48%;
-    --teal-muted: 174 25% 55%;
-    --ink-deep: 220 12% 25%;
-    --ink-medium: 220 8% 40%;
-    --glass-bg: 42 10% 88% / 0.75;
-    --glass-border: 40 8% 72% / 0.5;
-    --glass-shadow: 220 20% 10% / 0.12;
-    --scanline-opacity: 0.03;
+    --heritage-cream: 40 30% 85%;
+    --teal-vibrant: 40 35% 78%;
+    --teal-glow: 40 45% 88%;
+    --teal-muted: 40 20% 60%;
+    --ink-deep: 220 20% 8%;
+    --ink-medium: 220 10% 40%;
+    --glass-bg: 220 18% 12% / 0.85;
+    --glass-border: 220 15% 22% / 0.8;
+    --glass-shadow: 0 0% 0% / 0.4;
+    --scanline-opacity: 0.05;
 
-    --font-heading: 'Michroma', 'Rajdhani', sans-serif;
+    --font-heading: 'Orbitron', 'Share Tech Mono', monospace;
     --font-body: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    --font-display: 'Michroma', 'Rajdhani', sans-serif;
+    --font-display: 'Orbitron', 'Share Tech Mono', monospace;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 174 72% 36%;
+    --sidebar-background: 220 18% 8%;
+    --sidebar-foreground: 40 30% 85%;
+    --sidebar-primary: 40 30% 85%;
+    --sidebar-primary-foreground: 220 20% 8%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 40 30% 85%;
+    --sidebar-border: 220 15% 16%;
+    --sidebar-ring: 40 35% 78%;
   }
 
   .dark {
-    --background: 220 25% 6%;
-    --foreground: 45 10% 92%;
+    --background: 220 25% 5%;
+    --foreground: 40 35% 88%;
 
-    --card: 220 22% 10%;
-    --card-foreground: 45 10% 92%;
+    --card: 220 22% 9%;
+    --card-foreground: 40 35% 88%;
 
-    --popover: 220 22% 10%;
-    --popover-foreground: 45 10% 92%;
+    --popover: 220 22% 9%;
+    --popover-foreground: 40 35% 88%;
 
-    --primary: 174 72% 45%;
-    --primary-foreground: 220 25% 6%;
+    --primary: 40 40% 82%;
+    --primary-foreground: 220 25% 5%;
 
-    --secondary: 220 18% 16%;
-    --secondary-foreground: 45 10% 92%;
+    --secondary: 220 18% 14%;
+    --secondary-foreground: 40 35% 88%;
 
-    --muted: 220 18% 14%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 220 18% 12%;
+    --muted-foreground: 220 10% 50%;
 
-    --accent: 174 72% 45%;
-    --accent-foreground: 220 25% 6%;
+    --accent: 40 40% 82%;
+    --accent-foreground: 220 25% 5%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 18% 18%;
-    --input: 220 18% 18%;
-    --ring: 174 72% 45%;
+    --border: 220 18% 16%;
+    --input: 220 18% 16%;
+    --ring: 40 40% 82%;
 
-    --heritage-cream: 220 25% 6%;
-    --teal-vibrant: 174 72% 45%;
-    --teal-glow: 174 80% 60%;
-    --teal-muted: 174 30% 45%;
-    --ink-deep: 45 10% 92%;
-    --ink-medium: 220 10% 65%;
-    --glass-bg: 220 22% 10% / 0.85;
-    --glass-border: 220 18% 22% / 0.8;
-    --glass-shadow: 0 0% 0% / 0.4;
-    --scanline-opacity: 0.04;
+    --heritage-cream: 40 35% 88%;
+    --teal-vibrant: 40 40% 82%;
+    --teal-glow: 40 50% 90%;
+    --teal-muted: 40 25% 55%;
+    --ink-deep: 220 25% 5%;
+    --ink-medium: 220 10% 55%;
+    --glass-bg: 220 22% 9% / 0.85;
+    --glass-border: 220 18% 20% / 0.8;
+    --glass-shadow: 0 0% 0% / 0.5;
+    --scanline-opacity: 0.06;
 
-    --sidebar-background: 220 22% 8%;
-    --sidebar-foreground: 45 10% 88%;
-    --sidebar-primary: 45 10% 92%;
-    --sidebar-primary-foreground: 220 25% 6%;
-    --sidebar-accent: 220 18% 14%;
-    --sidebar-accent-foreground: 45 10% 92%;
-    --sidebar-border: 220 18% 16%;
-    --sidebar-ring: 174 72% 45%;
+    --sidebar-background: 220 22% 6%;
+    --sidebar-foreground: 40 35% 88%;
+    --sidebar-primary: 40 35% 88%;
+    --sidebar-primary-foreground: 220 25% 5%;
+    --sidebar-accent: 220 18% 12%;
+    --sidebar-accent-foreground: 40 35% 88%;
+    --sidebar-border: 220 18% 14%;
+    --sidebar-ring: 40 40% 82%;
   }
 }
 
