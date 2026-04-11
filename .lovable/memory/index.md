@@ -1,12 +1,12 @@
 # Project Memory
 
 ## Core
-Portfolio for Kaushik JV — Principal Design Engineer at Apple.
-Heritage Cream #F5F5F7 base, High-Voltage Teal accents, noise texture overlay.
-Michroma headings (retro-futurism geometric), Rajdhani body. Dark mode supported.
+Portfolio for Kaushik JV — Product Designer / Design Engineer.
+Heritage Cream base, Blue accents (210° hue), noise texture overlay.
+Abril Fatface headings, Space Mono body. Retro-futuristic theme.
 Floating glass cards, concentric corner radii, micro-float animations.
-Loading splash animation resets every 10 minutes.
+No sans-serif fonts. No sketch/wobble filters.
 
 ## Memories
-- [Design tokens](mem://design/tokens) — Heritage cream, teal vibrant/glow/muted, glass materials
+- [Design tokens](mem://design/tokens) — Heritage cream, blue vibrant/glow/muted, glass materials
 - [Content source](mem://reference/content) — Original site at kaushikjv.framer.website
