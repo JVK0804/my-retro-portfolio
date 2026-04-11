@@ -72,7 +72,7 @@ const ChapterBlock = ({
           width={1280}
           height={720}
         />
-        <div className="absolute inset-0 bg-background/70" />
+        <div className="absolute inset-0 bg-background/60" />
       </motion.div>
 
       {/* Text content */}
@@ -80,13 +80,13 @@ const ChapterBlock = ({
         className="relative z-10 max-w-2xl"
         style={{ y: textY, opacity: textOpacity }}
       >
-        <p className="font-heading text-xs text-primary mb-2 tracking-widest uppercase">
+        <p className="font-heading text-xs text-primary mb-3 tracking-widest uppercase">
           {chapter.era} · {chapter.year}
         </p>
         <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
           {chapter.title}
         </h2>
-        <p className="font-body text-lg text-muted-foreground leading-relaxed">
+        <p className="font-body text-lg text-foreground/90 leading-relaxed">
           {chapter.text}
         </p>
       </motion.div>
@@ -121,7 +121,7 @@ const About = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="font-body text-muted-foreground text-lg text-center max-w-lg"
+          className="font-body text-foreground/70 text-lg text-center max-w-lg"
         >
           A Zillennial's journey from analog tactility to cloud-native design — each era leaving its fingerprint on how I build.
         </motion.p>
@@ -129,7 +129,7 @@ const About = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-16 text-muted-foreground animate-bounce"
+          className="mt-16 text-foreground/50 animate-bounce"
         >
           ↓ Scroll
         </motion.div>
@@ -151,7 +151,7 @@ const About = () => {
           <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
             Product designer with <span className="teal-shimmer">6+ years</span> of experience
           </h2>
-          <p className="font-body text-muted-foreground text-lg leading-relaxed">
+          <p className="font-body text-foreground/80 text-lg leading-relaxed">
             Combining a designer's eye and a <span className="font-heading text-primary">&lt;developer's mindset /&gt;</span> to craft user-first experiences, backed by Privacy and Data.
           </p>
         </motion.div>

@@ -13,26 +13,32 @@ const PhotographyGrid = () => {
   return (
     <section id="photography" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+        >
           <p className="font-heading text-xs text-primary mb-3 tracking-widest uppercase">
             The Lens → The Interface
           </p>
           <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
             Photography
           </h2>
-          <p className="font-body text-muted-foreground max-w-lg">
+          <p className="font-body text-foreground/60 max-w-lg">
             Street and landscape photography inform my UI layout decisions — composition, negative space, and visual hierarchy transfer directly from lens to screen.
           </p>
-        </div>
+        </motion.div>
 
         <div className="columns-2 md:columns-3 gap-4 space-y-4">
           {photos.map((src, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="break-inside-avoid"
             >
               <img

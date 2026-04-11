@@ -25,21 +25,28 @@ const CaseStudyTiles = () => {
   return (
     <section id="work" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-          Selected Work
-        </h2>
-        <p className="font-body text-muted-foreground mb-16 max-w-lg">
-          Case studies spanning healthcare, AI, and enterprise — where craft meets complexity.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+        >
+          <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Selected Work
+          </h2>
+          <p className="font-body text-foreground/60 mb-16 max-w-lg">
+            Case studies spanning healthcare, AI, and enterprise — where craft meets complexity.
+          </p>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((study, i) => (
             <motion.article
               key={study.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.15, duration: 0.6 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="glass-card p-8 flex flex-col justify-between min-h-[320px] group cursor-pointer"
             >
               <div>
@@ -49,7 +56,7 @@ const CaseStudyTiles = () => {
                 <h3 className="mono-heading text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {study.title}
                 </h3>
-                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                <p className="font-body text-foreground/60 text-sm leading-relaxed">
                   {study.description}
                 </p>
               </div>

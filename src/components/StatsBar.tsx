@@ -14,16 +14,16 @@ const StatsBar = () => {
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-center"
           >
             <p className="mono-heading text-3xl md:text-4xl font-bold teal-shimmer mb-1">
               {stat.value}
             </p>
-            <p className="font-body text-sm text-muted-foreground">{stat.label}</p>
+            <p className="font-body text-sm text-foreground/60">{stat.label}</p>
           </motion.div>
         ))}
       </div>
