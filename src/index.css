@@ -15,44 +15,44 @@
     --popover: 38 25% 90%;
     --popover-foreground: 225 25% 12%;
 
-    --primary: 210 80% 50%;
+    --primary: 210 55% 55%;
     --primary-foreground: 38 30% 95%;
 
-    --secondary: 210 18% 78%;
-    --secondary-foreground: 225 25% 12%;
+    --secondary: 210 15% 80%;
+    --secondary-foreground: 225 18% 20%;
 
-    --muted: 38 20% 85%;
-    --muted-foreground: 225 12% 40%;
+    --muted: 38 18% 86%;
+    --muted-foreground: 225 10% 45%;
 
-    --accent: 210 30% 45%;
-    --accent-foreground: 225 25% 12%;
+    --accent: 210 25% 50%;
+    --accent-foreground: 225 18% 20%;
 
-    --destructive: 0 60% 50%;
+    --destructive: 0 50% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 38 18% 78%;
-    --input: 38 18% 78%;
-    --ring: 210 80% 50%;
+    --border: 38 15% 80%;
+    --input: 38 15% 80%;
+    --ring: 210 55% 55%;
 
     --radius: 0.25rem;
 
-    /* Custom tokens — light warm palette with blue accents */
+    /* Custom tokens — light warm palette with soft blue accents */
     --heritage-cream: 38 30% 92%;
-    --accent-warm: 210 80% 50%;
-    --accent-glow: 200 85% 60%;
-    --accent-muted: 215 50% 38%;
-    --steel-blue: 210 30% 40%;
-    --steel-blue-light: 210 35% 52%;
-    --ink-deep: 225 25% 12%;
-    --ink-medium: 225 12% 50%;
+    --accent-warm: 210 55% 55%;
+    --accent-glow: 200 60% 65%;
+    --accent-muted: 215 35% 45%;
+    --steel-blue: 210 25% 45%;
+    --steel-blue-light: 210 30% 55%;
+    --ink-deep: 225 18% 20%;
+    --ink-medium: 225 10% 52%;
     --glass-bg: 38 25% 88% / 0.85;
-    --glass-border: 38 18% 75% / 0.8;
-    --glass-shadow: 225 10% 60% / 0.15;
+    --glass-border: 38 15% 78% / 0.8;
+    --glass-shadow: 225 8% 62% / 0.12;
     --scanline-opacity: 0.03;
 
-    --teal-vibrant: 210 80% 50%;
-    --teal-glow: 200 85% 60%;
-    --teal-muted: 215 50% 38%;
+    --teal-vibrant: 210 55% 55%;
+    --teal-glow: 200 60% 65%;
+    --teal-muted: 215 35% 45%;
 
     --font-heading: 'Abril Fatface', 'Courier Prime', serif;
     --font-body: 'Space Mono', 'Courier Prime', monospace;
@@ -69,50 +69,50 @@
   }
 
   .dark {
-    --background: 225 28% 5%;
-    --foreground: 38 40% 84%;
+    --background: 225 22% 8%;
+    --foreground: 38 25% 78%;
 
-    --card: 225 25% 9%;
-    --card-foreground: 38 40% 84%;
+    --card: 225 20% 11%;
+    --card-foreground: 38 25% 78%;
 
-    --popover: 225 25% 8%;
-    --popover-foreground: 38 40% 84%;
+    --popover: 225 20% 10%;
+    --popover-foreground: 38 25% 78%;
 
-    --primary: 210 82% 58%;
-    --primary-foreground: 225 28% 5%;
+    --primary: 210 55% 62%;
+    --primary-foreground: 225 22% 8%;
 
-    --secondary: 210 22% 16%;
-    --secondary-foreground: 38 40% 84%;
+    --secondary: 210 18% 18%;
+    --secondary-foreground: 38 25% 78%;
 
-    --muted: 225 20% 12%;
-    --muted-foreground: 225 12% 48%;
+    --muted: 225 16% 14%;
+    --muted-foreground: 225 10% 50%;
 
-    --accent: 210 32% 48%;
-    --accent-foreground: 38 40% 84%;
+    --accent: 210 28% 50%;
+    --accent-foreground: 38 25% 78%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 65% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 20% 15%;
-    --input: 225 20% 15%;
-    --ring: 210 82% 58%;
+    --border: 225 16% 18%;
+    --input: 225 16% 18%;
+    --ring: 210 55% 62%;
 
-    --heritage-cream: 38 40% 84%;
-    --accent-warm: 210 82% 58%;
-    --accent-glow: 200 88% 68%;
-    --accent-muted: 215 52% 45%;
-    --steel-blue: 210 32% 48%;
-    --steel-blue-light: 210 38% 60%;
-    --ink-deep: 225 28% 5%;
-    --ink-medium: 225 12% 40%;
-    --glass-bg: 225 25% 9% / 0.85;
-    --glass-border: 225 20% 18% / 0.8;
-    --glass-shadow: 0 0% 0% / 0.5;
-    --scanline-opacity: 0.06;
+    --heritage-cream: 38 25% 78%;
+    --accent-warm: 210 55% 62%;
+    --accent-glow: 200 60% 70%;
+    --accent-muted: 215 35% 50%;
+    --steel-blue: 210 28% 50%;
+    --steel-blue-light: 210 32% 60%;
+    --ink-deep: 225 22% 8%;
+    --ink-medium: 225 10% 42%;
+    --glass-bg: 225 20% 11% / 0.85;
+    --glass-border: 225 16% 20% / 0.8;
+    --glass-shadow: 0 0% 0% / 0.4;
+    --scanline-opacity: 0.05;
 
-    --teal-vibrant: 210 82% 58%;
-    --teal-glow: 200 88% 68%;
-    --teal-muted: 215 52% 45%;
+    --teal-vibrant: 210 55% 62%;
+    --teal-glow: 200 60% 70%;
+    --teal-muted: 215 35% 50%;
 
     --sidebar-background: 225 25% 6%;
     --sidebar-foreground: 38 40% 84%;
