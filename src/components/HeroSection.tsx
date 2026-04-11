@@ -77,13 +77,13 @@ const HeroSection = () => {
       >
         <a
           href="#letsconnect"
-          className="glass-card px-8 py-3 font-mono text-sm font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity"
+          className="glass-card px-8 py-3 font-heading text-sm font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity"
         >
           Let's Connect
         </a>
         <a
           href="/about"
-          className="glass-card px-8 py-3 font-mono text-sm font-bold text-foreground hover:text-primary transition-colors"
+          className="glass-card px-8 py-3 font-heading text-sm font-bold text-foreground hover:text-primary transition-colors"
         >
           About me →
         </a>

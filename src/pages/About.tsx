@@ -80,7 +80,7 @@ const ChapterBlock = ({
         className="relative z-10 max-w-2xl"
         style={{ y: textY, opacity: textOpacity }}
       >
-        <p className="font-mono text-xs text-primary mb-2 tracking-widest uppercase">
+        <p className="font-heading text-xs text-primary mb-2 tracking-widest uppercase">
           {chapter.era} · {chapter.year}
         </p>
         <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
@@ -105,7 +105,7 @@ const About = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="font-mono text-xs text-primary mb-4 tracking-widest uppercase"
+          className="font-heading text-xs text-primary mb-4 tracking-widest uppercase"
         >
           The Chaptered Journey
         </motion.p>
@@ -152,7 +152,7 @@ const About = () => {
             Product designer with <span className="teal-shimmer">6+ years</span> of experience
           </h2>
           <p className="font-body text-muted-foreground text-lg leading-relaxed">
-            Combining a designer's eye and a <span className="font-mono text-primary">&lt;developer's mindset /&gt;</span> to craft user-first experiences, backed by Privacy and Data.
+            Combining a designer's eye and a <span className="font-heading text-primary">&lt;developer's mindset /&gt;</span> to craft user-first experiences, backed by Privacy and Data.
           </p>
         </motion.div>
       </section>

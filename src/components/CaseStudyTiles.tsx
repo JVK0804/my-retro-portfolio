@@ -43,7 +43,7 @@ const CaseStudyTiles = () => {
               className="glass-card p-8 flex flex-col justify-between min-h-[320px] group cursor-pointer"
             >
               <div>
-                <p className="font-mono text-xs text-primary mb-3 tracking-wider uppercase">
+                <p className="font-heading text-xs text-primary mb-3 tracking-wider uppercase">
                   {study.subtitle}
                 </p>
                 <h3 className="mono-heading text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
@@ -57,7 +57,7 @@ const CaseStudyTiles = () => {
                 {study.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="font-mono text-[10px] px-3 py-1 rounded-full bg-secondary text-secondary-foreground uppercase tracking-wider"
+                    className="font-heading text-[10px] px-3 py-1 rounded-full bg-secondary text-secondary-foreground uppercase tracking-wider"
                   >
                     {tag}
                   </span>

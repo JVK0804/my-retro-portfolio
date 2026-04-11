@@ -14,7 +14,7 @@ const PhotographyGrid = () => {
     <section id="photography" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-16">
-          <p className="font-mono text-xs text-primary mb-3 tracking-widest uppercase">
+          <p className="font-heading text-xs text-primary mb-3 tracking-widest uppercase">
             The Lens → The Interface
           </p>
           <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">

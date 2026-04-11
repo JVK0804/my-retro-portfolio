@@ -23,7 +23,7 @@ const PhilosophySection = () => {
   return (
     <section className="py-24 px-6 border-t border-border">
       <div className="max-w-6xl mx-auto">
-        <p className="font-mono text-xs text-primary mb-3 tracking-widest uppercase">
+        <p className="font-heading text-xs text-primary mb-3 tracking-widest uppercase">
           Living Document
         </p>
         <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">

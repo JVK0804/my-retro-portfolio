@@ -25,7 +25,7 @@ const Footer = () => {
           href="https://calendly.com/kaushik-jv6/30min"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 glass-card px-8 py-4 font-mono text-sm font-bold text-primary hover:text-primary-foreground hover:bg-primary transition-all duration-300 mb-12"
+          className="inline-flex items-center gap-3 glass-card px-8 py-4 font-heading text-sm font-bold text-primary hover:text-primary-foreground hover:bg-primary transition-all duration-300 mb-12"
         >
           <Calendar size={18} />
           Schedule a 30-min call
@@ -48,7 +48,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-16 pt-8 border-t border-border">
-          <p className="font-mono text-xs text-muted-foreground">
+          <p className="font-heading text-xs text-muted-foreground">
             © {new Date().getFullYear()} Kaushik JV. Designed & engineered with intent.
           </p>
         </div>
