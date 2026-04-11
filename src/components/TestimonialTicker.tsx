@@ -30,7 +30,7 @@ const TestimonialTicker = () => {
 
   return (
     <section className="py-16 overflow-hidden border-t border-b border-border">
-      <p className="font-mono text-xs text-primary text-center mb-8 tracking-widest uppercase">
+      <p className="font-heading text-xs text-primary text-center mb-8 tracking-widest uppercase">
         What colleagues say
       </p>
       <div className="ticker-scroll">
@@ -49,7 +49,7 @@ const TestimonialTicker = () => {
                 height={40}
               />
               <div>
-                <p className="font-mono text-sm font-bold text-foreground">{t.name}</p>
+                <p className="font-heading text-sm font-bold text-foreground">{t.name}</p>
                 <p className="font-body text-xs text-muted-foreground">{t.role}</p>
               </div>
             </div>

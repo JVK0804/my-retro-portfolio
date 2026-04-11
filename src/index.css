@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Rajdhani:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -47,9 +47,9 @@
     --glass-border: 0 0% 100% / 0.3;
     --glass-shadow: 220 20% 12% / 0.08;
 
-    --font-mono: 'Space Mono', ui-monospace, monospace;
-    --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    --font-heading: 'Michroma', 'Rajdhani', sans-serif;
+    --font-body: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    --font-display: 'Michroma', 'Rajdhani', sans-serif;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -59,6 +59,55 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 174 72% 40%;
+  }
+
+  .dark {
+    --background: 220 20% 8%;
+    --foreground: 240 5% 96%;
+
+    --card: 220 18% 12%;
+    --card-foreground: 240 5% 96%;
+
+    --popover: 220 18% 12%;
+    --popover-foreground: 240 5% 96%;
+
+    --primary: 174 72% 45%;
+    --primary-foreground: 220 20% 8%;
+
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 240 5% 96%;
+
+    --muted: 220 15% 16%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 174 72% 45%;
+    --accent-foreground: 220 20% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 174 72% 45%;
+
+    --heritage-cream: 220 20% 8%;
+    --teal-vibrant: 174 72% 45%;
+    --teal-glow: 174 80% 60%;
+    --teal-muted: 174 30% 50%;
+    --ink-deep: 240 5% 96%;
+    --ink-medium: 220 10% 70%;
+    --glass-bg: 220 20% 14% / 0.7;
+    --glass-border: 220 15% 25% / 0.5;
+    --glass-shadow: 0 0% 0% / 0.3;
+
+    --sidebar-background: 220 18% 10%;
+    --sidebar-foreground: 240 5% 90%;
+    --sidebar-primary: 240 5% 96%;
+    --sidebar-primary-foreground: 220 20% 8%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 240 5% 96%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 174 72% 45%;
   }
 }
 
@@ -72,7 +121,10 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
+  }
+  .heading-font {
+    font-family: var(--font-heading);
   }
 }
 
@@ -148,9 +200,10 @@
 
   /* Mono heading style */
   .mono-heading {
-    font-family: var(--font-mono);
-    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
     line-height: 1.1;
+    text-transform: uppercase;
   }
 
   /* Teal shimmer */
