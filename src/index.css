@@ -289,3 +289,10 @@
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-2%, -3%); }
+  66% { transform: translate(1%, 2%); }
+  100% { transform: translate(3%, -1%); }
+}
