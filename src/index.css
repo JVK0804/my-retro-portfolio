@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,110 +6,123 @@
 
 @layer base {
   :root {
-    --background: 220 20% 8%;
-    --foreground: 40 30% 85%;
+    --background: 225 25% 7%;
+    --foreground: 38 35% 80%;
 
-    --card: 220 18% 12%;
-    --card-foreground: 40 30% 85%;
+    --card: 225 22% 11%;
+    --card-foreground: 38 35% 80%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 40 30% 85%;
+    --popover: 225 22% 9%;
+    --popover-foreground: 38 35% 80%;
 
-    --primary: 195 60% 55%;
-    --primary-foreground: 220 20% 8%;
+    --primary: 25 80% 55%;
+    --primary-foreground: 225 25% 7%;
 
-    --secondary: 220 15% 16%;
-    --secondary-foreground: 40 30% 85%;
+    --secondary: 210 25% 18%;
+    --secondary-foreground: 38 35% 80%;
 
-    --muted: 220 15% 14%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 225 18% 14%;
+    --muted-foreground: 225 12% 45%;
 
-    --accent: 195 60% 55%;
-    --accent-foreground: 220 20% 8%;
+    --accent: 210 30% 45%;
+    --accent-foreground: 38 35% 80%;
 
     --destructive: 0 60% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 195 60% 55%;
+    --border: 225 18% 16%;
+    --input: 225 18% 16%;
+    --ring: 25 80% 55%;
 
     --radius: 0.25rem;
 
-    /* Custom tokens */
-    --heritage-cream: 40 30% 85%;
-    --teal-vibrant: 195 60% 55%;
-    --teal-glow: 195 70% 65%;
-    --teal-muted: 195 35% 45%;
-    --ink-deep: 220 20% 8%;
-    --ink-medium: 220 10% 40%;
-    --glass-bg: 220 18% 12% / 0.85;
-    --glass-border: 220 15% 22% / 0.8;
+    /* Custom tokens — retro warm palette */
+    --heritage-cream: 38 35% 80%;
+    --accent-warm: 25 80% 55%;
+    --accent-glow: 30 85% 65%;
+    --accent-muted: 20 50% 42%;
+    --steel-blue: 210 30% 45%;
+    --steel-blue-light: 210 35% 58%;
+    --ink-deep: 225 25% 7%;
+    --ink-medium: 225 12% 35%;
+    --glass-bg: 225 22% 11% / 0.85;
+    --glass-border: 225 18% 20% / 0.8;
     --glass-shadow: 0 0% 0% / 0.4;
     --scanline-opacity: 0.05;
 
-    --font-heading: 'Orbitron', 'Share Tech Mono', monospace;
-    --font-body: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    --font-display: 'Orbitron', 'Share Tech Mono', monospace;
+    /* Legacy teal aliases → now warm orange */
+    --teal-vibrant: 25 80% 55%;
+    --teal-glow: 30 85% 65%;
+    --teal-muted: 20 50% 42%;
 
-    --sidebar-background: 220 18% 8%;
-    --sidebar-foreground: 40 30% 85%;
-    --sidebar-primary: 40 30% 85%;
-    --sidebar-primary-foreground: 220 20% 8%;
-    --sidebar-accent: 220 15% 14%;
-    --sidebar-accent-foreground: 40 30% 85%;
-    --sidebar-border: 220 15% 16%;
-    --sidebar-ring: 195 60% 55%;
+    --font-heading: 'Abril Fatface', 'Courier Prime', serif;
+    --font-body: 'Space Mono', 'Courier Prime', monospace;
+    --font-display: 'Abril Fatface', 'Courier Prime', serif;
+
+    --sidebar-background: 225 22% 7%;
+    --sidebar-foreground: 38 35% 80%;
+    --sidebar-primary: 38 35% 80%;
+    --sidebar-primary-foreground: 225 25% 7%;
+    --sidebar-accent: 225 18% 14%;
+    --sidebar-accent-foreground: 38 35% 80%;
+    --sidebar-border: 225 18% 14%;
+    --sidebar-ring: 25 80% 55%;
   }
 
   .dark {
-    --background: 220 25% 5%;
-    --foreground: 40 35% 88%;
+    --background: 225 28% 5%;
+    --foreground: 38 40% 84%;
 
-    --card: 220 22% 9%;
-    --card-foreground: 40 35% 88%;
+    --card: 225 25% 9%;
+    --card-foreground: 38 40% 84%;
 
-    --popover: 220 22% 9%;
-    --popover-foreground: 40 35% 88%;
+    --popover: 225 25% 8%;
+    --popover-foreground: 38 40% 84%;
 
-    --primary: 195 65% 58%;
-    --primary-foreground: 220 25% 5%;
+    --primary: 25 82% 58%;
+    --primary-foreground: 225 28% 5%;
 
-    --secondary: 220 18% 14%;
-    --secondary-foreground: 40 35% 88%;
+    --secondary: 210 22% 16%;
+    --secondary-foreground: 38 40% 84%;
 
-    --muted: 220 18% 12%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 225 20% 12%;
+    --muted-foreground: 225 12% 48%;
 
-    --accent: 195 65% 58%;
-    --accent-foreground: 220 25% 5%;
+    --accent: 210 32% 48%;
+    --accent-foreground: 38 40% 84%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 18% 16%;
-    --input: 220 18% 16%;
-    --ring: 195 65% 58%;
+    --border: 225 20% 15%;
+    --input: 225 20% 15%;
+    --ring: 25 82% 58%;
 
-    --heritage-cream: 40 35% 88%;
-    --teal-vibrant: 195 65% 58%;
-    --teal-glow: 195 75% 68%;
-    --teal-muted: 195 40% 48%;
-    --ink-deep: 220 25% 5%;
-    --ink-medium: 220 10% 55%;
-    --glass-bg: 220 22% 9% / 0.85;
-    --glass-border: 220 18% 20% / 0.8;
+    --heritage-cream: 38 40% 84%;
+    --accent-warm: 25 82% 58%;
+    --accent-glow: 30 88% 68%;
+    --accent-muted: 20 52% 45%;
+    --steel-blue: 210 32% 48%;
+    --steel-blue-light: 210 38% 60%;
+    --ink-deep: 225 28% 5%;
+    --ink-medium: 225 12% 40%;
+    --glass-bg: 225 25% 9% / 0.85;
+    --glass-border: 225 20% 18% / 0.8;
     --glass-shadow: 0 0% 0% / 0.5;
     --scanline-opacity: 0.06;
 
-    --sidebar-background: 220 22% 6%;
-    --sidebar-foreground: 40 35% 88%;
-    --sidebar-primary: 40 35% 88%;
-    --sidebar-primary-foreground: 220 25% 5%;
-    --sidebar-accent: 220 18% 12%;
-    --sidebar-accent-foreground: 40 35% 88%;
-    --sidebar-border: 220 18% 14%;
-    --sidebar-ring: 195 65% 58%;
+    --teal-vibrant: 25 82% 58%;
+    --teal-glow: 30 88% 68%;
+    --teal-muted: 20 52% 45%;
+
+    --sidebar-background: 225 25% 6%;
+    --sidebar-foreground: 38 40% 84%;
+    --sidebar-primary: 38 40% 84%;
+    --sidebar-primary-foreground: 225 28% 5%;
+    --sidebar-accent: 225 20% 12%;
+    --sidebar-accent-foreground: 38 40% 84%;
+    --sidebar-border: 225 20% 13%;
+    --sidebar-ring: 25 82% 58%;
   }
 }
 
@@ -203,10 +216,10 @@ svg.sketch-filters {
   }
   .glass-card:hover {
     transform: translateY(-2px) rotate(-0.3deg);
-    border-color: hsl(var(--teal-vibrant) / 0.4);
+    border-color: hsl(var(--accent-warm) / 0.4);
     box-shadow:
       0 4px 0 hsl(var(--glass-shadow)),
-      0 0 20px hsl(var(--teal-vibrant) / 0.08),
+      0 0 20px hsl(var(--accent-warm) / 0.08),
       inset 0 1px 0 hsl(0 0% 100% / 0.1),
       4px 4px 0 hsl(var(--glass-shadow));
   }
@@ -227,12 +240,12 @@ svg.sketch-filters {
     filter: url(#sketch-wobble);
   }
   .glass-toggle:hover {
-    background: hsl(var(--teal-vibrant) / 0.12);
-    border-color: hsl(var(--teal-vibrant) / 0.5);
+    background: hsl(var(--accent-warm) / 0.12);
+    border-color: hsl(var(--accent-warm) / 0.5);
     transform: translateY(-1px) rotate(0.5deg);
     box-shadow:
       0 3px 0 hsl(var(--glass-shadow)),
-      0 0 16px hsl(var(--teal-vibrant) / 0.12),
+      0 0 16px hsl(var(--accent-warm) / 0.12),
       3px 3px 0 hsl(var(--glass-shadow));
   }
 
@@ -248,19 +261,19 @@ svg.sketch-filters {
   /* ===== MONO HEADING — retro-futuristic sketch ===== */
   .mono-heading {
     font-family: var(--font-heading);
-    letter-spacing: 0.1em;
-    line-height: 1.15;
-    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: none;
     filter: url(#sketch-text);
   }
 
-  /* ===== TEAL SHIMMER ===== */
+  /* ===== WARM SHIMMER (was teal) ===== */
   .teal-shimmer {
     background: linear-gradient(
       135deg,
-      hsl(var(--teal-vibrant)),
-      hsl(var(--teal-glow)),
-      hsl(var(--teal-vibrant))
+      hsl(var(--accent-warm)),
+      hsl(var(--accent-glow)),
+      hsl(var(--accent-warm))
     );
     background-size: 200% 200%;
     animation: shimmer 3s ease-in-out infinite;
@@ -275,9 +288,9 @@ svg.sketch-filters {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(var(--teal-vibrant) / 0.4) 20%,
-      hsl(var(--teal-vibrant)) 50%,
-      hsl(var(--teal-vibrant) / 0.4) 80%,
+      hsl(var(--accent-warm) / 0.4) 20%,
+      hsl(var(--accent-warm)) 50%,
+      hsl(var(--accent-warm) / 0.4) 80%,
       transparent 100%
     );
     filter: url(#sketch-heavy);
@@ -285,11 +298,14 @@ svg.sketch-filters {
 
   /* ===== RETRO TAG / BADGE — sketch ===== */
   .retro-tag {
-    @apply font-heading text-[10px] px-3 py-1 uppercase tracking-wider;
-    border: 1px solid hsl(var(--teal-vibrant) / 0.3);
-    background: hsl(var(--teal-vibrant) / 0.08);
-    color: hsl(var(--teal-vibrant));
+    @apply font-heading text-[10px] px-3 py-1 tracking-wider;
+    border: 1px solid hsl(var(--steel-blue) / 0.4);
+    background: hsl(var(--steel-blue) / 0.1);
+    color: hsl(var(--steel-blue-light));
     filter: url(#sketch-wobble);
+    text-transform: none;
+    font-family: var(--font-body);
+    font-size: 11px;
   }
 
   /* ===== SKETCH SECTION BORDERS ===== */
@@ -303,7 +319,7 @@ svg.sketch-filters {
   .sketch-underline {
     text-decoration: underline;
     text-decoration-style: wavy;
-    text-decoration-color: hsl(var(--teal-vibrant) / 0.4);
+    text-decoration-color: hsl(var(--accent-warm) / 0.4);
     text-underline-offset: 4px;
   }
 }
