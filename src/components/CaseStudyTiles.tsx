@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useSound } from "@/contexts/SoundContext";
 
 const caseStudies = [
   {
@@ -22,6 +23,8 @@ const caseStudies = [
 ];
 
 const CaseStudyTiles = () => {
+  const { play } = useSound();
+
   return (
     <section id="work" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
@@ -49,6 +52,7 @@ const CaseStudyTiles = () => {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="glass-card p-8 flex flex-col justify-between min-h-[320px] group cursor-pointer"
+              onMouseEnter={() => play("hover")}
             >
               <div>
                 <p className="font-heading text-[10px] text-primary mb-3 tracking-widest uppercase">

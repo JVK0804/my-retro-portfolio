@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useSound } from "@/contexts/SoundContext";
 
 const ThemeToggle = () => {
+  const { play } = useSound();
   const [dark, setDark] = useState(() => {
     if (typeof window === "undefined") return false;
     return document.documentElement.classList.contains("dark");
@@ -16,6 +18,7 @@ const ThemeToggle = () => {
   }, []);
 
   const toggle = () => {
+    play("toggle");
     const next = !dark;
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
