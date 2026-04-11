@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import SoundToggle from "./SoundToggle";
+import { useSound } from "@/contexts/SoundContext";
 
 const navItems = [
   { label: "Work", href: "/#work" },
