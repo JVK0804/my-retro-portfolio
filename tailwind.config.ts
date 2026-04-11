@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        mono: ["'Space Mono'", "ui-monospace", "monospace"],
-        body: ["-apple-system", "BlinkMacSystemFont", "'SF Pro Text'", "'Helvetica Neue'", "sans-serif"],
-        display: ["-apple-system", "BlinkMacSystemFont", "'SF Pro Display'", "'Helvetica Neue'", "sans-serif"],
+        heading: ["'Michroma'", "'Rajdhani'", "sans-serif"],
+        body: ["'Rajdhani'", "-apple-system", "BlinkMacSystemFont", "'SF Pro Text'", "'Helvetica Neue'", "sans-serif"],
+        display: ["'Michroma'", "'Rajdhani'", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
