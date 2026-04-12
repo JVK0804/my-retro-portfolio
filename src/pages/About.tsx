@@ -158,7 +158,7 @@ const ScrollTimeline = () => {
   const lineWidth = useTransform(scrollYProgress, [0.18, 0.78], ["0%", "100%"]);
 
   return (
-    <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 hidden md:block">
+    <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 hidden pointer-events-none md:block">
       <div className="glass-card px-6 py-3">
         <div className="flex items-center gap-8 relative">
           <div className="absolute top-5 left-5 right-5 h-[2px] bg-border/40" />
