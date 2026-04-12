@@ -10,24 +10,23 @@ const ScrollFadeSection = ({ children, className = "" }: ScrollFadeSectionProps)
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"],
+    offset: ["start start", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 0.82, 1], [1, 1, 0.3, 0]);
-  const blur = useTransform(scrollYProgress, [0.45, 1], [0, 16]);
-  const y = useTransform(scrollYProgress, [0.5, 1], [0, -56]);
-  const scale = useTransform(scrollYProgress, [0.5, 1], [1, 0.985]);
+  const opacity = useTransform(scrollYProgress, [0, 0.45, 0.72, 1], [1, 1, 0.38, 0]);
+  const blur = useTransform(scrollYProgress, [0.55, 1], [0, 14]);
+  const y = useTransform(scrollYProgress, [0.55, 1], [0, -44]);
+  const scale = useTransform(scrollYProgress, [0.55, 1], [1, 0.985]);
   const filter = useMotionTemplate`blur(${blur}px)`;
 
   return (
-    <div ref={ref} className={`relative min-h-[135vh] md:min-h-[145vh] ${className}`}>
-      <motion.div
-        className="sticky top-24"
-        style={{ opacity, y, scale, filter, willChange: "transform, filter, opacity" }}
-      >
-        {children}
-      </motion.div>
-    </div>
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ opacity, y, scale, filter, willChange: "transform, filter, opacity" }}
+    >
+      {children}
+    </motion.div>
   );
 };
 
