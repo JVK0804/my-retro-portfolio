@@ -3,22 +3,28 @@ import { useSound } from "@/contexts/SoundContext";
 
 const caseStudies = [
   {
-    title: "SmartAlign",
-    subtitle: "AI-First UX Design System",
-    description: "Pioneering alignment between AI capabilities and human-centered interfaces.",
-    tags: ["Product Design", "AI/ML", "Design System"],
+    title: "Integrating AI Powered features to enhance data privacy.",
+    subtitle: "AI Design for Data Privacy",
+    description: "Redesigned Slack's AI to make privacy feel human, empowering students to trust, learn, and take control of their data.",
+    tags: ["AI", "Data Privacy", "UX Design"],
+    impact: "20% increase in user engagement",
+    readTime: "6 min Read",
   },
   {
-    title: "Health Catalyst",
-    subtitle: "Healthcare Data Platform",
-    description: "Transforming complex healthcare data into intuitive clinical workflows for 1M+ users.",
-    tags: ["Enterprise", "Data Viz", "Accessibility"],
+    title: "AI Powered features to learn Mobile Photography",
+    subtitle: "Mobile AI",
+    description: "Designed Smart Align, an AI-powered mobile photography app that improved user interaction through iterative testing and feedback.",
+    tags: ["Mobile AI", "Photography", "UX Research"],
+    impact: "62% improved interaction · 35% less onboarding friction",
+    readTime: "5 min Read",
   },
   {
-    title: "Kyndryl Design",
-    subtitle: "Enterprise Infrastructure UX",
-    description: "Redesigning IT infrastructure management with user-first thinking at global scale.",
-    tags: ["Enterprise", "UX Strategy", "Research"],
+    title: "Collaboration That Scales Trust (NDA)",
+    subtitle: "Design Systems",
+    description: "Designed 20+ react components and built a unified design system for Cigna Enterprise enabling seamless collaboration across 3 teams with zero integration regressions.",
+    tags: ["Design Systems", "Enterprise", "React"],
+    impact: "Reduced development time by 35%",
+    readTime: "4 min Read",
   },
 ];
 
