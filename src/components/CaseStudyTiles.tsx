@@ -61,22 +61,32 @@ const CaseStudyTiles = () => {
               onMouseEnter={() => play("hover")}
             >
               <div>
-                <p className="font-heading text-[10px] text-primary mb-3 tracking-widest uppercase">
-                  {study.subtitle}
-                </p>
-                <h3 className="mono-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <p className="font-heading text-[10px] text-primary tracking-widest uppercase">
+                    {study.subtitle}
+                  </p>
+                  <span className="font-body text-[10px] text-foreground/40">⏱ {study.readTime}</span>
+                </div>
+                <h3 className="mono-heading text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-snug">
                   {study.title}
                 </h3>
                 <p className="font-body text-foreground/60 text-sm leading-relaxed">
                   {study.description}
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2 mt-6">
-                {study.tags.map((tag) => (
-                  <span key={tag} className="retro-tag">
-                    {tag}
-                  </span>
-                ))}
+              <div>
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {study.tags.map((tag) => (
+                    <span key={tag} className="retro-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="retro-divider w-full mt-4 mb-2" />
+                <p className="font-body text-[11px]">
+                  <span className="text-foreground/50 mr-2">IMPACT</span>
+                  <span className="text-primary font-medium">{study.impact}</span>
+                </p>
               </div>
             </motion.article>
           ))}
