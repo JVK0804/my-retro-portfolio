@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 
 const logos = [
@@ -79,21 +80,21 @@ const HeroSection = () => {
         className="flex gap-4 mt-14"
       >
         <a
-          href="#letsconnect"
+          href="mailto:kaushikjv@example.com"
           onClick={() => play("click")}
           onMouseEnter={() => play("hover")}
-          className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase"
+          className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase cursor-pointer"
         >
           Let's Connect
         </a>
-        <a
-          href="/about"
+        <Link
+          to="/about"
           onClick={() => play("whoosh")}
           onMouseEnter={() => play("hover")}
           className="glass-card px-8 py-3 font-heading text-xs font-bold text-foreground hover:text-primary transition-colors tracking-wider uppercase"
         >
           About me →
-        </a>
+        </Link>
       </motion.div>
     </section>
   );

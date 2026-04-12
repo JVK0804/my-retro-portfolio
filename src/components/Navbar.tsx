@@ -36,8 +36,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-3rem)] max-w-3xl">
-      <div className="glass-card px-6 py-3 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4">
+      <div className="glass-card px-6 py-3 flex items-center justify-between max-w-5xl mx-auto">
         <Link to="/" className="heading-font text-sm font-bold tracking-[0.25em] uppercase text-foreground">
           JVK
         </Link>
