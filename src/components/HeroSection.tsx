@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 
 const logos = [
