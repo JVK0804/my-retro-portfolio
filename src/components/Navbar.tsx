@@ -9,7 +9,7 @@ import { useSound } from "@/contexts/SoundContext";
 const navItems = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/about" },
-  { label: "Photography", href: "/#photography" },
+  { label: "Photography", href: "/photography" },
   { label: "Resume", href: "https://drive.google.com/file/d/1GpKL7lSGkl9zEBl2DNvDwdw2U2NPDKrX/view", external: true },
 ];
 
@@ -35,8 +35,60 @@ const Navbar = () => {
     }
   };
 
+  const isHashLink = (href: string) => href.includes("#");
+
+  const renderNavItem = (item: typeof navItems[0], mobile = false) => {
+    const baseClass = mobile
+      ? "font-heading text-[10px] tracking-widest uppercase text-muted-foreground"
+      : `font-heading text-[10px] tracking-widest uppercase transition-colors ${
+          location.pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-primary"
+        }`;
+
+    if (item.external) {
+      return (
+        <a
+          key={item.label}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => { play("click"); if (mobile) setMobileOpen(false); }}
+          onMouseEnter={() => !mobile && play("hover")}
+          className={baseClass}
+        >
+          {item.label}
+        </a>
+      );
+    }
+
+    if (isHashLink(item.href)) {
+      return (
+        <a
+          key={item.label}
+          href={item.href}
+          onClick={(e) => { play("click"); handleHashNav(e, item.href); }}
+          onMouseEnter={() => !mobile && play("hover")}
+          className={baseClass}
+        >
+          {item.label}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        key={item.label}
+        to={item.href}
+        onClick={() => { play("click"); setMobileOpen(false); }}
+        onMouseEnter={() => !mobile && play("hover")}
+        className={baseClass}
+      >
+        {item.label}
+      </Link>
+    );
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
       <div className="glass-card px-6 py-3 flex items-center justify-between max-w-5xl mx-auto">
         <Link to="/" className="heading-font text-sm font-bold tracking-[0.25em] uppercase text-foreground">
           JVK
@@ -44,32 +96,7 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) =>
-            item.external ? (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => play("click")}
-                onMouseEnter={() => play("hover")}
-                className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => { play("click"); handleHashNav(e, item.href); }}
-                className={`font-heading text-[10px] tracking-widest uppercase transition-colors ${
-                  location.pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-primary"
-                }`}
-              >
-                {item.label}
-              </a>
-            )
-          )}
+          {navItems.map((item) => renderNavItem(item))}
           <SoundToggle />
           <ThemeToggle />
         </div>
@@ -97,29 +124,7 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -8 }}
             className="glass-card mt-2 px-6 py-4 flex flex-col gap-4 md:hidden"
           >
-            {navItems.map((item) =>
-              item.external ? (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleHashNav(e, item.href)}
-                  className="font-heading text-[10px] tracking-widest uppercase text-muted-foreground"
-                >
-                  {item.label}
-                </a>
-              )
-            )}
+            {navItems.map((item) => renderNavItem(item, true))}
           </motion.div>
         )}
       </AnimatePresence>

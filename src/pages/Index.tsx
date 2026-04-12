@@ -3,7 +3,6 @@ import HeroSection from "@/components/HeroSection";
 import StatsBar from "@/components/StatsBar";
 import CaseStudyTiles from "@/components/CaseStudyTiles";
 import TestimonialTicker from "@/components/TestimonialTicker";
-import PhotographyGrid from "@/components/PhotographyGrid";
 import PhilosophySection from "@/components/PhilosophySection";
 
 import Footer from "@/components/Footer";
@@ -18,7 +17,6 @@ const Index = () => {
         <StatsBar />
         <CaseStudyTiles />
         <TestimonialTicker />
-        <PhotographyGrid />
         <PhilosophySection />
         
         <Footer />
