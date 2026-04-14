@@ -46,140 +46,74 @@ const chapters = [
   },
 ];
 
-/* ───── Scroll-progress timeline node ───── */
-const TimelineNode = ({
-  icon,
-  year,
-  active,
-}: {
-  index: number;
-  total: number;
-  icon: string;
-  title: string;
-  year: string;
-  active: boolean;
-}) => (
-  <div className="flex flex-col items-center gap-1 relative z-10">
-    <motion.div
-      className={`w-10 h-10 rounded-full flex items-center justify-center text-lg border-2 transition-all duration-500 ${
-        active
-          ? "border-primary bg-primary/20 scale-110 shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
-          : "border-border bg-background/80"
-      }`}
-    >
-      {icon}
-    </motion.div>
-    <span
-      className={`font-heading text-[9px] tracking-widest uppercase transition-colors duration-500 ${
-        active ? "text-primary" : "text-muted-foreground"
-      }`}
-    >
-      {year}
-    </span>
-  </div>
-);
-
-/* ───── Chapter block ───── */
-const ChapterBlock = ({
-  chapter,
-  index,
-}: {
-  chapter: (typeof chapters)[0];
-  index: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const imageBlur = useTransform(scrollYProgress, [0.5, 0.8], [0, 12]);
-  const textY = useTransform(scrollYProgress, [0.2, 0.5], [60, 0]);
-  const textOpacity = useTransform(scrollYProgress, [0.2, 0.45], [0, 1]);
-
-  const isEven = index % 2 === 0;
-
-  return (
-    <div
-      ref={ref}
-      className="relative min-h-[100vh] flex items-center justify-center px-6"
-    >
-      {/* Background image */}
-      <motion.div className="absolute inset-0 z-0" style={{ opacity: imageOpacity }}>
-        <motion.img
-          src={chapter.image}
-          alt={chapter.title}
-          className="w-full h-full object-cover"
-          style={{ filter: useTransform(imageBlur, (v) => `blur(${v}px)`) }}
-          loading={index === 0 ? "eager" : "lazy"}
-          width={1280}
-          height={720}
-        />
-        <div className="absolute inset-0 bg-background/70" />
-      </motion.div>
-
-      {/* Content — alternates alignment */}
-      <motion.div
-        className={`relative z-10 max-w-2xl ${isEven ? "md:mr-auto md:ml-24" : "md:ml-auto md:mr-24"}`}
-        style={{ y: textY, opacity: textOpacity }}
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl">{chapter.icon}</span>
-          <p className="font-heading text-xs text-primary tracking-widest uppercase">
-            {chapter.era} · {chapter.year}
-          </p>
-        </div>
-        <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-          {chapter.title}
-        </h2>
-        <p className="font-body text-lg text-foreground/90 leading-relaxed">
-          {chapter.text}
-        </p>
-      </motion.div>
-    </div>
-  );
-};
-
-/* ───── Sticky scroll-progress timeline ───── */
+/* ───── Vertical side-rail timeline ───── */
 const ScrollTimeline = () => {
   const { scrollYProgress } = useScroll();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const chapterStart = 0.18;
-    const chapterEnd = 0.78;
+    const chapterEnd = 0.82;
+    setVisible(v >= chapterStart - 0.05 && v <= chapterEnd + 0.05);
     const range = chapterEnd - chapterStart;
     const normalized = Math.max(0, Math.min(1, (v - chapterStart) / range));
     const idx = Math.min(chapters.length - 1, Math.floor(normalized * chapters.length));
     setActiveIndex(idx);
   });
 
-  const lineWidth = useTransform(scrollYProgress, [0.18, 0.78], ["0%", "100%"]);
+  const lineHeight = useTransform(scrollYProgress, [0.18, 0.82], ["0%", "100%"]);
 
   return (
-    <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 hidden pointer-events-none md:block">
-      <div className="glass-card px-6 py-3">
-        <div className="flex items-center gap-8 relative">
-          <div className="absolute top-5 left-5 right-5 h-[2px] bg-border/40" />
-          <motion.div
-            className="absolute top-5 left-5 h-[2px] bg-primary"
-            style={{ width: lineWidth }}
-          />
-          {chapters.map((ch, i) => (
-            <TimelineNode
-              key={ch.title}
-              index={i}
-              total={chapters.length}
-              icon={ch.icon}
-              title={ch.title}
-              year={ch.year}
-              active={i <= activeIndex}
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.4 }}
+          className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden pointer-events-none md:flex flex-col items-center"
+        >
+          <div className="relative flex flex-col items-center gap-6">
+            {/* Track line */}
+            <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1px] bg-border/30" />
+            <motion.div
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] bg-primary origin-top"
+              style={{ height: lineHeight }}
             />
-          ))}
-        </div>
-      </div>
-    </div>
+
+            {/* Nodes */}
+            {chapters.map((ch, i) => (
+              <div key={ch.title} className="relative z-10 flex items-center gap-3">
+                <motion.div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm border transition-all duration-500 ${
+                    i <= activeIndex
+                      ? "border-primary bg-primary/15 shadow-[0_0_12px_hsl(var(--primary)/0.25)]"
+                      : "border-border/60 bg-background/60"
+                  }`}
+                  animate={{ scale: i === activeIndex ? 1.15 : 1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <span className="text-xs">{ch.icon}</span>
+                </motion.div>
+                <AnimatePresence>
+                  {i === activeIndex && (
+                    <motion.span
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -8 }}
+                      className="font-heading text-[9px] tracking-widest uppercase text-primary whitespace-nowrap"
+                    >
+                      {ch.year}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
