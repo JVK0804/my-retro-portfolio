@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Briefcase, Camera } from "lucide-react";
