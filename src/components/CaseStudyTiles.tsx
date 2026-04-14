@@ -43,7 +43,7 @@ const CaseStudyTiles = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "50px" }}
           transition={{ duration: 0.7 }}
         >
           <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
