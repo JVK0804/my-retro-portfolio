@@ -46,7 +46,67 @@ const chapters = [
   },
 ];
 
-/* ───── Vertical side-rail timeline ───── */
+/* ───── Chapter block ───── */
+const ChapterBlock = ({
+  chapter,
+  index,
+}: {
+  chapter: (typeof chapters)[0];
+  index: number;
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const imageBlur = useTransform(scrollYProgress, [0.5, 0.8], [0, 12]);
+  const textY = useTransform(scrollYProgress, [0.2, 0.5], [60, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0.2, 0.45], [0, 1]);
+
+  const isEven = index % 2 === 0;
+
+  return (
+    <div
+      ref={ref}
+      className="relative min-h-[100vh] flex items-center justify-center px-6"
+    >
+      <motion.div className="absolute inset-0 z-0" style={{ opacity: imageOpacity }}>
+        <motion.img
+          src={chapter.image}
+          alt={chapter.title}
+          className="w-full h-full object-cover"
+          style={{ filter: useTransform(imageBlur, (v) => `blur(${v}px)`) }}
+          loading={index === 0 ? "eager" : "lazy"}
+          width={1280}
+          height={720}
+        />
+        <div className="absolute inset-0 bg-background/70" />
+      </motion.div>
+
+      <motion.div
+        className={`relative z-10 max-w-2xl ${isEven ? "md:mr-auto md:ml-24" : "md:ml-auto md:mr-24"}`}
+        style={{ y: textY, opacity: textOpacity }}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl">{chapter.icon}</span>
+          <p className="font-heading text-xs text-primary tracking-widest uppercase">
+            {chapter.era} · {chapter.year}
+          </p>
+        </div>
+        <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
+          {chapter.title}
+        </h2>
+        <p className="font-body text-lg text-foreground/90 leading-relaxed">
+          {chapter.text}
+        </p>
+      </motion.div>
+    </div>
+  );
+};
+
+
 const ScrollTimeline = () => {
   const { scrollYProgress } = useScroll();
   const [activeIndex, setActiveIndex] = useState(0);
