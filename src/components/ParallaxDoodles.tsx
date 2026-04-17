@@ -28,22 +28,22 @@ type Doodle = {
 // Retro doodles dominate the top of the page; modern doodles take over
 // further down. Each one fades in/out around its anchor as you scroll past.
 const doodles: Doodle[] = [
-  // RETRO — visible from top through ~mid scroll
-  { src: crt,      alt: "CRT",      side: "left",  top: "8vh",   size: 220, speed: -600,  rotate: -8,  offset: -30, era: "retro" },
-  { src: cassette, alt: "Cassette", side: "right", top: "22vh",  size: 190, speed: -900,  rotate: 10,  offset: -20, era: "retro" },
-  { src: gameboy,  alt: "Game Boy", side: "left",  top: "65vh",  size: 200, speed: -750,  rotate: 6,   offset: 30,  era: "retro" },
-  { src: vhs,      alt: "VHS",      side: "right", top: "90vh",  size: 230, speed: -1200, rotate: -6,  offset: -40, era: "retro" },
-  { src: phone,    alt: "Phone",    side: "left",  top: "140vh", size: 210, speed: -850,  rotate: -10, offset: -20, era: "retro" },
-  { src: boombox,  alt: "Boombox",  side: "right", top: "170vh", size: 250, speed: -1100, rotate: 8,   offset: 20,  era: "retro" },
-  { src: camera,   alt: "Camera",   side: "right", top: "125vh", size: 170, speed: -800,  rotate: 18,  offset: 60,  era: "retro" },
+  // RETRO — top of the page
+  { src: crt,      alt: "CRT",      side: "left",  top: "8vh",   size: 180, speed: -600,  rotate: -8,  offset: 10,  era: "retro" },
+  { src: cassette, alt: "Cassette", side: "right", top: "22vh",  size: 160, speed: -900,  rotate: 10,  offset: 20,  era: "retro" },
+  { src: gameboy,  alt: "Game Boy", side: "left",  top: "65vh",  size: 170, speed: -750,  rotate: 6,   offset: 20,  era: "retro" },
+  { src: vhs,      alt: "VHS",      side: "right", top: "90vh",  size: 190, speed: -1200, rotate: -6,  offset: 10,  era: "retro" },
+  { src: phone,    alt: "Phone",    side: "left",  top: "140vh", size: 170, speed: -850,  rotate: -10, offset: 30,  era: "retro" },
+  { src: boombox,  alt: "Boombox",  side: "right", top: "170vh", size: 200, speed: -1100, rotate: 8,   offset: 20,  era: "retro" },
+  { src: camera,   alt: "Camera",   side: "right", top: "125vh", size: 150, speed: -800,  rotate: 18,  offset: 60,  era: "retro" },
 
-  // MODERN — gradually fade in from mid scroll downward
-  { src: smartphone, alt: "Smartphone", side: "left",  top: "200vh", size: 200, speed: -900,  rotate: -8, offset: -20, era: "modern" },
-  { src: earbuds,    alt: "Earbuds",    side: "right", top: "220vh", size: 180, speed: -1000, rotate: 12, offset: 30,  era: "modern" },
-  { src: smartwatch, alt: "Smartwatch", side: "left",  top: "245vh", size: 170, speed: -800,  rotate: 6,  offset: 40,  era: "modern" },
-  { src: vr,         alt: "AR Glasses", side: "right", top: "265vh", size: 220, speed: -1100, rotate: -4, offset: -30, era: "modern" },
-  { src: laptop,     alt: "Laptop",     side: "left",  top: "285vh", size: 230, speed: -950,  rotate: 4,  offset: -40, era: "modern" },
-  { src: drone,      alt: "Drone",      side: "right", top: "305vh", size: 210, speed: -1200, rotate: -10, offset: 20, era: "modern" },
+  // MODERN — lower in the page
+  { src: smartphone, alt: "Smartphone", side: "left",  top: "200vh", size: 170, speed: -900,  rotate: -8, offset: 20, era: "modern" },
+  { src: earbuds,    alt: "Earbuds",    side: "right", top: "220vh", size: 160, speed: -1000, rotate: 12, offset: 30, era: "modern" },
+  { src: smartwatch, alt: "Smartwatch", side: "left",  top: "245vh", size: 150, speed: -800,  rotate: 6,  offset: 40, era: "modern" },
+  { src: vr,         alt: "AR Glasses", side: "right", top: "265vh", size: 180, speed: -1100, rotate: -4, offset: 20, era: "modern" },
+  { src: laptop,     alt: "Laptop",     side: "left",  top: "285vh", size: 190, speed: -950,  rotate: 4,  offset: 10, era: "modern" },
+  { src: drone,      alt: "Drone",      side: "right", top: "305vh", size: 170, speed: -1200, rotate: -10, offset: 20, era: "modern" },
 ];
 
 const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> }) => {
