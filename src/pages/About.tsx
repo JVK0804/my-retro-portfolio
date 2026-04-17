@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollFadeSection from "@/components/ScrollFadeSection";
 import StickyChapters from "@/components/StickyChapters";
+import CitiesJourney from "@/components/CitiesJourney";
 
 /* ───── Main About Page ───── */
 const About = () => {
@@ -114,6 +115,9 @@ const About = () => {
           </div>
         </section>
       </ScrollFadeSection>
+
+      {/* ===== CITIES — Zigzag floating portrait journey ===== */}
+      <CitiesJourney />
 
       {/* ===== WHERE I'VE BEEN — Quick Stats ===== */}
       <ScrollFadeSection>
