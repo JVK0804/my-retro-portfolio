@@ -116,6 +116,9 @@ const About = () => {
         </section>
       </ScrollFadeSection>
 
+      {/* ===== CITIES — Zigzag floating portrait journey ===== */}
+      <CitiesJourney />
+
       {/* ===== WHERE I'VE BEEN — Quick Stats ===== */}
       <ScrollFadeSection>
         <section className="py-16 px-6 border-y border-border/50">
