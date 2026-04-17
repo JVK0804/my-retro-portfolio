@@ -1,188 +1,16 @@
-import { useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Briefcase, Camera } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollFadeSection from "@/components/ScrollFadeSection";
-import eraCassette from "@/assets/era-cassette.jpg";
-import eraCd from "@/assets/era-cd.jpg";
-import eraMp3 from "@/assets/era-mp3.jpg";
-import eraStreaming from "@/assets/era-streaming.jpg";
-
-const chapters = [
-  {
-    era: "Chapter I — Analog",
-    title: "The Cassette",
-    year: "1990s",
-    icon: "📼",
-    image: eraCassette,
-    text: "Growing up rewinding tapes taught me patience with process. The tactile click of a play button, the hiss before the music — these analog rituals shaped how I think about micro-interactions today. Every interface should have that moment of anticipation.",
-  },
-  {
-    era: "Chapter II — Digital Dawn",
-    title: "The Compact Disc",
-    year: "2000s",
-    icon: "💿",
-    image: eraCd,
-    text: "CDs introduced perfection — skip-free, crystal clear. But they also introduced fragility. I learned that polish without resilience is meaningless. My design systems are built to be both precise and unbreakable.",
-  },
-  {
-    era: "Chapter III — Portable",
-    title: "The MP3 Player",
-    year: "2005–2012",
-    icon: "🎵",
-    image: eraMp3,
-    text: "1,000 songs in your pocket changed everything. Compression forced choices — what's essential? This era taught me ruthless prioritization in design. Every pixel must earn its place.",
-  },
-  {
-    era: "Chapter IV — Cloud",
-    title: "Streaming",
-    year: "2012–Present",
-    icon: "☁️",
-    image: eraStreaming,
-    text: "Now everything is everywhere, instantly. The challenge shifted from access to attention. As a Product Designer & Design Engineer, I design for a world where the medium is invisible — only the experience remains.",
-  },
-];
-
-/* ───── Chapter block ───── */
-const ChapterBlock = ({
-  chapter,
-  index,
-}: {
-  chapter: (typeof chapters)[0];
-  index: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const imageBlur = useTransform(scrollYProgress, [0.5, 0.8], [0, 12]);
-  const textY = useTransform(scrollYProgress, [0.2, 0.5], [60, 0]);
-  const textOpacity = useTransform(scrollYProgress, [0.2, 0.45], [0, 1]);
-
-  const isEven = index % 2 === 0;
-
-  return (
-    <div
-      ref={ref}
-      className="relative min-h-[100vh] flex items-center justify-center px-6"
-    >
-      <motion.div className="absolute inset-0 z-0" style={{ opacity: imageOpacity }}>
-        <motion.img
-          src={chapter.image}
-          alt={chapter.title}
-          className="w-full h-full object-cover"
-          style={{ filter: useTransform(imageBlur, (v) => `blur(${v}px)`) }}
-          loading={index === 0 ? "eager" : "lazy"}
-          width={1280}
-          height={720}
-        />
-        <div className="absolute inset-0 bg-background/70" />
-      </motion.div>
-
-      <motion.div
-        className={`relative z-10 max-w-2xl ${isEven ? "md:mr-auto md:ml-24" : "md:ml-auto md:mr-24"}`}
-        style={{ y: textY, opacity: textOpacity }}
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl">{chapter.icon}</span>
-          <p className="font-heading text-xs text-primary tracking-widest uppercase">
-            {chapter.era} · {chapter.year}
-          </p>
-        </div>
-        <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-          {chapter.title}
-        </h2>
-        <p className="font-body text-lg text-foreground/90 leading-relaxed">
-          {chapter.text}
-        </p>
-      </motion.div>
-    </div>
-  );
-};
-
-
-const ScrollTimeline = () => {
-  const { scrollYProgress } = useScroll();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const chapterStart = 0.18;
-    const chapterEnd = 0.82;
-    setVisible(v >= chapterStart - 0.05 && v <= chapterEnd + 0.05);
-    const range = chapterEnd - chapterStart;
-    const normalized = Math.max(0, Math.min(1, (v - chapterStart) / range));
-    const idx = Math.min(chapters.length - 1, Math.floor(normalized * chapters.length));
-    setActiveIndex(idx);
-  });
-
-  const lineHeight = useTransform(scrollYProgress, [0.18, 0.82], ["0%", "100%"]);
-
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.4 }}
-          className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden pointer-events-none md:flex flex-col items-center"
-        >
-          <div className="relative flex flex-col items-center gap-6">
-            {/* Track line */}
-            <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1px] bg-border/30" />
-            <motion.div
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] bg-primary origin-top"
-              style={{ height: lineHeight }}
-            />
-
-            {/* Nodes */}
-            {chapters.map((ch, i) => (
-              <div key={ch.title} className="relative z-10 flex items-center gap-3">
-                <motion.div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm border transition-all duration-500 ${
-                    i <= activeIndex
-                      ? "border-primary bg-primary/15 shadow-[0_0_12px_hsl(var(--primary)/0.25)]"
-                      : "border-border/60 bg-background/60"
-                  }`}
-                  animate={{ scale: i === activeIndex ? 1.15 : 1 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <span className="text-xs">{ch.icon}</span>
-                </motion.div>
-                <AnimatePresence>
-                  {i === activeIndex && (
-                    <motion.span
-                      initial={{ opacity: 0, x: -8 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -8 }}
-                      className="font-heading text-[9px] tracking-widest uppercase text-primary whitespace-nowrap"
-                    >
-                      {ch.year}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+import StickyChapters from "@/components/StickyChapters";
 
 /* ───── Main About Page ───── */
 const About = () => {
   return (
     <div className="noise-overlay min-h-screen bg-background">
       <Navbar />
-      <ScrollTimeline />
 
       {/* ===== HERO INTRO ===== */}
       <ScrollFadeSection>
@@ -325,13 +153,8 @@ const About = () => {
         </section>
       </ScrollFadeSection>
 
-      {/* ===== CHAPTERS — Era Journey ===== */}
-      <section className="relative">
-        <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-border/30 -translate-x-1/2 hidden md:block" />
-        {chapters.map((chapter, i) => (
-          <ChapterBlock key={chapter.title} chapter={chapter} index={i} />
-        ))}
-      </section>
+      {/* ===== STICKY CHAPTERS — Era Journey ===== */}
+      <StickyChapters />
 
       {/* ===== PHOTOGRAPHY SECTION WITH CTA ===== */}
       <ScrollFadeSection>
