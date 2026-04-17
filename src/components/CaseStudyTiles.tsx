@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 import caseStudyPrivacy from "@/assets/case-study-privacy.jpg";
 import caseStudyPhotography from "@/assets/case-study-photography.jpg";
@@ -13,6 +14,7 @@ const caseStudies = [
     impact: "20% increase in user engagement",
     readTime: "6 min Read",
     image: caseStudyPrivacy,
+    href: "/work/slack",
   },
   {
     title: "AI Powered features to learn Mobile Photography",
@@ -22,6 +24,7 @@ const caseStudies = [
     impact: "62% improved interaction · 35% less onboarding friction",
     readTime: "5 min Read",
     image: caseStudyPhotography,
+    href: "#work",
   },
   {
     title: "Collaboration That Scales Trust (NDA)",
@@ -31,6 +34,7 @@ const caseStudies = [
     impact: "Reduced development time by 35%",
     readTime: "4 min Read",
     image: caseStudyDesignSystem,
+    href: "#work",
   },
 ];
 
@@ -56,59 +60,77 @@ const CaseStudyTiles = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {caseStudies.map((study, i) => (
-            <motion.article
-              key={study.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-card flex flex-col justify-between min-h-[460px] group cursor-pointer overflow-hidden"
-              onMouseEnter={() => play("hover")}
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={study.image}
-                  alt={study.subtitle}
-                  loading="lazy"
-                  width={800}
-                  height={512}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80" />
-              </div>
-              <div className="p-7 pt-4 flex flex-col flex-1 justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <p className="font-heading text-[10px] text-primary tracking-widest uppercase">
-                      {study.subtitle}
+          {caseStudies.map((study, i) => {
+            const isInternal = study.href.startsWith("/");
+            const cardInner = (
+              <>
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={study.image}
+                    alt={study.subtitle}
+                    loading="lazy"
+                    width={800}
+                    height={512}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80" />
+                </div>
+                <div className="p-7 pt-4 flex flex-col flex-1 justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <p className="font-heading text-[10px] text-primary tracking-widest uppercase">
+                        {study.subtitle}
+                      </p>
+                      <span className="font-body text-[10px] text-foreground/40">⏱ {study.readTime}</span>
+                    </div>
+                    <h3 className="mono-heading text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-snug">
+                      {study.title}
+                    </h3>
+                    <p className="font-body text-foreground/60 text-sm leading-relaxed">
+                      {study.description}
                     </p>
-                    <span className="font-body text-[10px] text-foreground/40">⏱ {study.readTime}</span>
                   </div>
-                  <h3 className="mono-heading text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-snug">
-                    {study.title}
-                  </h3>
-                  <p className="font-body text-foreground/60 text-sm leading-relaxed">
-                    {study.description}
-                  </p>
-                </div>
-                <div>
-                  <div className="flex flex-wrap gap-2 mt-6">
-                    {study.tags.map((tag) => (
-                      <span key={tag} className="retro-tag">
-                        {tag}
-                      </span>
-                    ))}
+                  <div>
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {study.tags.map((tag) => (
+                        <span key={tag} className="retro-tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="retro-divider w-full mt-4 mb-2" />
+                    <p className="font-body text-[11px]">
+                      <span className="text-foreground/50 mr-2">IMPACT</span>
+                      <span className="text-primary font-medium">{study.impact}</span>
+                    </p>
                   </div>
-                  <div className="retro-divider w-full mt-4 mb-2" />
-                  <p className="font-body text-[11px]">
-                    <span className="text-foreground/50 mr-2">IMPACT</span>
-                    <span className="text-primary font-medium">{study.impact}</span>
-                  </p>
                 </div>
-              </div>
-            </motion.article>
-          ))}
+              </>
+            );
+
+            const wrapperClass = "glass-card flex flex-col justify-between min-h-[460px] group cursor-pointer overflow-hidden";
+
+            return (
+              <motion.div
+                key={study.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                onMouseEnter={() => play("hover")}
+              >
+                {isInternal ? (
+                  <Link to={study.href} onClick={() => play("click")} className={wrapperClass}>
+                    {cardInner}
+                  </Link>
+                ) : (
+                  <a href={study.href} className={wrapperClass}>
+                    {cardInner}
+                  </a>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div
