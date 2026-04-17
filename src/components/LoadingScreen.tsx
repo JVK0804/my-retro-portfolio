@@ -85,6 +85,9 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
               <h1 className="heading-font text-5xl md:text-7xl font-bold tracking-[0.3em] text-foreground">
                 JVK
               </h1>
+              <p className="font-body text-[11px] md:text-xs tracking-[0.35em] uppercase text-foreground/60 mt-3 text-center">
+                Kaushik <span className="text-foreground/40">aka</span> JVK
+              </p>
             </motion.div>
 
             {/* Subtitle */}
