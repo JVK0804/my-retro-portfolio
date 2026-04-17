@@ -1,9 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import illusCassette from "@/assets/illus-cassette.png";
-import illusCd from "@/assets/illus-cd.png";
-import illusMp3 from "@/assets/illus-mp3.png";
-import illusStreaming from "@/assets/illus-streaming.png";
+import MorphIllustration from "@/components/MorphIllustration";
 
 export type Chapter = {
   era: string;
@@ -11,7 +8,6 @@ export type Chapter = {
   year: string;
   icon: string;
   text: string;
-  illus: string;
 };
 
 export const stickyChapters: Chapter[] = [
@@ -20,7 +16,6 @@ export const stickyChapters: Chapter[] = [
     title: "The Cassette",
     year: "1990s",
     icon: "📼",
-    illus: illusCassette,
     text: "Growing up rewinding tapes taught me patience with process. The tactile click of a play button, the hiss before the music — these analog rituals shaped how I think about micro-interactions today.",
   },
   {
@@ -28,7 +23,6 @@ export const stickyChapters: Chapter[] = [
     title: "The Compact Disc",
     year: "2000s",
     icon: "💿",
-    illus: illusCd,
     text: "CDs introduced perfection — skip-free, crystal clear. But also fragility. I learned that polish without resilience is meaningless. My design systems are built to be both precise and unbreakable.",
   },
   {
@@ -36,7 +30,6 @@ export const stickyChapters: Chapter[] = [
     title: "The MP3 Player",
     year: "2005–2012",
     icon: "🎵",
-    illus: illusMp3,
     text: "1,000 songs in your pocket changed everything. Compression forced choices — what's essential? This era taught me ruthless prioritization. Every pixel must earn its place.",
   },
   {
@@ -44,13 +37,12 @@ export const stickyChapters: Chapter[] = [
     title: "Streaming",
     year: "2012–Now",
     icon: "☁️",
-    illus: illusStreaming,
     text: "Now everything is everywhere, instantly. The challenge shifted from access to attention. I design for a world where the medium is invisible — only the experience remains.",
   },
 ];
 
-/* Each chapter slot fades its text + illustration in/out based on scroll progress */
-const ChapterSlot = ({
+/* Text panel for each chapter — only the copy fades, illustration morphs continuously */
+const ChapterText = ({
   chapter,
   index,
   total,
@@ -66,80 +58,33 @@ const ChapterSlot = ({
   const end = start + segment;
   const mid = start + segment / 2;
 
-  // Text: fade + slide in, hold, fade + slide out
-  const textOpacity = useTransform(
+  const opacity = useTransform(
     progress,
     [start, start + segment * 0.2, end - segment * 0.2, end],
     [0, 1, 1, 0]
   );
-  const textY = useTransform(
-    progress,
-    [start, mid, end],
-    [40, 0, -40]
-  );
-
-  // Illustration: rotate + scale + fade morph
-  const illusOpacity = useTransform(
-    progress,
-    [start, start + segment * 0.15, end - segment * 0.15, end],
-    [0, 1, 1, 0]
-  );
-  const illusRotate = useTransform(progress, [start, end], [-25, 25]);
-  const illusScale = useTransform(
-    progress,
-    [start, mid, end],
-    [0.7, 1, 0.7]
-  );
-  const illusBlur = useTransform(
-    progress,
-    [start, start + segment * 0.15, end - segment * 0.15, end],
-    [12, 0, 0, 12]
-  );
-  const illusFilter = useTransform(illusBlur, (v) => `blur(${v}px)`);
+  const y = useTransform(progress, [start, mid, end], [40, 0, -40]);
 
   return (
-    <>
-      {/* Text panel — left side */}
-      <motion.div
-        className="absolute inset-y-0 left-0 w-full md:w-1/2 flex items-center justify-center px-6 md:px-16"
-        style={{ opacity: textOpacity, y: textY }}
-      >
-        <div className="max-w-md">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl">{chapter.icon}</span>
-            <p className="font-heading text-xs text-primary tracking-widest uppercase">
-              {chapter.era} · {chapter.year}
-            </p>
-          </div>
-          <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-            {chapter.title}
-          </h2>
-          <p className="font-body text-base md:text-lg text-foreground/80 leading-relaxed">
-            {chapter.text}
+    <motion.div
+      className="absolute inset-y-0 left-0 w-full md:w-1/2 flex items-center justify-center px-6 md:px-16"
+      style={{ opacity, y }}
+    >
+      <div className="max-w-md">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-3xl">{chapter.icon}</span>
+          <p className="font-heading text-xs text-primary tracking-widest uppercase">
+            {chapter.era} · {chapter.year}
           </p>
         </div>
-      </motion.div>
-
-      {/* Illustration — right side, morphs */}
-      <motion.div
-        className="absolute inset-y-0 right-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none"
-        style={{
-          opacity: illusOpacity,
-          rotate: illusRotate,
-          scale: illusScale,
-          filter: illusFilter,
-        }}
-      >
-        <img
-          src={chapter.illus}
-          alt={chapter.title}
-          width={1024}
-          height={1024}
-          loading="lazy"
-          className="w-[60vw] max-w-[480px] h-auto dark:invert opacity-90"
-        />
-      </motion.div>
-    </>
+        <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
+          {chapter.title}
+        </h2>
+        <p className="font-body text-base md:text-lg text-foreground/80 leading-relaxed">
+          {chapter.text}
+        </p>
+      </div>
+    </motion.div>
   );
 };
 
@@ -150,8 +95,9 @@ const StickyChapters = () => {
     offset: ["start start", "end end"],
   });
 
-  // Progress bar fill
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  // Subtle continuous rotation tied to scroll for extra life
+  const illusRotate = useTransform(scrollYProgress, [0, 1], [-12, 12]);
 
   return (
     <section
@@ -161,7 +107,7 @@ const StickyChapters = () => {
       aria-label="The chaptered journey through music tech eras"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Backdrop subtle grid */}
+        {/* Backdrop */}
         <div className="absolute inset-0 bg-background" />
         <div
           className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -172,10 +118,15 @@ const StickyChapters = () => {
           }}
         />
 
-        {/* Chapter slots stacked & cross-faded */}
+        {/* Single morphing illustration on the right — persists through all chapters */}
+        <div className="absolute inset-y-0 right-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none">
+          <MorphIllustration progress={scrollYProgress} rotate={illusRotate} />
+        </div>
+
+        {/* Text slots cross-fade on the left */}
         <div className="relative h-full w-full">
           {stickyChapters.map((ch, i) => (
-            <ChapterSlot
+            <ChapterText
               key={ch.title}
               chapter={ch}
               index={i}
@@ -185,7 +136,7 @@ const StickyChapters = () => {
           ))}
         </div>
 
-        {/* Bottom progress bar + chapter dots */}
+        {/* Progress bar + year markers */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 w-[min(420px,80vw)]">
           <div className="flex items-center gap-2 font-heading text-[10px] tracking-widest uppercase text-foreground/50">
             <span>Scroll to advance</span>
@@ -198,7 +149,7 @@ const StickyChapters = () => {
             />
           </div>
           <div className="flex items-center justify-between w-full">
-            {stickyChapters.map((ch, i) => (
+            {stickyChapters.map((ch) => (
               <span
                 key={ch.title}
                 className="font-heading text-[10px] text-foreground/40 tracking-wider"
