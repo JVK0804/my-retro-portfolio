@@ -183,8 +183,7 @@ const CitiesJourney = () => {
           </p>
         </div>
 
-        {/* Floating zigzag portrait */}
-        <FloatingPortrait progress={scrollYProgress} />
+        {/* Floating zigzag portrait — temporarily hidden */}
 
         {/* City panels cross-fade */}
         <div className="relative h-full w-full">
