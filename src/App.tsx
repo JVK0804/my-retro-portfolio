@@ -7,6 +7,7 @@ import { SoundProvider } from "@/contexts/SoundContext";
 import Index from "./pages/Index.tsx";
 import About from "./pages/About.tsx";
 import Photography from "./pages/Photography.tsx";
+import SlackCaseStudy from "./pages/SlackCaseStudy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
             <Route path="/photography" element={<Photography />} />
+            <Route path="/work/slack" element={<SlackCaseStudy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
