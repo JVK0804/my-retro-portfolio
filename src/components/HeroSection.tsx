@@ -7,12 +7,18 @@ const WELCOME_TEXT = "Kaushik here ✦ Welcome to my internet corner";
 
 const TypingWelcome = () => {
   const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    if (count >= WELCOME_TEXT.length) return;
-    const t = setTimeout(() => setCount((c) => c + 1), 55);
+    const t = setTimeout(() => setStarted(true), 1000);
     return () => clearTimeout(t);
-  }, [count]);
+  }, []);
+
+  useEffect(() => {
+    if (!started || count >= WELCOME_TEXT.length) return;
+    const t = setTimeout(() => setCount((c) => c + 1), 32);
+    return () => clearTimeout(t);
+  }, [count, started]);
 
   const shown = WELCOME_TEXT.slice(0, count);
   const isDone = count >= WELCOME_TEXT.length;
