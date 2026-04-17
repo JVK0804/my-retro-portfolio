@@ -19,7 +19,7 @@ const HeroSection = () => {
         transition={{ delay: 0.2, duration: 0.6 }}
         className="font-body text-foreground/70 text-sm mb-8 tracking-wide"
       >
-        <span className="teal-shimmer font-bold">Kaushik</span> here ✦ design engineer, mixtape maker
+        <span className="teal-shimmer font-bold">Kaushik</span> here ✦ design engineer, photographer, dancer, tech geek
       </motion.p>
 
       <motion.h1
