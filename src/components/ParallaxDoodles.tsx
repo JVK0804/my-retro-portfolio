@@ -47,21 +47,8 @@ const doodles: Doodle[] = [
 ];
 
 const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> }) => {
+  // Modern doodles enter slightly later via initial offset, but never fade out.
   const y = useTransform(scrollY, [0, 3000], [0, d.speed]);
-
-  // Compute fade based on era — retro fades out as you scroll past ~1800px,
-  // modern fades in starting around ~1400px. Smooth crossfade in the middle.
-  const opacity = useTransform(scrollY, (v) => {
-    if (d.era === "retro") {
-      if (v < 1400) return 0.4;
-      if (v > 2200) return 0;
-      return 0.4 * (1 - (v - 1400) / 800);
-    } else {
-      if (v < 1400) return 0;
-      if (v > 2200) return 0.4;
-      return 0.4 * ((v - 1400) / 800);
-    }
-  });
 
   return (
     <motion.img
@@ -70,15 +57,17 @@ const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> })
       width={512}
       height={512}
       loading="lazy"
+      decoding="async"
       aria-hidden="true"
       style={{
         y,
-        opacity,
         rotate: d.rotate,
         top: d.top,
         width: d.size,
         height: d.size,
+        opacity: 0.4,
         [d.side]: d.offset,
+        willChange: "transform",
       }}
       className="absolute dark:invert pointer-events-none select-none"
     />
