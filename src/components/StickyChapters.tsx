@@ -56,14 +56,17 @@ const ChapterText = ({
   const segment = 1 / total;
   const start = index * segment;
   const end = start + segment;
-  const mid = start + segment / 2;
+  const fadeInStart = Math.max(0, start - segment * 0.12);
+  const fadeInEnd = start + segment * 0.14;
+  const fadeOutStart = end - segment * 0.14;
+  const fadeOutEnd = Math.min(1, end + segment * 0.12);
 
   const opacity = useTransform(
     progress,
-    [start, start + segment * 0.2, end - segment * 0.2, end],
+    [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
     [0, 1, 1, 0]
   );
-  const y = useTransform(progress, [start, mid, end], [40, 0, -40]);
+  const y = useTransform(progress, [fadeInStart, start, end, fadeOutEnd], [18, 0, 0, -18]);
 
   return (
     <motion.div

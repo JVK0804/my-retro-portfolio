@@ -63,7 +63,7 @@ const useMorph = (progress: MotionValue<number>, paths: string[]) => {
   const total = paths.length; // number of chapters (e.g. 4)
   const chapterSize = 1 / total;
   // Transition window centered on each boundary between chapters.
-  const transitionHalf = chapterSize * 0.2; // 20% of a chapter on each side
+  const transitionHalf = chapterSize * 0.12; // tighter window so morph completes while text is still present
 
   return useTransform(progress, (v) => {
     const clamped = Math.max(0, Math.min(0.9999, v));
