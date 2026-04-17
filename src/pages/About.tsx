@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollFadeSection from "@/components/ScrollFadeSection";
 import StickyChapters from "@/components/StickyChapters";
+import CitiesJourney from "@/components/CitiesJourney";
 
 /* ───── Main About Page ───── */
 const About = () => {
