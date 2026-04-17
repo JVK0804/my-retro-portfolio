@@ -17,43 +17,35 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        className="font-body text-foreground/60 text-base mb-6 tracking-wide"
+        className="font-body text-foreground/70 text-sm mb-8 tracking-wide"
       >
-        Hey! I'm <span className="teal-shimmer font-bold">Kaushik</span> — welcome to my corner of the internet
+        <span className="teal-shimmer font-bold">Kaushik</span> here ✦ design engineer, mixtape maker
       </motion.p>
 
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl mb-2"
+        className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl mb-2"
       >
-        Designing Simple,
+        Simple, scalable,
       </motion.h1>
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl mb-2"
+        className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl"
       >
-        Scalable,
-      </motion.h1>
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-center max-w-4xl"
-      >
-        & <span className="teal-shimmer">Human Experiences</span>
+        & <span className="teal-shimmer">human.</span>
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="font-body text-foreground/50 text-sm mt-14 mb-6 tracking-widest uppercase"
+        className="font-body text-foreground/50 text-[11px] mt-12 mb-5 tracking-[0.25em] uppercase"
       >
-        Previously designed for
+        Shipped at
       </motion.p>
 
       <motion.div

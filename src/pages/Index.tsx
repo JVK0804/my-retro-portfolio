@@ -7,19 +7,22 @@ import PhilosophySection from "@/components/PhilosophySection";
 
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
+import ParallaxDoodles from "@/components/ParallaxDoodles";
 
 const Index = () => {
   return (
     <LoadingScreen>
-      <div className="noise-overlay min-h-screen bg-background">
-        <Navbar />
-        <HeroSection />
-        <StatsBar />
-        <CaseStudyTiles />
-        <TestimonialTicker />
-        <PhilosophySection />
-        
-        <Footer />
+      <div className="noise-overlay min-h-screen bg-background relative overflow-hidden">
+        <ParallaxDoodles />
+        <div className="relative z-10">
+          <Navbar />
+          <HeroSection />
+          <StatsBar />
+          <CaseStudyTiles />
+          <TestimonialTicker />
+          <PhilosophySection />
+          <Footer />
+        </div>
       </div>
     </LoadingScreen>
   );
