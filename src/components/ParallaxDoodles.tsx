@@ -27,9 +27,9 @@ const doodles: Doodle[] = [
   { src: boombox,  alt: "Boombox",  side: "right", top: "170vh", size: 250, speed: -1100, rotate: 8,  offset: 20 },
   { src: cassette, alt: "Cassette", side: "left",  top: "220vh", size: 180, speed: -700,  rotate: 12, offset: 40 },
   { src: gameboy,  alt: "Game Boy", side: "right", top: "250vh", size: 200, speed: -1000, rotate: -5, offset: -30 },
-  { src: camera,   alt: "Camera",   side: "left",  top: "45vh",  size: 220, speed: -950,  rotate: -14, offset: -10 },
-  { src: camera,   alt: "Camera",   side: "right", top: "115vh", size: 180, speed: -800,  rotate: 18,  offset: 50 },
-  { src: camera,   alt: "Camera",   side: "left",  top: "195vh", size: 200, speed: -1050, rotate: 8,   offset: -20 },
+  { src: camera,   alt: "Camera",   side: "right", top: "125vh", size: 170, speed: -800,  rotate: 18,  offset: 60 },
+  { src: camera,   alt: "Camera",   side: "left",  top: "205vh", size: 190, speed: -1050, rotate: 8,   offset: -30 },
+  { src: camera,   alt: "Camera",   side: "right", top: "275vh", size: 180, speed: -900,  rotate: -12, offset: 40 },
 ];
 
 const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> }) => {
