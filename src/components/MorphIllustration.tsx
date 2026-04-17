@@ -50,17 +50,50 @@ const ACCENTS = [
 const useMorph = (progress: MotionValue<number>, paths: string[]) => {
   // progress is 0..1 across the whole scroll. Slice into segments between paths.
   const segments = paths.length - 1;
-  const inputs = paths.map((_, i) => i / segments);
   // Build pairwise interpolators
   const interps = paths.slice(0, -1).map((p, i) =>
     interpolate(p, paths[i + 1], { maxSegmentLength: 4 })
   );
 
+  // Each chapter occupies 1/total of scroll. Within a chapter, text fades in
+  // during the first 20%, holds, then fades out during the last 20%.
+  // We want the illustration to HOLD on its shape while text is fully visible,
+  // and morph to the next shape during the transition window between chapters
+  // (i.e. the trailing 20% of chapter N + leading 20% of chapter N+1).
+  const total = paths.length; // number of chapters (e.g. 4)
+  const chapterSize = 1 / total;
+  // Transition window centered on each boundary between chapters.
+  const transitionHalf = chapterSize * 0.2; // 20% of a chapter on each side
+
   return useTransform(progress, (v) => {
     const clamped = Math.max(0, Math.min(0.9999, v));
-    const idx = Math.min(segments - 1, Math.floor(clamped * segments));
-    const local = clamped * segments - idx;
-    return interps[idx](local);
+    // For each segment i (0..segments-1), the boundary sits at (i+1)/total.
+    // Find which segment we're in based on which boundary we're closest to / past.
+    let idx = 0;
+    let local = 0;
+    for (let i = 0; i < segments; i++) {
+      const boundary = (i + 1) * chapterSize;
+      const tStart = boundary - transitionHalf;
+      const tEnd = boundary + transitionHalf;
+      if (clamped < tStart) {
+        // Still fully on shape i
+        idx = i;
+        local = 0;
+        break;
+      } else if (clamped <= tEnd) {
+        // Inside the transition window between shape i and i+1
+        idx = i;
+        local = (clamped - tStart) / (tEnd - tStart);
+        break;
+      } else {
+        // Past this boundary — default to fully on next shape, keep looping
+        idx = i;
+        local = 1;
+      }
+    }
+    // Smoothstep easing for a softer morph
+    const eased = local * local * (3 - 2 * local);
+    return interps[idx](eased);
   });
 };
 
