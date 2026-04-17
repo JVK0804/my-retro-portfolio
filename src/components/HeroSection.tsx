@@ -28,7 +28,7 @@ const HeroSection = () => {
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl mb-2"
       >
-        Simple, scalable,
+        Designing the space
       </motion.h1>
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
@@ -36,7 +36,7 @@ const HeroSection = () => {
         transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl"
       >
-        & <span className="teal-shimmer">human.</span>
+        between <span className="teal-shimmer">humans & machines.</span>
       </motion.h1>
 
       <motion.p
