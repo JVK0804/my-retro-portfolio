@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail, Calendar } from "lucide-react";
 const socialLinks = [
   { icon: Mail, href: "mailto:kaushik.jv6@gmail.com", label: "Email" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/venkata-kaushik-jayanthi-822247124/", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com/KaushikJV/MyBoltProject", label: "GitHub" },
+  { icon: Github, href: "https://github.com/JVK0804", label: "GitHub" },
 ];
 
 const Footer = () => {
