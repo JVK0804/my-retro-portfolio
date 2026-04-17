@@ -10,30 +10,30 @@ type Doodle = {
   src: string;
   alt: string;
   side: "left" | "right";
-  top: string; // vh-based positioning
-  size: number; // px
-  speed: number; // negative = up faster, positive = up slower
+  top: string;
+  size: number;
+  speed: number; // px traveled across full scroll
   rotate: number;
-  offset: number; // px from edge
+  offset: number; // px from edge (can be negative to bleed off-screen)
 };
 
 const doodles: Doodle[] = [
-  { src: crt,      alt: "CRT monitor",   side: "left",  top: "12vh",  size: 140, speed: -180, rotate: -6, offset: 24 },
-  { src: cassette, alt: "Cassette tape", side: "right", top: "28vh",  size: 120, speed: -320, rotate: 8,  offset: 32 },
-  { src: gameboy,  alt: "Game Boy",      side: "left",  top: "70vh",  size: 130, speed: -240, rotate: 4,  offset: 40 },
-  { src: vhs,      alt: "VHS tape",      side: "right", top: "95vh",  size: 150, speed: -420, rotate: -5, offset: 20 },
-  { src: phone,    alt: "Rotary phone",  side: "left",  top: "150vh", size: 140, speed: -300, rotate: -8, offset: 28 },
-  { src: boombox,  alt: "Boombox",       side: "right", top: "180vh", size: 160, speed: -380, rotate: 6,  offset: 36 },
-  { src: cassette, alt: "Cassette tape", side: "left",  top: "230vh", size: 110, speed: -260, rotate: 10, offset: 44 },
-  { src: gameboy,  alt: "Game Boy",      side: "right", top: "260vh", size: 125, speed: -340, rotate: -4, offset: 30 },
+  { src: crt,      alt: "CRT",      side: "left",  top: "8vh",   size: 220, speed: -600,  rotate: -8, offset: -30 },
+  { src: cassette, alt: "Cassette", side: "right", top: "22vh",  size: 190, speed: -900,  rotate: 10, offset: -20 },
+  { src: gameboy,  alt: "Game Boy", side: "left",  top: "65vh",  size: 200, speed: -750,  rotate: 6,  offset: 30 },
+  { src: vhs,      alt: "VHS",      side: "right", top: "90vh",  size: 230, speed: -1200, rotate: -6, offset: -40 },
+  { src: phone,    alt: "Phone",    side: "left",  top: "140vh", size: 210, speed: -850,  rotate: -10, offset: -20 },
+  { src: boombox,  alt: "Boombox",  side: "right", top: "170vh", size: 250, speed: -1100, rotate: 8,  offset: 20 },
+  { src: cassette, alt: "Cassette", side: "left",  top: "220vh", size: 180, speed: -700,  rotate: 12, offset: 40 },
+  { src: gameboy,  alt: "Game Boy", side: "right", top: "250vh", size: 200, speed: -1000, rotate: -5, offset: -30 },
 ];
 
 const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> }) => {
-  const y = useTransform(scrollY, [0, 2000], [0, d.speed]);
+  const y = useTransform(scrollY, [0, 3000], [0, d.speed]);
   return (
     <motion.img
       src={d.src}
-      alt={d.alt}
+      alt=""
       width={512}
       height={512}
       loading="lazy"
@@ -46,7 +46,7 @@ const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> })
         height: d.size,
         [d.side]: d.offset,
       }}
-      className="absolute opacity-25 dark:opacity-30 dark:invert pointer-events-none select-none"
+      className="absolute opacity-40 dark:opacity-50 dark:invert pointer-events-none select-none"
     />
   );
 };
@@ -54,7 +54,7 @@ const DoodleItem = ({ d, scrollY }: { d: Doodle; scrollY: MotionValue<number> })
 const ParallaxDoodles = () => {
   const { scrollY } = useScroll();
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block z-0">
+    <div className="absolute inset-0 pointer-events-none hidden md:block z-0">
       {doodles.map((d, i) => (
         <DoodleItem key={i} d={d} scrollY={scrollY} />
       ))}
