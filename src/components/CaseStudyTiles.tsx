@@ -39,7 +39,7 @@ const CaseStudyTiles = () => {
 
   return (
     <section id="work" className="py-24 px-6">
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -55,7 +55,7 @@ const CaseStudyTiles = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-col gap-8">
           {caseStudies.map((study, i) => (
             <motion.article
               key={study.title}
@@ -63,10 +63,10 @@ const CaseStudyTiles = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-card flex flex-col justify-between min-h-[420px] group cursor-pointer overflow-hidden"
+              className="glass-card grid md:grid-cols-5 group cursor-pointer overflow-hidden"
               onMouseEnter={() => play("hover")}
             >
-              <div className="relative h-44 overflow-hidden">
+              <div className="relative md:col-span-2 h-56 md:h-auto min-h-[260px] overflow-hidden">
                 <img
                   src={study.image}
                   alt={study.subtitle}
@@ -75,9 +75,9 @@ const CaseStudyTiles = () => {
                   height={512}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/40 md:to-background/20" />
               </div>
-              <div className="p-8 pt-4 flex flex-col flex-1 justify-between">
+              <div className="md:col-span-3 p-8 flex flex-col justify-between gap-6">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
                     <p className="font-heading text-[10px] text-primary tracking-widest uppercase">
@@ -85,22 +85,22 @@ const CaseStudyTiles = () => {
                     </p>
                     <span className="font-body text-[10px] text-foreground/40">⏱ {study.readTime}</span>
                   </div>
-                  <h3 className="mono-heading text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-snug">
+                  <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-snug">
                     {study.title}
                   </h3>
-                  <p className="font-body text-foreground/60 text-sm leading-relaxed">
+                  <p className="font-body text-foreground/60 text-sm leading-relaxed max-w-xl">
                     {study.description}
                   </p>
                 </div>
                 <div>
-                  <div className="flex flex-wrap gap-2 mt-6">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {study.tags.map((tag) => (
                       <span key={tag} className="retro-tag">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <div className="retro-divider w-full mt-4 mb-2" />
+                  <div className="retro-divider w-full mb-2" />
                   <p className="font-body text-[11px]">
                     <span className="text-foreground/50 mr-2">IMPACT</span>
                     <span className="text-primary font-medium">{study.impact}</span>
@@ -110,6 +110,23 @@ const CaseStudyTiles = () => {
             </motion.article>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mt-14"
+        >
+          <a
+            href="#work"
+            onClick={() => play("click")}
+            onMouseEnter={() => play("hover")}
+            className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase cursor-pointer"
+          >
+            View all projects →
+          </a>
+        </motion.div>
       </div>
     </section>
   );
