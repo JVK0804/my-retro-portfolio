@@ -6,7 +6,7 @@ import caseStudyDesignSystem from "@/assets/case-study-designsystem.jpg";
 
 const caseStudies = [
   {
-    title: "Integrating AI Powered features to enhance data privacy.",
+    title: "Integrating AI Powered features in Slack, to enhance data privacy.",
     subtitle: "AI Design for Data Privacy",
     description: "Redesigned Slack's AI to make privacy feel human, empowering students to trust, learn, and take control of their data.",
     tags: ["AI", "Data Privacy", "UX Design"],
