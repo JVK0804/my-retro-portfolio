@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 import caseStudyPrivacy from "@/assets/case-study-privacy.jpg";
 import caseStudyPhotography from "@/assets/case-study-photography.jpg";
@@ -13,6 +14,7 @@ const caseStudies = [
     impact: "20% increase in user engagement",
     readTime: "6 min Read",
     image: caseStudyPrivacy,
+    href: "/work/slack",
   },
   {
     title: "AI Powered features to learn Mobile Photography",
@@ -22,6 +24,7 @@ const caseStudies = [
     impact: "62% improved interaction · 35% less onboarding friction",
     readTime: "5 min Read",
     image: caseStudyPhotography,
+    href: "#work",
   },
   {
     title: "Collaboration That Scales Trust (NDA)",
@@ -31,6 +34,7 @@ const caseStudies = [
     impact: "Reduced development time by 35%",
     readTime: "4 min Read",
     image: caseStudyDesignSystem,
+    href: "#work",
   },
 ];
 
