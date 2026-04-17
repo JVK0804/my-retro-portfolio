@@ -12,7 +12,7 @@ import ParallaxDoodles from "@/components/ParallaxDoodles";
 const Index = () => {
   return (
     <LoadingScreen>
-      <div className="noise-overlay min-h-screen bg-background relative overflow-hidden">
+      <div className="noise-overlay min-h-screen bg-background relative">
         <ParallaxDoodles />
         <div className="relative z-10">
           <Navbar />
