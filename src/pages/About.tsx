@@ -51,72 +51,55 @@ const About = () => {
         </section>
       </ScrollFadeSection>
 
-      {/* ===== WHO AM I — Introduction ===== */}
+      {/* ===== WHO I AM + WHERE I'M FROM — merged sticky journey ===== */}
       <ScrollFadeSection>
-        <section className="py-32 px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-5 gap-12 items-center">
-              {/* Photo placeholder */}
-              <motion.div
-                className="md:col-span-2"
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8 }}
-              >
-                <div className="aspect-[3/4] w-full bg-muted/50 border-2 border-border flex items-center justify-center relative overflow-hidden group">
-                  <div className="text-center text-muted-foreground/60 p-6">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
-                      <Camera size={24} className="text-muted-foreground/40" />
-                    </div>
-                    <p className="font-heading text-xs tracking-widest uppercase">Portrait Photo</p>
-                    <p className="font-body text-[10px] mt-1">Placeholder</p>
-                  </div>
-                  <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-primary/30" />
-                  <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-primary/30" />
-                  <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-primary/30" />
-                  <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-primary/30" />
-                </div>
-              </motion.div>
-
-              {/* Bio text */}
-              <motion.div
-                className="md:col-span-3"
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: 0.15 }}
-              >
-                <p className="font-heading text-xs text-primary mb-4 tracking-widest uppercase">
-                  Who Am I
-                </p>
-                <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground mb-6">
-                  Hey, I'm <span className="teal-shimmer">Kaushik JV</span>
-                </h2>
-                <div className="flex flex-wrap gap-4 mb-6">
-                  <span className="retro-tag inline-flex items-center gap-2">
-                    <Briefcase size={12} /> Product Designer & Design Engineer
-                  </span>
-                  <span className="retro-tag inline-flex items-center gap-2">
-                    <MapPin size={12} /> India → Bay Area
-                  </span>
-                </div>
-                <p className="font-body text-foreground/80 leading-relaxed mb-4">
-                  With 6+ years in the design trenches, I've shipped products that millions use daily — from enterprise platforms at Kyndryl and Health Catalyst to privacy-first AI features at scale.
-                </p>
-                <p className="font-body text-foreground/70 leading-relaxed mb-4">
-                  I sit at the intersection of design and engineering — fluent in Figma and code, equally at home pushing pixels or writing production React. I believe the best interfaces feel inevitable, like they couldn't have been designed any other way.
-                </p>
-                <p className="font-body text-foreground/60 leading-relaxed">
-                  When I'm not designing, you'll find me behind a camera lens, exploring cities, or diving into the latest in spatial computing and AI.
-                </p>
-              </motion.div>
-            </div>
+        <section className="pt-32 pb-12 px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="font-heading text-xs text-primary mb-4 tracking-widest uppercase"
+            >
+              Who I Am · Where I'm From
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mono-heading text-3xl md:text-5xl font-bold text-foreground mb-6"
+            >
+              Hey, I'm <span className="teal-shimmer">Kaushik JV</span>
+            </motion.h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="flex flex-wrap gap-3 justify-center mb-6"
+            >
+              <span className="retro-tag inline-flex items-center gap-2">
+                <Briefcase size={12} /> Product Designer & Design Engineer
+              </span>
+              <span className="retro-tag inline-flex items-center gap-2">
+                <MapPin size={12} /> India → Bay Area
+              </span>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="font-body text-foreground/70 leading-relaxed"
+            >
+              6+ years designing at the intersection of craft and code — shipping enterprise products at Deloitte for clients like Anthem, Cigna, and the Commonwealth of Massachusetts. Scroll to trace the three cities that shaped me.
+            </motion.p>
           </div>
         </section>
       </ScrollFadeSection>
 
-      {/* ===== CITIES — Zigzag floating portrait journey ===== */}
+      {/* Sticky cities journey */}
       <CitiesJourney />
 
       {/* ===== WHERE I'VE BEEN — Quick Stats ===== */}
