@@ -1,6 +1,42 @@
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useSound } from "@/contexts/SoundContext";
+
+const WELCOME_TEXT = "Kaushik here ✦ Welcome to my internet corner";
+
+const TypingWelcome = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (count >= WELCOME_TEXT.length) return;
+    const t = setTimeout(() => setCount((c) => c + 1), 55);
+    return () => clearTimeout(t);
+  }, [count]);
+
+  const shown = WELCOME_TEXT.slice(0, count);
+  const isDone = count >= WELCOME_TEXT.length;
+
+  return (
+    <motion.p
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.6 }}
+      className="font-mono text-foreground/70 text-sm mb-8 tracking-wide min-h-[1.5em]"
+      aria-label={WELCOME_TEXT}
+    >
+      <span className="text-primary mr-1">$</span>
+      <span className="teal-shimmer font-bold">{shown.split("✦")[0]}</span>
+      {shown.includes("✦") && <span>{"✦" + shown.split("✦")[1]}</span>}
+      <span
+        className={`inline-block w-[0.55ch] h-[1em] -mb-[0.15em] ml-[1px] bg-primary ${
+          isDone ? "animate-pulse" : ""
+        }`}
+        aria-hidden="true"
+      />
+    </motion.p>
+  );
+};
 
 const logos = [
   { name: "Slack", url: "https://framerusercontent.com/images/Y1BLUOFjSoTgGkUdTbXiGf240.png?width=1600&height=572" },
@@ -13,14 +49,7 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-        className="font-body text-foreground/70 text-sm mb-8 tracking-wide"
-      >
-        <span className="teal-shimmer font-bold">Kaushik</span> here ✦ design engineer, photographer, dancer, tech geek
-      </motion.p>
+      <TypingWelcome />
 
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
@@ -80,8 +109,12 @@ const HeroSection = () => {
         className="flex gap-4 mt-14"
       >
         <a
-          href="mailto:kaushikjv@example.com"
-          onClick={() => play("click")}
+          href="#letsconnect"
+          onClick={(e) => {
+            e.preventDefault();
+            play("click");
+            document.getElementById("letsconnect")?.scrollIntoView({ behavior: "smooth" });
+          }}
           onMouseEnter={() => play("hover")}
           className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase cursor-pointer"
         >
