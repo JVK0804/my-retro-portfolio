@@ -135,7 +135,7 @@ const CityPanel = ({
             width={512}
             height={512}
             loading="lazy"
-            className="mt-8 w-64 h-auto opacity-80 dark:invert mix-blend-multiply dark:mix-blend-screen md:hidden"
+            className="mt-8 w-64 h-auto opacity-80 dark:invert md:hidden"
           />
         </div>
 
@@ -148,7 +148,7 @@ const CityPanel = ({
             width={1024}
             height={1024}
             loading="lazy"
-            className="w-full max-w-xl h-auto opacity-40 dark:invert mix-blend-multiply dark:mix-blend-screen"
+            className="w-full max-w-xl h-auto opacity-50 dark:invert dark:opacity-70"
           />
         </div>
       </div>
