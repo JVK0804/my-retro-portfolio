@@ -45,35 +45,33 @@ const cities: City[] = [
   },
 ];
 
-/* Photo that floats in zigzag inside the right column — never overlaps text */
+/* Small portrait that floats in zigzag near the column gutter — never overlaps the landmark */
 const FloatingPortrait = ({ progress }: { progress: MotionValue<number> }) => {
-  // Zigzag confined to the right half of the screen
   const x = useTransform(
     progress,
     [0, 0.33, 0.66, 1],
-    ["-12%", "12%", "-10%", "10%"]
+    ["-8%", "8%", "-6%", "6%"]
   );
-  const scale = useTransform(progress, [0, 1], [1, 0.55]);
+  const scale = useTransform(progress, [0, 1], [1, 0.6]);
   const rotate = useTransform(progress, [0, 0.33, 0.66, 1], [-5, 4, -3, 5]);
   const y = useTransform(progress, [0, 0.5, 1], [0, -8, 8]);
 
   return (
     <motion.div
       style={{ x, scale, rotate, y }}
-      className="hidden md:block absolute top-1/2 right-[12%] -translate-y-1/2 z-10 pointer-events-none"
+      className="hidden lg:block absolute top-12 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
     >
-      <div className="relative w-[170px] lg:w-[210px] aspect-[3/4] glass-card flex items-center justify-center bg-muted/40">
-        <div className="text-center text-muted-foreground/70 p-3">
-          <div className="w-10 h-10 mx-auto mb-2 rounded-full border-2 border-dashed border-foreground/30 flex items-center justify-center">
-            <Camera size={16} className="text-foreground/50" />
+      <div className="relative w-[110px] aspect-[3/4] glass-card flex items-center justify-center bg-muted/40">
+        <div className="text-center text-muted-foreground/70 p-2">
+          <div className="w-8 h-8 mx-auto mb-1 rounded-full border-2 border-dashed border-foreground/30 flex items-center justify-center">
+            <Camera size={14} className="text-foreground/50" />
           </div>
-          <p className="font-heading text-[9px] tracking-widest uppercase">Kaushik</p>
-          <p className="font-body text-[8px] mt-1 opacity-70">Portrait</p>
+          <p className="font-heading text-[8px] tracking-widest uppercase">Kaushik</p>
         </div>
-        <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-primary/50" />
-        <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-primary/50" />
-        <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-primary/50" />
-        <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-primary/50" />
+        <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-primary/50" />
+        <div className="absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 border-primary/50" />
+        <div className="absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 border-primary/50" />
+        <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-primary/50" />
       </div>
     </motion.div>
   );
