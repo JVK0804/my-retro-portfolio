@@ -45,35 +45,31 @@ const cities: City[] = [
   },
 ];
 
-/* Photo that floats in zigzag while shrinking — persists through the section */
+/* Photo that floats in zigzag inside the right column — never overlaps text */
 const FloatingPortrait = ({ progress }: { progress: MotionValue<number> }) => {
-  // Zigzag horizontal motion: left → right → left → right
+  // Zigzag confined to the right half of the screen
   const x = useTransform(
     progress,
     [0, 0.33, 0.66, 1],
-    ["-30%", "30%", "-25%", "25%"]
+    ["-12%", "12%", "-10%", "10%"]
   );
-  // Shrinks from large to small as user scrolls
-  const scale = useTransform(progress, [0, 1], [1, 0.45]);
-  // Subtle continuous wobble rotation
-  const rotate = useTransform(progress, [0, 0.33, 0.66, 1], [-6, 5, -4, 6]);
-  // Slight vertical drift to feel "floaty"
-  const y = useTransform(progress, [0, 0.5, 1], [0, -10, 10]);
+  const scale = useTransform(progress, [0, 1], [1, 0.55]);
+  const rotate = useTransform(progress, [0, 0.33, 0.66, 1], [-5, 4, -3, 5]);
+  const y = useTransform(progress, [0, 0.5, 1], [0, -8, 8]);
 
   return (
     <motion.div
       style={{ x, scale, rotate, y }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none"
+      className="hidden md:block absolute top-1/2 right-[12%] -translate-y-1/2 z-10 pointer-events-none"
     >
-      <div className="relative w-[220px] md:w-[280px] aspect-[3/4] glass-card flex items-center justify-center bg-muted/40">
-        <div className="text-center text-muted-foreground/70 p-4">
-          <div className="w-12 h-12 mx-auto mb-3 rounded-full border-2 border-dashed border-foreground/30 flex items-center justify-center">
-            <Camera size={20} className="text-foreground/50" />
+      <div className="relative w-[170px] lg:w-[210px] aspect-[3/4] glass-card flex items-center justify-center bg-muted/40">
+        <div className="text-center text-muted-foreground/70 p-3">
+          <div className="w-10 h-10 mx-auto mb-2 rounded-full border-2 border-dashed border-foreground/30 flex items-center justify-center">
+            <Camera size={16} className="text-foreground/50" />
           </div>
-          <p className="font-heading text-[10px] tracking-widest uppercase">Kaushik</p>
-          <p className="font-body text-[9px] mt-1 opacity-70">Portrait placeholder</p>
+          <p className="font-heading text-[9px] tracking-widest uppercase">Kaushik</p>
+          <p className="font-body text-[8px] mt-1 opacity-70">Portrait</p>
         </div>
-        {/* corner ticks for retro feel */}
         <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-primary/50" />
         <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-primary/50" />
         <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-primary/50" />
@@ -97,10 +93,10 @@ const CityPanel = ({
   const segment = 1 / total;
   const start = index * segment;
   const end = start + segment;
-  const fadeInStart = Math.max(0, start - segment * 0.12);
-  const fadeInEnd = start + segment * 0.18;
-  const fadeOutStart = end - segment * 0.18;
-  const fadeOutEnd = Math.min(1, end + segment * 0.12);
+  const fadeInStart = Math.max(0, start - segment * 0.15);
+  const fadeInEnd = start + segment * 0.35;
+  const fadeOutStart = end - segment * 0.15;
+  const fadeOutEnd = Math.min(1, end + segment * 0.15);
 
   const opacity = useTransform(
     progress,
@@ -109,17 +105,14 @@ const CityPanel = ({
   );
   const y = useTransform(progress, [fadeInStart, start, end, fadeOutEnd], [24, 0, 0, -24]);
 
-  // landmark on opposite side of text
-  const isLeftText = city.side === "left";
-
   return (
     <motion.div
       className="absolute inset-0 flex items-center"
       style={{ opacity, y }}
     >
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-center">
-        {/* Text */}
-        <div className={isLeftText ? "md:order-1" : "md:order-2"}>
+        {/* Text — always left column, never overlapped by portrait */}
+        <div>
           <div className="flex items-center gap-2 mb-3">
             <MapPin size={14} className="text-primary" />
             <p className="font-heading text-[11px] text-primary tracking-widest uppercase">
@@ -135,17 +128,27 @@ const CityPanel = ({
           <p className="font-body text-base md:text-lg text-foreground/80 leading-relaxed max-w-md">
             {city.text}
           </p>
-        </div>
-
-        {/* Landmark illustration */}
-        <div className={`${isLeftText ? "md:order-2" : "md:order-1"} hidden md:flex items-center justify-center`}>
+          {/* Mobile landmark below text */}
           <img
             src={city.landmark}
             alt={`${city.city} landmark`}
+            width={512}
+            height={512}
+            loading="lazy"
+            className="mt-8 w-40 h-auto opacity-70 dark:invert md:hidden"
+          />
+        </div>
+
+        {/* Right column: faded landmark sits behind floating portrait */}
+        <div className="hidden md:flex relative items-center justify-center min-h-[420px]">
+          <img
+            src={city.landmark}
+            alt=""
+            aria-hidden="true"
             width={768}
             height={768}
             loading="lazy"
-            className="w-full max-w-sm h-auto opacity-80 dark:invert"
+            className="w-full max-w-xs h-auto opacity-25 dark:invert"
           />
         </div>
       </div>
