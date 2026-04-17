@@ -6,53 +6,54 @@
 
 @layer base {
   :root {
-    --background: 38 30% 92%;
-    --foreground: 225 25% 12%;
+    /* Inverted: bright orange background with cream/black text */
+    --background: 22 92% 56%;
+    --foreground: 225 30% 10%;
 
-    --card: 38 25% 88%;
-    --card-foreground: 225 25% 12%;
+    --card: 22 85% 62%;
+    --card-foreground: 225 30% 10%;
 
-    --popover: 38 25% 90%;
-    --popover-foreground: 225 25% 12%;
+    --popover: 22 88% 60%;
+    --popover-foreground: 225 30% 10%;
 
-    --primary: 210 55% 55%;
-    --primary-foreground: 38 30% 95%;
+    --primary: 38 40% 94%;
+    --primary-foreground: 225 30% 10%;
 
-    --secondary: 210 15% 80%;
-    --secondary-foreground: 225 18% 20%;
+    --secondary: 22 70% 48%;
+    --secondary-foreground: 38 40% 94%;
 
-    --muted: 38 18% 86%;
-    --muted-foreground: 225 10% 45%;
+    --muted: 22 60% 64%;
+    --muted-foreground: 225 25% 18%;
 
-    --accent: 210 25% 50%;
-    --accent-foreground: 225 18% 20%;
+    --accent: 38 40% 94%;
+    --accent-foreground: 225 30% 10%;
 
-    --destructive: 0 50% 55%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 65% 38%;
+    --destructive-foreground: 38 40% 94%;
 
-    --border: 38 15% 80%;
-    --input: 38 15% 80%;
-    --ring: 210 55% 55%;
+    --border: 22 50% 42%;
+    --input: 22 50% 42%;
+    --ring: 38 40% 94%;
 
     --radius: 0.25rem;
 
-    /* Custom tokens — light warm palette with soft blue accents */
-    --heritage-cream: 38 30% 92%;
-    --accent-warm: 210 55% 55%;
-    --accent-glow: 200 60% 65%;
-    --accent-muted: 215 35% 45%;
-    --steel-blue: 210 25% 45%;
-    --steel-blue-light: 210 30% 55%;
-    --ink-deep: 225 18% 20%;
-    --ink-medium: 225 10% 52%;
-    --glass-bg: 38 25% 88% / 0.85;
-    --glass-border: 38 15% 78% / 0.8;
-    --glass-shadow: 225 8% 62% / 0.12;
-    --scanline-opacity: 0.03;
+    /* Custom tokens — orange-forward palette with cream accents */
+    --heritage-cream: 38 40% 94%;
+    --accent-warm: 38 40% 94%;
+    --accent-glow: 38 60% 88%;
+    --accent-muted: 22 70% 40%;
+    --steel-blue: 225 30% 10%;
+    --steel-blue-light: 225 25% 22%;
+    --ink-deep: 225 30% 10%;
+    --ink-medium: 225 25% 22%;
+    --glass-bg: 22 85% 60% / 0.65;
+    --glass-border: 225 30% 10% / 0.25;
+    --glass-shadow: 225 30% 10% / 0.18;
+    --scanline-opacity: 0.05;
 
-    --teal-vibrant: 210 55% 55%;
-    --teal-glow: 200 60% 65%;
-    --teal-muted: 215 35% 45%;
+    --teal-vibrant: 38 40% 94%;
+    --teal-glow: 38 60% 88%;
+    --teal-muted: 225 30% 10%;
 
     --font-heading: 'Abril Fatface', 'Courier Prime', serif;
     --font-body: 'Space Mono', 'Courier Prime', monospace;
