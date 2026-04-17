@@ -135,20 +135,19 @@ const CityPanel = ({
             width={512}
             height={512}
             loading="lazy"
-            className="mt-8 w-40 h-auto opacity-70 dark:invert md:hidden"
+            className="mt-8 w-64 h-auto md:hidden"
           />
         </div>
 
-        {/* Right column: faded landmark sits behind floating portrait */}
-        <div className="hidden md:flex relative items-center justify-center min-h-[420px]">
+        {/* Right column: large bold landmark — the visual crux of the section */}
+        <div className="hidden md:flex relative items-center justify-center min-h-[460px]">
           <img
             src={city.landmark}
-            alt=""
-            aria-hidden="true"
+            alt={`${city.city} landmark illustration`}
             width={768}
             height={768}
             loading="lazy"
-            className="w-full max-w-xs h-auto opacity-25 dark:invert"
+            className="w-full max-w-lg lg:max-w-xl h-auto opacity-90"
           />
         </div>
       </div>
