@@ -24,7 +24,7 @@ const caseStudies = [
     impact: "62% improved interaction · 35% less onboarding friction",
     readTime: "5 min Read",
     image: caseStudyPhotography,
-    href: "#work",
+    href: "/work/smartalign",
   },
   {
     title: "Collaboration That Scales Trust (NDA)",
