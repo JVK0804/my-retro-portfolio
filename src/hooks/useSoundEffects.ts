@@ -17,6 +17,10 @@ const useSoundEffects = () => {
     if (!ctxRef.current) {
       ctxRef.current = new AudioContext();
     }
+    // Resume if suspended (browsers auto-suspend until user gesture / tab focus)
+    if (ctxRef.current.state === "suspended") {
+      void ctxRef.current.resume();
+    }
     return ctxRef.current;
   }, []);
 
@@ -24,7 +28,8 @@ const useSoundEffects = () => {
     (type: SoundType) => {
       if (!enabled) return;
       const ctx = getCtx();
-      const now = ctx.currentTime;
+      // Schedule slightly in the future — events at exactly currentTime can be dropped
+      const now = ctx.currentTime + 0.005;
 
       // Fluorescent lamp startup — noise hum + random strike bursts → steady buzz
       if (type === "fluorescent") {
