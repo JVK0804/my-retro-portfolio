@@ -1,1 +1,4 @@
 project_id = "usndbulhnajxmhrramtz"
+
+[functions.generate-era-sound]
+verify_jwt = false
