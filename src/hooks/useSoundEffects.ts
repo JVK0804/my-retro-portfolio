@@ -25,6 +25,61 @@ const useSoundEffects = () => {
       if (!enabled) return;
       const ctx = getCtx();
       const now = ctx.currentTime;
+
+      // Fluorescent lamp startup — noise hum + random strike bursts → steady buzz
+      if (type === "fluorescent") {
+        const duration = 1.6;
+        // White-noise buffer
+        const bufferSize = Math.floor(ctx.sampleRate * duration);
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+        const noise = ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
+
+        const bandpass = ctx.createBiquadFilter();
+        bandpass.type = "bandpass";
+        bandpass.frequency.value = 2000;
+        bandpass.Q.value = 0.8;
+
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0, now);
+        // Random flicker bursts of noise (ballast strikes)
+        const burstTimes = [0.0, 0.12, 0.28, 0.42, 0.6, 0.78];
+        burstTimes.forEach((t) => {
+          const start = now + t;
+          noiseGain.gain.setValueAtTime(0.0001, start);
+          noiseGain.gain.exponentialRampToValueAtTime(0.09, start + 0.012);
+          noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 0.07);
+        });
+        // Settle to faint steady hiss
+        noiseGain.gain.setValueAtTime(0.001, now + 0.95);
+        noiseGain.gain.exponentialRampToValueAtTime(0.012, now + 1.1);
+        noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        noise.connect(bandpass);
+        bandpass.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+        noise.start(now);
+        noise.stop(now + duration);
+
+        // 100Hz mains hum that fades in as lamp "settles"
+        const hum = ctx.createOscillator();
+        const humGain = ctx.createGain();
+        hum.type = "sawtooth";
+        hum.frequency.value = 100;
+        humGain.gain.setValueAtTime(0.0001, now);
+        humGain.gain.setValueAtTime(0.0001, now + 0.85);
+        humGain.gain.exponentialRampToValueAtTime(0.025, now + 1.15);
+        humGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        hum.connect(humGain);
+        humGain.connect(ctx.destination);
+        hum.start(now);
+        hum.stop(now + duration);
+        return;
+      }
+
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
