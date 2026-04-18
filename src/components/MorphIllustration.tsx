@@ -1,5 +1,10 @@
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue, useTransform, useMotionValueEvent } from "framer-motion";
 import { interpolate } from "flubber";
+import { useState } from "react";
+import { Play, Loader2 } from "lucide-react";
+import { useEraSounds, type Era } from "@/hooks/useEraSounds";
+import { useSound } from "@/contexts/SoundContext";
+import { toast } from "sonner";
 
 /**
  * Morphing tech illustration.
@@ -102,26 +107,90 @@ interface MorphIllustrationProps {
   rotate?: MotionValue<number> | number;
 }
 
+const ERAS: Era[] = ["cassette", "cd", "mp3", "streaming"];
+const ERA_LABELS: Record<Era, string> = {
+  cassette: "cassette",
+  cd: "compact disc",
+  mp3: "MP3 player",
+  streaming: "streaming",
+};
+
 const MorphIllustration = ({ progress, rotate = 0 }: MorphIllustrationProps) => {
   const shellD = useMorph(progress, SHELLS);
   const detailD = useMorph(progress, DETAILS);
   const accentD = useMorph(progress, ACCENTS);
+  const { play, loadingEra } = useEraSounds();
+  const { enabled: soundEnabled } = useSound();
+  const [currentEra, setCurrentEra] = useState<Era>("cassette");
+  const [hovered, setHovered] = useState(false);
+
+  // Track which era we're closest to as scroll progresses.
+  useMotionValueEvent(progress, "change", (v) => {
+    const idx = Math.min(ERAS.length - 1, Math.max(0, Math.floor(v * ERAS.length)));
+    setCurrentEra(ERAS[idx]);
+  });
+
+  const handleClick = () => {
+    if (!soundEnabled) {
+      toast("Enable sound effects to hear era audio", {
+        description: "Tap the speaker icon in the top right.",
+      });
+      return;
+    }
+    void play(currentEra);
+  };
+
+  const isLoading = loadingEra === currentEra;
 
   return (
-    <motion.svg
-      viewBox="0 0 200 200"
-      className="w-[60vw] max-w-[440px] h-auto"
-      style={{ rotate }}
-      fill="none"
-      stroke="hsl(var(--foreground))"
-      strokeWidth={2.4}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <motion.path d={shellD} />
-      <motion.path d={detailD} opacity={0.85} />
-      <motion.path d={accentD} opacity={0.7} />
-    </motion.svg>
+    <div className="relative pointer-events-auto">
+      <motion.button
+        type="button"
+        onClick={handleClick}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="block group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-lg"
+        aria-label={`Play ${ERA_LABELS[currentEra]} sound`}
+      >
+        <motion.svg
+          viewBox="0 0 200 200"
+          className="w-[60vw] max-w-[440px] h-auto"
+          style={{ rotate }}
+          fill="none"
+          stroke="hsl(var(--foreground))"
+          strokeWidth={2.4}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <motion.path d={shellD} />
+          <motion.path d={detailD} opacity={0.85} />
+          <motion.path d={accentD} opacity={0.7} />
+        </motion.svg>
+      </motion.button>
+
+      {/* Hover hint */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: hovered || isLoading ? 1 : 0, y: hovered || isLoading ? 0 : 6 }}
+        transition={{ duration: 0.2 }}
+        className="absolute left-1/2 -translate-x-1/2 -bottom-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-foreground/90 text-background font-heading text-[10px] uppercase tracking-widest pointer-events-none whitespace-nowrap"
+      >
+        {isLoading ? (
+          <>
+            <Loader2 size={11} className="animate-spin" />
+            Generating…
+          </>
+        ) : (
+          <>
+            <Play size={11} fill="currentColor" />
+            Tap to hear
+          </>
+        )}
+      </motion.div>
+    </div>
   );
 };
 
