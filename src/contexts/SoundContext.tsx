@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, useRef, useEffect } f
 
 type SoundType = "click" | "hover" | "whoosh" | "toggle" | "success" | "fluorescent";
 
-const FLUORESCENT_DURATION = 4.6;
+const FLUORESCENT_DURATION = 4.1;
 const RECENT_GESTURE_WINDOW = 250;
 
 type SoundContextType = {
