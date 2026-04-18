@@ -41,6 +41,8 @@ const caseStudies = [
 
 const CaseStudyTiles = () => {
   const { play } = useSound();
+  const gridRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(gridRef, { once: true, margin: "-15% 0px -15% 0px" });
 
   return (
     <section id="work" className="py-24 px-6">
