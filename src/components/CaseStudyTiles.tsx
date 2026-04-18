@@ -44,6 +44,12 @@ const CaseStudyTiles = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInView(gridRef, { once: true, amount: 0.5 });
 
+  // Random per-card extra resolve delay — different order each visit.
+  // All cards begin flicker at 0ms (synchronized); each settles at a random offset.
+  const randomDelays = useRef<number[]>(
+    caseStudies.map(() => Math.floor(Math.random() * 450))
+  );
+
   return (
     <section id="work" className="py-24 px-6">
       <div className="max-w-6xl mx-auto relative z-10">
@@ -63,7 +69,7 @@ const CaseStudyTiles = () => {
         </motion.div>
 
         <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {caseStudies.map((study) => {
+          {caseStudies.map((study, idx) => {
             const isInternal = study.href.startsWith("/");
             const cardInner = (
               <>
@@ -117,6 +123,7 @@ const CaseStudyTiles = () => {
               <div
                 key={study.title}
                 className={inView ? "glitch-in" : "opacity-50"}
+                style={inView ? ({ ["--glitch-delay" as string]: `${randomDelays.current[idx]}ms` } as React.CSSProperties) : undefined}
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
