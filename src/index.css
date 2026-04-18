@@ -382,6 +382,13 @@ svg.sketch-filters {
     glitch-rgb 2.5s steps(12, end) both;
   animation-delay: var(--glitch-delay, 0ms), var(--glitch-delay, 0ms);
 }
+.glitch-in.glow-flash {
+  animation:
+    glitch-flicker 2.5s steps(12, end) both,
+    glitch-rgb 2.5s steps(12, end) both,
+    glow-flash 380ms ease-out 3780ms both;
+  animation-delay: var(--glitch-delay, 0ms), var(--glitch-delay, 0ms), 3780ms;
+}
 .glitch-in-rgb {
   animation: glitch-rgb-split 0.7s steps(8, end) both;
 }
