@@ -116,7 +116,7 @@ const CaseStudyTiles = () => {
             return (
               <div
                 key={study.title}
-                className={inView ? "glitch-in" : "opacity-0"}
+                className={inView ? "glitch-in" : "opacity-50"}
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
