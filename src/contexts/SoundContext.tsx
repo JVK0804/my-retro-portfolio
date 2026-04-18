@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, useRef, useEffect } f
 
 type SoundType = "click" | "hover" | "whoosh" | "toggle" | "success" | "fluorescent";
 
-const FLUORESCENT_DURATION = 4.6;
+const FLUORESCENT_DURATION = 4.1;
 const RECENT_GESTURE_WINDOW = 250;
 
 type SoundContextType = {
@@ -100,7 +100,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         bandpass.Q.value = 0.8;
 
         noiseGain.gain.setValueAtTime(0.0001, now);
-        [0, 0.12, 0.28, 0.42, 0.6, 0.78, 0.92, 1.05, 1.22, 1.46, 1.72, 1.94, 2.16, 2.48, 2.82].forEach(
+        [0, 0.1, 0.24, 0.36, 0.52, 0.68, 0.82, 0.95, 1.1, 1.32, 1.56, 1.76, 1.96, 2.24, 2.54].forEach(
           (offset) => {
             const start = now + offset;
             noiseGain.gain.setValueAtTime(0.0001, start);
@@ -108,15 +108,16 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
             noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 0.07);
           }
         );
-        noiseGain.gain.setValueAtTime(0.001, now + 3.8);
-        noiseGain.gain.exponentialRampToValueAtTime(0.012, now + 4.05);
+        // Final "click on" burst — synchronized with card glow flash at end
+        noiseGain.gain.setValueAtTime(0.001, now + 3.4);
+        noiseGain.gain.exponentialRampToValueAtTime(0.18, now + 3.78);
         noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + FLUORESCENT_DURATION);
 
         hum.type = "sawtooth";
         hum.frequency.value = 100;
         humGain.gain.setValueAtTime(0.0001, now);
-        humGain.gain.setValueAtTime(0.0001, now + 3.7);
-        humGain.gain.exponentialRampToValueAtTime(0.025, now + 4.1);
+        humGain.gain.setValueAtTime(0.0001, now + 3.3);
+        humGain.gain.exponentialRampToValueAtTime(0.04, now + 3.78);
         humGain.gain.exponentialRampToValueAtTime(0.0001, now + FLUORESCENT_DURATION);
 
         noise.connect(bandpass);
