@@ -46,8 +46,10 @@ const CaseStudyTiles = () => {
 
   // Random per-card extra resolve delay — different order each visit.
   // All cards begin flicker at 0ms (synchronized); each settles at a random offset.
+  // Tight random start offsets so cards begin flickering nearly together
+  // and finish ≈ at the same moment the sound's final "click-on" burst hits.
   const randomDelays = useRef<number[]>(
-    caseStudies.map(() => Math.floor(Math.random() * 450))
+    caseStudies.map(() => Math.floor(Math.random() * 120))
   );
 
   useEffect(() => {
