@@ -352,60 +352,35 @@ svg.sketch-filters {
   100% { transform: translate(3%, -1%); }
 }
 
-/* ===== GLITCH APPEAR — 0.5s blink phase, settles to 100% opacity over 1s ===== */
-@keyframes glitch-appear {
-  0% {
-    opacity: 0.5;
-    transform: translate(0, 0);
-    clip-path: inset(45% 0 45% 0);
-    filter: hue-rotate(0deg) saturate(1.4);
-  }
-  8% {
-    opacity: 1;
-    transform: translate(-6px, 3px);
-    clip-path: inset(10% 0 60% 0);
-    filter: hue-rotate(20deg) saturate(1.8);
-  }
-  16% {
-    opacity: 0.5;
-    transform: translate(5px, -2px);
-    clip-path: inset(55% 0 12% 0);
-    filter: hue-rotate(-15deg) saturate(1.6);
-  }
-  24% {
-    opacity: 1;
-    transform: translate(-3px, 2px);
-    clip-path: inset(20% 0 30% 0);
-    filter: hue-rotate(8deg) saturate(1.3);
-  }
-  32% {
-    opacity: 0.5;
-    transform: translate(4px, -1px);
-    clip-path: inset(40% 0 20% 0);
-    filter: hue-rotate(-10deg) saturate(1.5);
-  }
-  40% {
-    opacity: 1;
-    transform: translate(-2px, 1px);
-    clip-path: inset(8% 0 8% 0);
-    filter: hue-rotate(5deg) saturate(1.2);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(0, 0);
-    clip-path: inset(0 0 0 0);
-    filter: hue-rotate(0deg) saturate(1);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-    clip-path: inset(0 0 0 0);
-    filter: hue-rotate(0deg) saturate(1);
-  }
+/* ===== GLITCH FLICKER — synchronized flicker, then settle ===== */
+@keyframes glitch-flicker {
+  0%   { opacity: 0.5; transform: translate(0, 0);     filter: hue-rotate(0deg) saturate(1.2); }
+  6%   { opacity: 0.15; transform: translate(-4px, 2px); filter: hue-rotate(25deg) saturate(1.8); }
+  12%  { opacity: 0.95; transform: translate(5px, -2px); filter: hue-rotate(-20deg) saturate(1.6); }
+  20%  { opacity: 0.2; transform: translate(-3px, 3px); filter: hue-rotate(15deg) saturate(1.7); }
+  28%  { opacity: 0.85; transform: translate(4px, -1px); filter: hue-rotate(-10deg) saturate(1.4); }
+  36%  { opacity: 0.3; transform: translate(-2px, 2px); filter: hue-rotate(8deg) saturate(1.5); }
+  44%  { opacity: 0.9; transform: translate(2px, -1px); filter: hue-rotate(-5deg) saturate(1.3); }
+  52%  { opacity: 0.4; transform: translate(-1px, 1px); filter: hue-rotate(3deg) saturate(1.2); }
+  60%  { opacity: 1;   transform: translate(0, 0);     filter: hue-rotate(0deg) saturate(1); }
+  100% { opacity: 1;   transform: translate(0, 0);     filter: hue-rotate(0deg) saturate(1); }
+}
+
+/* RGB chromatic-aberration overlay during flicker */
+@keyframes glitch-rgb {
+  0%, 100% { box-shadow: none; }
+  10% { box-shadow: -3px 0 0 hsl(0 90% 55% / 0.5), 3px 0 0 hsl(190 90% 55% / 0.5); }
+  25% { box-shadow:  4px 0 0 hsl(0 90% 55% / 0.4), -4px 0 0 hsl(190 90% 55% / 0.4); }
+  40% { box-shadow: -2px 0 0 hsl(0 90% 55% / 0.4), 2px 0 0 hsl(190 90% 55% / 0.4); }
+  55% { box-shadow:  1px 0 0 hsl(0 90% 55% / 0.3), -1px 0 0 hsl(190 90% 55% / 0.3); }
+  60% { box-shadow: none; }
 }
 
 .glitch-in {
-  animation: glitch-appear 1s steps(10, end) both;
+  animation:
+    glitch-flicker 0.5s steps(12, end) both,
+    glitch-rgb 0.5s steps(12, end) both;
+  animation-delay: var(--glitch-delay, 0ms), var(--glitch-delay, 0ms);
 }
 .glitch-in-rgb {
   animation: glitch-rgb-split 0.7s steps(8, end) both;
