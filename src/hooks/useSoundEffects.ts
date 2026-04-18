@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-type SoundType = "click" | "hover" | "whoosh" | "toggle" | "success";
+type SoundType = "click" | "hover" | "whoosh" | "toggle" | "success" | "fluorescent";
 
 const useSoundEffects = () => {
   const [enabled, setEnabled] = useState(() => {
