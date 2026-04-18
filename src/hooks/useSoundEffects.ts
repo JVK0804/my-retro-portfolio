@@ -54,9 +54,9 @@ const useSoundEffects = () => {
       // Schedule slightly in the future — events at exactly currentTime can be dropped
       const now = ctx.currentTime + 0.005;
 
-      // Fluorescent lamp startup — noise hum + random strike bursts → steady buzz
+      // Fluorescent lamp startup — noise hum + random strike bursts → steady buzz (2.6s sustain)
       if (type === "fluorescent") {
-        const duration = 1.6;
+        const duration = 2.6;
         // White-noise buffer
         const bufferSize = Math.floor(ctx.sampleRate * duration);
         const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -73,8 +73,8 @@ const useSoundEffects = () => {
 
         const noiseGain = ctx.createGain();
         noiseGain.gain.setValueAtTime(0, now);
-        // Random flicker bursts of noise (ballast strikes)
-        const burstTimes = [0.0, 0.12, 0.28, 0.42, 0.6, 0.78];
+        // Extended random flicker bursts of noise (ballast strikes) over 1s
+        const burstTimes = [0.0, 0.12, 0.28, 0.42, 0.6, 0.78, 0.92, 1.05, 1.22];
         burstTimes.forEach((t) => {
           const start = now + t;
           noiseGain.gain.setValueAtTime(0.0001, start);
@@ -82,8 +82,8 @@ const useSoundEffects = () => {
           noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 0.07);
         });
         // Settle to faint steady hiss
-        noiseGain.gain.setValueAtTime(0.001, now + 0.95);
-        noiseGain.gain.exponentialRampToValueAtTime(0.012, now + 1.1);
+        noiseGain.gain.setValueAtTime(0.001, now + 1.95);
+        noiseGain.gain.exponentialRampToValueAtTime(0.012, now + 2.1);
         noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
         noise.connect(bandpass);
@@ -98,8 +98,8 @@ const useSoundEffects = () => {
         hum.type = "sawtooth";
         hum.frequency.value = 100;
         humGain.gain.setValueAtTime(0.0001, now);
-        humGain.gain.setValueAtTime(0.0001, now + 0.85);
-        humGain.gain.exponentialRampToValueAtTime(0.025, now + 1.15);
+        humGain.gain.setValueAtTime(0.0001, now + 1.85);
+        humGain.gain.exponentialRampToValueAtTime(0.025, now + 2.15);
         humGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
         hum.connect(humGain);
         humGain.connect(ctx.destination);
