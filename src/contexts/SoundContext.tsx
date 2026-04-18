@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, useRef, useEffect } f
 
 type SoundType = "click" | "hover" | "whoosh" | "toggle" | "success" | "fluorescent";
 
-const FLUORESCENT_DURATION = 4.1;
+const FLUORESCENT_DURATION = 3.0;
 const RECENT_GESTURE_WINDOW = 250;
 
 type SoundContextType = {
@@ -99,8 +99,10 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         bandpass.frequency.value = 2000;
         bandpass.Q.value = 0.8;
 
+        // Flicker bursts span 0–2.5s, perfectly matching the CSS glitch-flicker keyframes
+        // (which pulse at 0%, 6%, 14%, 22%, 32%, 44%, 56%, 68%, 78%, 88%, 100% over 2.5s)
         noiseGain.gain.setValueAtTime(0.0001, now);
-        [0, 0.1, 0.24, 0.36, 0.52, 0.68, 0.82, 0.95, 1.1, 1.32, 1.56, 1.76, 1.96, 2.24, 2.54].forEach(
+        [0, 0.15, 0.35, 0.55, 0.8, 1.1, 1.4, 1.7, 1.95, 2.2].forEach(
           (offset) => {
             const start = now + offset;
             noiseGain.gain.setValueAtTime(0.0001, start);
@@ -108,16 +110,16 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
             noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 0.07);
           }
         );
-        // Final "click on" burst — synchronized with card glow flash at end
-        noiseGain.gain.setValueAtTime(0.001, now + 3.4);
-        noiseGain.gain.exponentialRampToValueAtTime(0.18, now + 3.78);
+        // Final "click on" burst — lands exactly at 2.5s when cards finish flickering and glow ignites
+        noiseGain.gain.setValueAtTime(0.001, now + 2.35);
+        noiseGain.gain.exponentialRampToValueAtTime(0.2, now + 2.5);
         noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + FLUORESCENT_DURATION);
 
         hum.type = "sawtooth";
         hum.frequency.value = 100;
         humGain.gain.setValueAtTime(0.0001, now);
-        humGain.gain.setValueAtTime(0.0001, now + 3.3);
-        humGain.gain.exponentialRampToValueAtTime(0.04, now + 3.78);
+        humGain.gain.setValueAtTime(0.0001, now + 2.3);
+        humGain.gain.exponentialRampToValueAtTime(0.045, now + 2.5);
         humGain.gain.exponentialRampToValueAtTime(0.0001, now + FLUORESCENT_DURATION);
 
         noise.connect(bandpass);
