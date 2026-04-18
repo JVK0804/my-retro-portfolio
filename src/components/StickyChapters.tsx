@@ -123,7 +123,9 @@ const StickyChapters = () => {
 
         {/* Single morphing illustration on the right — persists through all chapters */}
         <div className="absolute inset-y-0 right-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none">
-          <MorphIllustration progress={scrollYProgress} rotate={illusRotate} />
+          <div className="pointer-events-auto">
+            <MorphIllustration progress={scrollYProgress} rotate={illusRotate} />
+          </div>
         </div>
 
         {/* Text slots cross-fade on the left */}
