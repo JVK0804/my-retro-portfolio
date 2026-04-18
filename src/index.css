@@ -386,9 +386,28 @@ svg.sketch-filters {
   animation: glitch-rgb-split 0.7s steps(8, end) both;
 }
 
+/* Synchronized "fluorescent click-on" glow — all cards flash together at sound's end */
+@keyframes glow-flash {
+  0%, 100% {
+    box-shadow: none;
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.6),
+      0 0 40px 8px hsl(var(--primary) / 0.55),
+      0 0 80px 20px hsl(var(--primary) / 0.3);
+    filter: brightness(1.25);
+  }
+}
+.glow-flash {
+  animation: glow-flash 380ms ease-out 3780ms both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .glitch-in,
-  .glitch-in-rgb {
+  .glitch-in-rgb,
+  .glow-flash {
     animation: none;
   }
 }
