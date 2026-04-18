@@ -42,7 +42,7 @@ const caseStudies = [
 const CaseStudyTiles = () => {
   const { play } = useSound();
   const gridRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(gridRef, { once: true, amount: 0.95 });
+  const inView = useInView(gridRef, { once: true, amount: 0.5 });
 
   return (
     <section id="work" className="py-24 px-6">
