@@ -123,6 +123,7 @@ const CaseStudyTiles = () => {
               <div
                 key={study.title}
                 className={inView ? "glitch-in" : "opacity-50"}
+                style={inView ? ({ ["--glitch-delay" as string]: `${randomDelays.current[idx]}ms` } as React.CSSProperties) : undefined}
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
