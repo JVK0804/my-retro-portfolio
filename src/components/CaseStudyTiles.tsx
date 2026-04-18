@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 import caseStudyPrivacy from "@/assets/case-study-privacy.jpg";
@@ -49,6 +49,10 @@ const CaseStudyTiles = () => {
   const randomDelays = useRef<number[]>(
     caseStudies.map(() => Math.floor(Math.random() * 450))
   );
+
+  useEffect(() => {
+    if (inView) play("fluorescent");
+  }, [inView, play]);
 
   return (
     <section id="work" className="py-24 px-6">
