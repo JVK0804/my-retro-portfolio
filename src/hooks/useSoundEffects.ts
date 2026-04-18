@@ -15,7 +15,8 @@ const useSoundEffects = () => {
 
   const getCtx = useCallback(() => {
     if (!ctxRef.current) {
-      ctxRef.current = new AudioContext();
+      const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      ctxRef.current = new Ctx();
     }
     // Resume if suspended (browsers auto-suspend until user gesture / tab focus)
     if (ctxRef.current.state === "suspended") {
@@ -23,6 +24,26 @@ const useSoundEffects = () => {
     }
     return ctxRef.current;
   }, []);
+
+  // Prime AudioContext on first user gesture so sounds triggered later
+  // (e.g. via scroll/inView) play immediately in new tabs/windows.
+  useEffect(() => {
+    const prime = () => {
+      const ctx = getCtx();
+      if (ctx.state === "suspended") void ctx.resume();
+    };
+    const opts = { once: true, passive: true } as AddEventListenerOptions;
+    window.addEventListener("pointerdown", prime, opts);
+    window.addEventListener("keydown", prime, opts);
+    window.addEventListener("touchstart", prime, opts);
+    window.addEventListener("scroll", prime, opts);
+    return () => {
+      window.removeEventListener("pointerdown", prime);
+      window.removeEventListener("keydown", prime);
+      window.removeEventListener("touchstart", prime);
+      window.removeEventListener("scroll", prime);
+    };
+  }, [getCtx]);
 
   const play = useCallback(
     (type: SoundType) => {
