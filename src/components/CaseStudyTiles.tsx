@@ -62,8 +62,8 @@ const CaseStudyTiles = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {caseStudies.map((study, i) => {
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {caseStudies.map((study) => {
             const isInternal = study.href.startsWith("/");
             const cardInner = (
               <>
@@ -114,12 +114,9 @@ const CaseStudyTiles = () => {
             const wrapperClass = "glass-card flex flex-col justify-between min-h-[460px] group cursor-pointer overflow-hidden";
 
             return (
-              <motion.div
+              <div
                 key={study.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className={inView ? "glitch-in" : "opacity-0"}
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
@@ -131,7 +128,7 @@ const CaseStudyTiles = () => {
                     {cardInner}
                   </a>
                 )}
-              </motion.div>
+              </div>
             );
           })}
         </div>
