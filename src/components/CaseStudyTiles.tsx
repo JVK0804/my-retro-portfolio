@@ -44,17 +44,19 @@ const CaseStudyTiles = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInView(gridRef, { once: true, amount: 0.5 });
 
-  // Random per-card extra resolve delay — different order each visit.
-  // All cards begin flicker at 0ms (synchronized); each settles at a random offset.
-  // Tight random start offsets so cards begin flickering nearly together
-  // and finish ≈ at the same moment the sound's final "click-on" burst hits.
-  const randomDelays = useRef<number[]>(
-    caseStudies.map(() => Math.floor(Math.random() * 120))
-  );
-
-  useEffect(() => {
-    if (inView) play("fluorescent");
-  }, [inView, play]);
+  // Simple fade-in without flicker
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    }),
+  };
 
   return (
     <section id="work" className="py-24 px-6">
@@ -126,10 +128,12 @@ const CaseStudyTiles = () => {
             const wrapperClass = "glass-card flex flex-col justify-between min-h-[460px] group cursor-pointer overflow-hidden";
 
             return (
-              <div
+              <motion.div
                 key={study.title}
-                className={inView ? "glitch-in glow-flash" : "opacity-50"}
-                style={inView ? ({ ["--glitch-delay" as string]: `${randomDelays.current[idx]}ms` } as React.CSSProperties) : undefined}
+                custom={idx}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={cardVariants}
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
@@ -141,7 +145,7 @@ const CaseStudyTiles = () => {
                     {cardInner}
                   </a>
                 )}
-              </div>
+              </motion.div>
             );
           })}
         </div>
