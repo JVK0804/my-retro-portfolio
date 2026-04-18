@@ -119,7 +119,7 @@ const ParallaxDoodles = () => {
   const { enabled: soundEnabled } = useSound();
 
   return (
-    <div className="absolute inset-0 pointer-events-none hidden md:block z-0">
+    <div className="absolute inset-0 pointer-events-none hidden md:block z-20">
       {doodles.map((d, i) => (
         <DoodleItem
           key={i}
