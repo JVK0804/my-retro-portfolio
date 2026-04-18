@@ -69,7 +69,7 @@ const CaseStudyTiles = () => {
         </motion.div>
 
         <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {caseStudies.map((study) => {
+          {caseStudies.map((study, idx) => {
             const isInternal = study.href.startsWith("/");
             const cardInner = (
               <>
