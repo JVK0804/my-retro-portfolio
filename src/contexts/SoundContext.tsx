@@ -11,7 +11,13 @@ type SoundContextType = {
   play: (type: SoundType) => void;
 };
 
-const SoundContext = createContext<SoundContextType | null>(null);
+const noop = () => undefined;
+
+const SoundContext = createContext<SoundContextType>({
+  enabled: false,
+  setEnabled: noop,
+  play: noop,
+});
 
 export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   const [enabled, setEnabled] = useState(() => {
@@ -228,8 +234,4 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useSound = () => {
-  const ctx = useContext(SoundContext);
-  if (!ctx) throw new Error("useSound must be inside SoundProvider");
-  return ctx;
-};
+export const useSound = () => useContext(SoundContext);
