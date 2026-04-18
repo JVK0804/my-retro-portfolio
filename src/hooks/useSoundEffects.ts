@@ -13,25 +13,18 @@ const useSoundEffects = () => {
     localStorage.setItem("retro-sfx", String(enabled));
   }, [enabled]);
 
-  const getCtx = useCallback(() => {
-    if (!ctxRef.current) {
-      const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      ctxRef.current = new Ctx();
-    }
-    // Resume if suspended (browsers auto-suspend until user gesture / tab focus)
-    if (ctxRef.current.state === "suspended") {
-      void ctxRef.current.resume();
-    }
-    return ctxRef.current;
-  }, []);
-
-  // Prime AudioContext on first user gesture so sounds triggered later
-  // (e.g. via scroll/inView) play immediately in new tabs/windows.
+  // Prime AudioContext on mount and on first user gesture so sounds triggered
+  // later (e.g. via scroll/inView) play immediately in new tabs/windows.
   useEffect(() => {
-    const prime = () => {
-      const ctx = getCtx();
-      if (ctx.state === "suspended") void ctx.resume();
+    const getCtx = () => {
+      if (!ctxRef.current) {
+        const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        ctxRef.current = new Ctx();
+      }
+      if (ctxRef.current.state === "suspended") void ctxRef.current.resume();
+      return ctxRef.current;
     };
+    const prime = () => getCtx();
     const opts = { once: true, passive: true } as AddEventListenerOptions;
     window.addEventListener("pointerdown", prime, opts);
     window.addEventListener("keydown", prime, opts);
@@ -43,7 +36,16 @@ const useSoundEffects = () => {
       window.removeEventListener("touchstart", prime);
       window.removeEventListener("scroll", prime);
     };
-  }, [getCtx]);
+  }, []);
+
+  const getCtx = useCallback(() => {
+    if (!ctxRef.current) {
+      const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      ctxRef.current = new Ctx();
+    }
+    if (ctxRef.current.state === "suspended") void ctxRef.current.resume();
+    return ctxRef.current;
+  }, []);
 
   const play = useCallback(
     (type: SoundType) => {
