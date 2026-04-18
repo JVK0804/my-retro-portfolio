@@ -50,6 +50,10 @@ const CaseStudyTiles = () => {
     caseStudies.map(() => Math.floor(Math.random() * 450))
   );
 
+  useEffect(() => {
+    if (inView) play("fluorescent");
+  }, [inView, play]);
+
   return (
     <section id="work" className="py-24 px-6">
       <div className="max-w-6xl mx-auto relative z-10">
