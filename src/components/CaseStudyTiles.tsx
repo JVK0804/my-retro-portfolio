@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 import caseStudyPrivacy from "@/assets/case-study-privacy.jpg";
