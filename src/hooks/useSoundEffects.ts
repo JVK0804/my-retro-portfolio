@@ -9,6 +9,7 @@ const useSoundEffects = () => {
     return stored === "true";
   });
   const ctxRef = useRef<AudioContext | null>(null);
+  const lastGestureAtRef = useRef(0);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -28,7 +29,7 @@ const useSoundEffects = () => {
     return ctxRef.current;
   }, []);
 
-  const ensureRunning = useCallback(async () => {
+  const unlock = useCallback(async () => {
     const ctx = getCtx();
     if (!ctx) return null;
 
@@ -45,7 +46,8 @@ const useSoundEffects = () => {
 
   useEffect(() => {
     const prime = () => {
-      void ensureRunning();
+      lastGestureAtRef.current = Date.now();
+      void unlock();
     };
 
     const opts = { once: true, passive: true } as AddEventListenerOptions;
@@ -62,7 +64,7 @@ const useSoundEffects = () => {
       document.removeEventListener("wheel", prime);
       document.removeEventListener("mousedown", prime);
     };
-  }, [ensureRunning]);
+  }, [unlock]);
 
   const play = useCallback(
     (type: SoundType) => {
@@ -180,12 +182,23 @@ const useSoundEffects = () => {
         }
       };
 
-      void ensureRunning().then((ctx) => {
-        if (!ctx) return;
+      const ctx = getCtx();
+      if (!ctx) return;
+
+      if (ctx.state === "running") {
         schedule(ctx);
+        return;
+      }
+
+      const triggeredByRecentGesture = Date.now() - lastGestureAtRef.current < 250;
+      if (!triggeredByRecentGesture) return;
+
+      void unlock().then((runningCtx) => {
+        if (!runningCtx) return;
+        schedule(runningCtx);
       });
     },
-    [enabled, ensureRunning]
+    [enabled, getCtx, unlock]
   );
 
   return { enabled, setEnabled, play };
