@@ -1,5 +1,10 @@
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue, useTransform, useMotionValueEvent } from "framer-motion";
 import { interpolate } from "flubber";
+import { useState } from "react";
+import { Play, Loader2 } from "lucide-react";
+import { useEraSounds, type Era } from "@/hooks/useEraSounds";
+import { useSound } from "@/contexts/SoundContext";
+import { toast } from "sonner";
 
 /**
  * Morphing tech illustration.
