@@ -378,8 +378,8 @@ svg.sketch-filters {
 
 .glitch-in {
   animation:
-    glitch-flicker 1s steps(12, end) both,
-    glitch-rgb 1s steps(12, end) both;
+    glitch-flicker 2.5s steps(12, end) both,
+    glitch-rgb 2.5s steps(12, end) both;
   animation-delay: var(--glitch-delay, 0ms), var(--glitch-delay, 0ms);
 }
 .glitch-in-rgb {
