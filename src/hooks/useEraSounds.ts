@@ -146,24 +146,33 @@ const synths: Record<DeviceKey, (ctx: AudioContext, t: number) => Voice[]> = {
   ],
   phone: (ctx, t) => {
     const voices: Voice[] = [];
-    // Rotary dial: a series of rapid mechanical clicks (dialing the number "5"),
-    // followed by the spring-return whirr, then the classic dial tone.
-    const dialDigit = 5;
-    const clickStart = t;
-    for (let i = 0; i < dialDigit; i++) {
-      const ct = clickStart + i * 0.09;
-      // Sharp mechanical click
-      voices.push(noiseBurst(ctx, ct, 0.025, { type: "highpass", freq: 3500 }, 0.25));
-      voices.push(beep(ctx, ct, 90, 0.03, "square", 0.18, 60));
+    // Classic dial tone first (350Hz + 440Hz) — short hum before dialing
+    voices.push(beep(ctx, t, 350, 0.4, "sine", 0.07));
+    voices.push(beep(ctx, t, 440, 0.4, "sine", 0.07));
+
+    // Finger inserts and pulls dial around — soft mechanical scrape
+    const pullStart = t + 0.45;
+    voices.push(noiseBurst(ctx, pullStart, 0.35, { type: "bandpass", freq: 500, q: 3 }, 0.05));
+    voices.push(beep(ctx, pullStart, 140, 0.35, "sawtooth", 0.04, 90));
+
+    // Governor "tick-tick-tick" as dial returns — evenly spaced sharp clicks
+    // Dialing the digit "7": 7 pulses, ~10 pulses per second (real rotary spec)
+    const digit = 7;
+    const tickStart = pullStart + 0.4;
+    const tickGap = 0.1;
+    for (let i = 0; i < digit; i++) {
+      const ct = tickStart + i * tickGap;
+      // Sharp metallic tick (governor pawl)
+      voices.push(noiseBurst(ctx, ct, 0.012, { type: "highpass", freq: 4500 }, 0.35));
+      voices.push(beep(ctx, ct, 1800, 0.015, "square", 0.12));
+      // Low mechanical thunk under each tick
+      voices.push(beep(ctx, ct, 70, 0.02, "sine", 0.15));
     }
-    // Spring-return whirr (descending mechanical hum)
-    const whirrStart = clickStart + dialDigit * 0.09 + 0.05;
-    voices.push(beep(ctx, whirrStart, 220, 0.45, "sawtooth", 0.06, 110));
-    voices.push(noiseBurst(ctx, whirrStart, 0.45, { type: "bandpass", freq: 800, q: 4 }, 0.05));
-    // Classic dial tone (350Hz + 440Hz)
-    const toneStart = whirrStart + 0.5;
-    voices.push(beep(ctx, toneStart, 350, 1.0, "sine", 0.08));
-    voices.push(beep(ctx, toneStart, 440, 1.0, "sine", 0.08));
+
+    // Brief mechanical settle at the end
+    const endTick = tickStart + digit * tickGap;
+    voices.push(noiseBurst(ctx, endTick, 0.05, { type: "bandpass", freq: 300, q: 2 }, 0.08));
+
     return voices;
   },
   boombox: (ctx, t) => [
