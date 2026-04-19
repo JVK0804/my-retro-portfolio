@@ -104,6 +104,8 @@ const SectionHeader = ({ kicker, title }: { kicker: string; title: React.ReactNo
 
 const CignaCaseStudy = () => {
   const { play } = useSound();
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>("Color");
+  const categories: CategoryKey[] = ["Color", "Typography", "Buttons", "Forms", "Spacing", "Cards", "Inputs"];
 
   return (
     <div className="noise-overlay min-h-screen bg-background text-foreground">
