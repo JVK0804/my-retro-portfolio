@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 
 export type Era = "cassette" | "cd" | "mp3" | "streaming";
 
@@ -18,65 +17,209 @@ export type DeviceKey =
   | "laptop"
   | "drone";
 
-// Module-scope cache so clips persist across re-renders / page navigations.
-const audioCache = new Map<DeviceKey, HTMLAudioElement>();
-let currentlyPlaying: HTMLAudioElement | null = null;
+let sharedCtx: AudioContext | null = null;
+const getCtx = (): AudioContext | null => {
+  if (typeof window === "undefined") return null;
+  if (!sharedCtx) {
+    const Ctor =
+      window.AudioContext ||
+      (window as Window & { webkitAudioContext?: typeof AudioContext })
+        .webkitAudioContext;
+    if (!Ctor) return null;
+    sharedCtx = new Ctor();
+  }
+  return sharedCtx;
+};
+
+let activeStop: (() => void) | null = null;
+const stopActive = () => {
+  activeStop?.();
+  activeStop = null;
+};
+
+// ---- Synth helpers ----
+const noiseBuffer = (ctx: AudioContext, seconds: number) => {
+  const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seconds), ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  return buf;
+};
+
+type Voice = { stop: () => void };
+
+const beep = (
+  ctx: AudioContext,
+  startAt: number,
+  freq: number,
+  dur: number,
+  type: OscillatorType = "sine",
+  vol = 0.15,
+  freqEnd?: number
+): Voice => {
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = type;
+  o.frequency.setValueAtTime(freq, startAt);
+  if (freqEnd !== undefined) {
+    o.frequency.exponentialRampToValueAtTime(Math.max(1, freqEnd), startAt + dur);
+  }
+  g.gain.setValueAtTime(0.0001, startAt);
+  g.gain.exponentialRampToValueAtTime(vol, startAt + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, startAt + dur);
+  o.connect(g).connect(ctx.destination);
+  o.start(startAt);
+  o.stop(startAt + dur + 0.05);
+  return {
+    stop: () => {
+      try { o.stop(); } catch { /* noop */ }
+      o.disconnect(); g.disconnect();
+    },
+  };
+};
+
+const noiseBurst = (
+  ctx: AudioContext,
+  startAt: number,
+  dur: number,
+  filter: { type: BiquadFilterType; freq: number; q?: number },
+  vol = 0.1
+): Voice => {
+  const src = ctx.createBufferSource();
+  src.buffer = noiseBuffer(ctx, dur);
+  const f = ctx.createBiquadFilter();
+  f.type = filter.type;
+  f.frequency.value = filter.freq;
+  if (filter.q !== undefined) f.Q.value = filter.q;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, startAt);
+  g.gain.exponentialRampToValueAtTime(vol, startAt + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, startAt + dur);
+  src.connect(f).connect(g).connect(ctx.destination);
+  src.start(startAt);
+  src.stop(startAt + dur + 0.05);
+  return {
+    stop: () => {
+      try { src.stop(); } catch { /* noop */ }
+      src.disconnect(); f.disconnect(); g.disconnect();
+    },
+  };
+};
+
+// ---- Per-device synthesizers ----
+const synths: Record<DeviceKey, (ctx: AudioContext, t: number) => Voice[]> = {
+  cassette: (ctx, t) => [
+    beep(ctx, t, 180, 0.05, "square", 0.18),
+    noiseBurst(ctx, t + 0.05, 1.6, { type: "highpass", freq: 4000 }, 0.04),
+    beep(ctx, t + 0.2, 220, 1.2, "triangle", 0.05, 200),
+  ],
+  cd: (ctx, t) => [
+    beep(ctx, t, 90, 0.15, "sine", 0.1),
+    noiseBurst(ctx, t + 0.1, 0.8, { type: "bandpass", freq: 1500, q: 2 }, 0.05),
+    beep(ctx, t + 0.6, 880, 0.4, "sine", 0.12, 1320),
+  ],
+  mp3: (ctx, t) => [
+    beep(ctx, t, 1200, 0.04, "square", 0.08),
+    beep(ctx, t + 0.08, 1400, 0.04, "square", 0.08),
+    beep(ctx, t + 0.16, 1600, 0.04, "square", 0.08),
+    beep(ctx, t + 0.3, 660, 0.5, "sawtooth", 0.06, 440),
+  ],
+  streaming: (ctx, t) => [
+    beep(ctx, t, 523, 0.4, "sine", 0.08, 1046),
+    beep(ctx, t + 0.05, 659, 0.5, "sine", 0.06, 1318),
+    noiseBurst(ctx, t, 1.2, { type: "lowpass", freq: 800 }, 0.02),
+  ],
+  crt: (ctx, t) => [
+    beep(ctx, t, 15600, 0.8, "sine", 0.04),
+    noiseBurst(ctx, t, 0.3, { type: "highpass", freq: 3000 }, 0.15),
+    beep(ctx, t + 0.3, 60, 0.2, "sine", 0.2, 30),
+  ],
+  gameboy: (ctx, t) => [
+    beep(ctx, t, 523, 0.12, "square", 0.1),
+    beep(ctx, t + 0.15, 659, 0.12, "square", 0.1),
+    beep(ctx, t + 0.3, 784, 0.12, "square", 0.1),
+    beep(ctx, t + 0.45, 1046, 0.25, "square", 0.1),
+  ],
+  vhs: (ctx, t) => [
+    beep(ctx, t, 80, 0.08, "square", 0.15),
+    noiseBurst(ctx, t + 0.1, 1.5, { type: "bandpass", freq: 600, q: 1 }, 0.06),
+    beep(ctx, t + 0.1, 200, 1.4, "sawtooth", 0.04, 180),
+  ],
+  phone: (ctx, t) => [
+    beep(ctx, t, 350, 1.5, "sine", 0.08),
+    beep(ctx, t, 440, 1.5, "sine", 0.08),
+  ],
+  boombox: (ctx, t) => [
+    beep(ctx, t, 60, 0.15, "sine", 0.2),
+    beep(ctx, t + 0.4, 60, 0.15, "sine", 0.2),
+    beep(ctx, t + 0.8, 60, 0.15, "sine", 0.2),
+    beep(ctx, t + 1.2, 60, 0.15, "sine", 0.2),
+    noiseBurst(ctx, t + 0.05, 0.05, { type: "highpass", freq: 6000 }, 0.15),
+    noiseBurst(ctx, t + 0.45, 0.05, { type: "highpass", freq: 6000 }, 0.15),
+    noiseBurst(ctx, t + 0.85, 0.05, { type: "highpass", freq: 6000 }, 0.15),
+    noiseBurst(ctx, t + 1.25, 0.05, { type: "highpass", freq: 6000 }, 0.15),
+  ],
+  camera: (ctx, t) => [
+    noiseBurst(ctx, t, 0.04, { type: "highpass", freq: 5000 }, 0.25),
+    noiseBurst(ctx, t + 0.15, 0.4, { type: "bandpass", freq: 2000, q: 3 }, 0.08),
+  ],
+  smartphone: (ctx, t) => [
+    beep(ctx, t, 1318, 0.15, "sine", 0.1),
+    beep(ctx, t + 0.18, 1760, 0.15, "sine", 0.1),
+    beep(ctx, t + 0.36, 2093, 0.25, "sine", 0.1),
+  ],
+  earbuds: (ctx, t) => [
+    beep(ctx, t, 880, 0.2, "sine", 0.08, 1320),
+    beep(ctx, t + 0.3, 1320, 0.3, "sine", 0.08, 1760),
+  ],
+  smartwatch: (ctx, t) => [
+    beep(ctx, t, 2093, 0.08, "sine", 0.1),
+    beep(ctx, t + 0.12, 2093, 0.08, "sine", 0.1),
+  ],
+  ar: (ctx, t) => [
+    beep(ctx, t, 220, 1.2, "sine", 0.06, 880),
+    beep(ctx, t + 0.1, 330, 1.1, "sine", 0.05, 1100),
+    noiseBurst(ctx, t, 1.2, { type: "highpass", freq: 5000 }, 0.02),
+  ],
+  laptop: (ctx, t) => [
+    beep(ctx, t, 523, 0.3, "sine", 0.1),
+    beep(ctx, t + 0.15, 784, 0.4, "sine", 0.1),
+    beep(ctx, t + 0.3, 1046, 0.5, "sine", 0.1),
+  ],
+  drone: (ctx, t) => [
+    beep(ctx, t, 180, 1.8, "sawtooth", 0.08, 240),
+    beep(ctx, t, 185, 1.8, "sawtooth", 0.08, 245),
+    beep(ctx, t, 178, 1.8, "sawtooth", 0.08, 238),
+    noiseBurst(ctx, t, 1.8, { type: "bandpass", freq: 400, q: 2 }, 0.04),
+  ],
+};
 
 export const useEraSounds = () => {
   const [loadingKey, setLoadingKey] = useState<DeviceKey | null>(null);
-  const inFlightRef = useRef<Set<DeviceKey>>(new Set());
+  const playingTimerRef = useRef<number | null>(null);
 
-  const stopCurrent = useCallback(() => {
-    if (currentlyPlaying) {
-      currentlyPlaying.pause();
-      currentlyPlaying.currentTime = 0;
-      currentlyPlaying = null;
+  const play = useCallback(async (key: DeviceKey) => {
+    stopActive();
+    const ctx = getCtx();
+    if (!ctx) return;
+    if (ctx.state !== "running") {
+      try { await ctx.resume(); } catch { return; }
     }
+
+    const make = synths[key];
+    if (!make) return;
+
+    const startAt = ctx.currentTime + 0.02;
+    const voices = make(ctx, startAt);
+
+    activeStop = () => voices.forEach((v) => v.stop());
+
+    // brief loading flash for visual feedback (kept short since playback is instant)
+    setLoadingKey(key);
+    if (playingTimerRef.current) window.clearTimeout(playingTimerRef.current);
+    playingTimerRef.current = window.setTimeout(() => {
+      setLoadingKey((cur) => (cur === key ? null : cur));
+    }, 250);
   }, []);
 
-  const play = useCallback(
-    async (key: DeviceKey) => {
-      stopCurrent();
-
-      const cached = audioCache.get(key);
-      if (cached) {
-        currentlyPlaying = cached;
-        cached.currentTime = 0;
-        void cached.play().catch((e) => console.warn("play failed", e));
-        return;
-      }
-
-      if (inFlightRef.current.has(key)) return;
-      inFlightRef.current.add(key);
-      setLoadingKey(key);
-
-      try {
-        const { data, error } = await supabase.functions.invoke(
-          "generate-era-sound",
-          { body: { device: key } }
-        );
-        if (error) throw error;
-
-        const blob =
-          data instanceof Blob
-            ? data
-            : new Blob([data as ArrayBuffer], { type: "audio/mpeg" });
-        const url = URL.createObjectURL(blob);
-        const audio = new Audio(url);
-        audio.preload = "auto";
-        audioCache.set(key, audio);
-        currentlyPlaying = audio;
-        await audio.play();
-      } catch (e) {
-        console.error("Failed to generate device sound", e);
-      } finally {
-        inFlightRef.current.delete(key);
-        setLoadingKey((cur) => (cur === key ? null : cur));
-      }
-    },
-    [stopCurrent]
-  );
-
-  // Backward-compat alias kept as `loadingEra` for MorphIllustration
   return { play, loadingKey, loadingEra: loadingKey as Era | null };
 };
