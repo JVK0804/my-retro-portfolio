@@ -144,10 +144,28 @@ const synths: Record<DeviceKey, (ctx: AudioContext, t: number) => Voice[]> = {
     noiseBurst(ctx, t + 0.1, 1.5, { type: "bandpass", freq: 600, q: 1 }, 0.06),
     beep(ctx, t + 0.1, 200, 1.4, "sawtooth", 0.04, 180),
   ],
-  phone: (ctx, t) => [
-    beep(ctx, t, 350, 1.5, "sine", 0.08),
-    beep(ctx, t, 440, 1.5, "sine", 0.08),
-  ],
+  phone: (ctx, t) => {
+    const voices: Voice[] = [];
+    // Rotary dial: a series of rapid mechanical clicks (dialing the number "5"),
+    // followed by the spring-return whirr, then the classic dial tone.
+    const dialDigit = 5;
+    const clickStart = t;
+    for (let i = 0; i < dialDigit; i++) {
+      const ct = clickStart + i * 0.09;
+      // Sharp mechanical click
+      voices.push(noiseBurst(ctx, ct, 0.025, { type: "highpass", freq: 3500 }, 0.25));
+      voices.push(beep(ctx, ct, 90, 0.03, "square", 0.18, 60));
+    }
+    // Spring-return whirr (descending mechanical hum)
+    const whirrStart = clickStart + dialDigit * 0.09 + 0.05;
+    voices.push(beep(ctx, whirrStart, 220, 0.45, "sawtooth", 0.06, 110));
+    voices.push(noiseBurst(ctx, whirrStart, 0.45, { type: "bandpass", freq: 800, q: 4 }, 0.05));
+    // Classic dial tone (350Hz + 440Hz)
+    const toneStart = whirrStart + 0.5;
+    voices.push(beep(ctx, toneStart, 350, 1.0, "sine", 0.08));
+    voices.push(beep(ctx, toneStart, 440, 1.0, "sine", 0.08));
+    return voices;
+  },
   boombox: (ctx, t) => [
     beep(ctx, t, 60, 0.15, "sine", 0.2),
     beep(ctx, t + 0.4, 60, 0.15, "sine", 0.2),
