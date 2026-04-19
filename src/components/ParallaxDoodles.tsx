@@ -78,17 +78,18 @@ const DoodleItem = ({
         onPlay(d.device);
       }}
       aria-label={`Play ${d.alt} sound`}
-      whileHover={{ scale: 1.08, opacity: 0.85 }}
+      whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       style={{
         y,
         rotate: d.rotate,
         top: d.top,
+        left: d.side === "left" ? d.offset : undefined,
+        right: d.side === "right" ? d.offset : undefined,
         width: d.size,
         height: d.size,
         opacity: loading ? 0.7 : 0.4,
-        [d.side]: d.offset,
         willChange: "transform",
       }}
       className="absolute pointer-events-auto cursor-pointer p-0 border-0 bg-transparent select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
