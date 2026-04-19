@@ -35,7 +35,7 @@ const caseStudies = [
     impact: "Reduced development time by 35%",
     readTime: "4 min Read",
     image: caseStudyDesignSystem,
-    href: "#work",
+    href: "/work/cigna",
   },
 ];
 

@@ -9,6 +9,7 @@ import About from "./pages/About.tsx";
 import Photography from "./pages/Photography.tsx";
 import SlackCaseStudy from "./pages/SlackCaseStudy.tsx";
 import SmartAlignCaseStudy from "./pages/SmartAlignCaseStudy.tsx";
+import CignaCaseStudy from "./pages/CignaCaseStudy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/photography" element={<Photography />} />
             <Route path="/work/slack" element={<SlackCaseStudy />} />
             <Route path="/work/smartalign" element={<SmartAlignCaseStudy />} />
+            <Route path="/work/cigna" element={<CignaCaseStudy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
