@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +8,8 @@ import SketchFilter from "@/components/SketchFilter";
 import { useSound } from "@/contexts/SoundContext";
 
 const sectionNav = ["Context", "Role", "Process", "System", "Impact", "Learnings"];
+
+type CategoryKey = "Color" | "Typography" | "Buttons" | "Forms" | "Spacing" | "Cards" | "Inputs";
 
 const processSteps = [
   {
