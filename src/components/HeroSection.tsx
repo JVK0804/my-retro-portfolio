@@ -28,7 +28,7 @@ const TypingWelcome = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.6 }}
-      className="font-mono text-foreground/70 text-sm mb-8 tracking-wide min-h-[1.5em]"
+      className="font-mono-space text-foreground/70 text-sm mb-8 tracking-[0.12em] min-h-[1.5em]"
       aria-label={WELCOME_TEXT}
     >
       <span className="text-primary mr-1">$</span>
@@ -63,7 +63,7 @@ const HeroSection = () => {
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl mb-2"
       >
-        A Zillennial Designer
+        Product Designer
       </motion.h1>
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
@@ -122,7 +122,7 @@ const HeroSection = () => {
             document.getElementById("letsconnect")?.scrollIntoView({ behavior: "smooth" });
           }}
           onMouseEnter={() => play("hover")}
-          className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase cursor-pointer"
+          className="rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold tracking-wider text-primary-foreground shadow-md uppercase cursor-pointer transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
         >
           Let's Connect
         </a>
@@ -130,7 +130,7 @@ const HeroSection = () => {
           to="/about"
           onClick={() => play("whoosh")}
           onMouseEnter={() => play("hover")}
-          className="glass-card px-8 py-3 font-heading text-xs font-bold text-foreground hover:text-primary transition-colors tracking-wider uppercase"
+          className="glass-card px-8 py-3 font-heading text-xs font-bold tracking-wider text-foreground uppercase transition-colors hover:text-primary"
         >
           About me →
         </Link>

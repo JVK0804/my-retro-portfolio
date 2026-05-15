@@ -111,6 +111,22 @@ const slackPalette = [
   { name: "Dark Canvas", hex: "#1D1C21" },
 ];
 
+/** Served from /public/case-studies/slack/ (mirrors Framer “From Rough to Real” section). */
+const slackSketchImages = [
+  { src: "/case-studies/slack/sketches/IMG_7425.webp", alt: "Lo-fi paper sketch — Slack AI transparency concepts" },
+  { src: "/case-studies/slack/sketches/IMG_7426.webp", alt: "Lo-fi paper sketch — flows and annotations" },
+  { src: "/case-studies/slack/sketches/Z6eV1Vp9ggSp6mQkYuO6S60Mac.webp", alt: "Lo-fi sketch — channel and alert patterns" },
+  { src: "/case-studies/slack/sketches/e3e0Du4BwCDYKsSO2eLILmTRds.webp", alt: "Lo-fi sketch — moderation and privacy paths" },
+];
+
+const slackMidFiImages = [
+  { src: "/case-studies/slack/mid-fi/init-concepts-1.webp", alt: "Mid-fi prototype — initial concept exploration" },
+  { src: "/case-studies/slack/mid-fi/initit-concept-2.webp", alt: "Mid-fi prototype — iteration on interaction model" },
+  { src: "/case-studies/slack/mid-fi/init-concept-3.webp", alt: "Mid-fi prototype — refined flows" },
+  { src: "/case-studies/slack/mid-fi/init-concepts-3-variant.webp", alt: "Mid-fi prototype — alternate concept direction" },
+  { src: "/case-studies/slack/mid-fi/img-8392.webp", alt: "Mid-fi prototype board — consolidated screens" },
+];
+
 const reflections = [
   {
     title: "Turning Ethical Frameworks into Actionable Design Decisions",
@@ -246,7 +262,7 @@ const SlackCaseStudy = () => {
               href="#designs"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="glass-card px-7 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary tracking-wider uppercase"
+              className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
             >
               Final Designs
             </a>
@@ -407,22 +423,65 @@ const SlackCaseStudy = () => {
           <p className="font-body text-foreground/60 max-w-2xl mb-12">
             Every concept iterated through Wizard of Oz testing with 40 real students before earning its place in the final designs.
           </p>
-          <div className="grid md:grid-cols-2 gap-6">
-            {["Lo-Fi Sketches", "Mid-Fi Prototypes"].map((label, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="glass-card aspect-[4/3] flex items-center justify-center relative overflow-hidden"
-              >
-                <div className="absolute inset-0 opacity-20" style={{
-                  backgroundImage: "repeating-linear-gradient(45deg, hsl(var(--foreground)) 0 1px, transparent 1px 12px)"
-                }} />
-                <p className="mono-heading text-2xl font-bold text-foreground/60 relative z-10">{label}</p>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-10 md:gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Lo-Fi Sketches</h3>
+              <p className="font-body text-sm text-foreground/50 mb-6">Paper and whiteboard explorations before higher fidelity.</p>
+              <div className="space-y-4">
+                {slackSketchImages.map((img, i) => (
+                  <motion.div
+                    key={img.src}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ delay: i * 0.05, duration: 0.5 }}
+                    className="glass-card overflow-hidden p-2 md:p-3 border border-border/50"
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-auto rounded-md object-contain bg-muted/20"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
+              <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Mid-Fi Prototypes</h3>
+              <p className="font-body text-sm text-foreground/50 mb-6">Screen-level flows aligned with Slack patterns.</p>
+              <div className="space-y-4">
+                {slackMidFiImages.map((img, i) => (
+                  <motion.div
+                    key={img.src}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ delay: i * 0.05, duration: 0.5 }}
+                    className="glass-card overflow-hidden p-2 md:p-3 border border-border/50"
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-auto rounded-md object-contain bg-muted/20"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -550,7 +609,7 @@ const SlackCaseStudy = () => {
               to="/#work"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="glass-card inline-flex items-center gap-3 px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary tracking-wider uppercase"
+              className="inline-flex items-center gap-3 rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
             >
               <ArrowLeft size={14} /> Back to all projects
             </Link>
