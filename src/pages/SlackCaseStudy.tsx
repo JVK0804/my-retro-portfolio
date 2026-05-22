@@ -423,16 +423,19 @@ const SlackCaseStudy = () => {
           <p className="font-body text-foreground/60 max-w-2xl mb-12">
             Every concept iterated through Wizard of Oz testing with 40 real students before earning its place in the final designs.
           </p>
-          <div className="grid md:grid-cols-2 gap-10 md:gap-12">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Lo-Fi Sketches</h3>
-              <p className="font-body text-sm text-foreground/50 mb-6">Paper and whiteboard explorations before higher fidelity.</p>
-              <div className="space-y-4">
+          {/* Two explicit grid columns (plain divs); min-w-0 + overflow on cards stops wide art from bleeding into the other column. */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 md:items-start">
+            <div className="min-w-0 w-full flex flex-col">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6 }}
+              >
+                <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Lo-Fi Sketches</h3>
+                <p className="font-body text-sm text-foreground/50 mb-6">Paper and whiteboard explorations before higher fidelity.</p>
+              </motion.div>
+              <div className="flex min-w-0 w-full flex-col gap-4">
                 {slackSketchImages.map((img, i) => (
                   <motion.div
                     key={img.src}
@@ -440,28 +443,30 @@ const SlackCaseStudy = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ delay: i * 0.05, duration: 0.5 }}
-                    className="glass-card overflow-hidden p-2 md:p-3 border border-border/50"
+                    className="glass-card w-full min-w-0 max-w-full overflow-hidden p-2 md:p-3 border border-border/50"
                   >
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className="w-full h-auto rounded-md object-contain bg-muted/20"
+                      className="block w-full max-w-full h-auto rounded-md object-contain bg-muted/20"
                       loading="lazy"
                       decoding="async"
                     />
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Mid-Fi Prototypes</h3>
-              <p className="font-body text-sm text-foreground/50 mb-6">Screen-level flows aligned with Slack patterns.</p>
-              <div className="space-y-4">
+            </div>
+            <div className="min-w-0 w-full flex flex-col">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+              >
+                <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Mid-Fi Prototypes</h3>
+                <p className="font-body text-sm text-foreground/50 mb-6">Screen-level flows aligned with Slack patterns.</p>
+              </motion.div>
+              <div className="flex min-w-0 w-full flex-col gap-4">
                 {slackMidFiImages.map((img, i) => (
                   <motion.div
                     key={img.src}
@@ -469,19 +474,19 @@ const SlackCaseStudy = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ delay: i * 0.05, duration: 0.5 }}
-                    className="glass-card overflow-hidden p-2 md:p-3 border border-border/50"
+                    className="glass-card w-full min-w-0 max-w-full overflow-hidden p-2 md:p-3 border border-border/50"
                   >
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className="w-full h-auto rounded-md object-contain bg-muted/20"
+                      className="block w-full max-w-full h-auto rounded-md object-contain bg-muted/20"
                       loading="lazy"
                       decoding="async"
                     />
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
