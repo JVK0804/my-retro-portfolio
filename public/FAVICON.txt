@@ -1,0 +1,8 @@
+Add your favicon here when ready:
+
+  • favicon.ico  — classic multi-size icon
+  • favicon.png  — e.g. 32×32 or 512×512
+
+Then uncomment the matching <link rel="icon" …> line in index.html (search for "Favicon").
+
+Hard-refresh the browser (Cmd+Shift+R) after adding the file.
