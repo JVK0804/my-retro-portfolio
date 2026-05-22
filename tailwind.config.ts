@@ -14,9 +14,14 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["'Abril Fatface'", "'Courier Prime'", "serif"],
-        body: ["'Space Mono'", "'Courier Prime'", "monospace"],
-        display: ["'Abril Fatface'", "'Courier Prime'", "serif"],
+        heading: ["var(--font-serif-fraunces)", "Georgia", "serif"],
+        body: ["var(--font-body)"],
+        display: ["var(--font-display)"],
+        mono: ["var(--font-mono)"],
+        "mono-space": ["var(--font-mono-space)"],
+        "serif-fraunces": ["var(--font-serif-fraunces)"],
+        "serif-playfair": ["var(--font-serif-playfair)"],
+        "serif-dm": ["var(--font-serif-dm)"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -53,6 +58,23 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         cream: "hsl(var(--heritage-cream))",
+        heritage: {
+          cream: "var(--color-heritage-cream)",
+          bright: "var(--color-heritage-bright)",
+          shadow: "var(--color-heritage-shadow)",
+        },
+        teal: {
+          deep: "var(--color-teal-deep)",
+          volt: "var(--color-teal-volt)",
+          phosphor: "var(--color-teal-phosphor)",
+        },
+        ink: {
+          DEFAULT: "var(--color-ink-primary)",
+          muted: "var(--color-ink-muted)",
+          disabled: "var(--color-ink-disabled)",
+          primary: "var(--color-ink-primary)",
+          medium: "var(--color-ink-muted)",
+        },
         warm: {
           DEFAULT: "hsl(var(--accent-warm))",
           glow: "hsl(var(--accent-glow))",
@@ -61,10 +83,6 @@ export default {
         steel: {
           DEFAULT: "hsl(var(--steel-blue))",
           light: "hsl(var(--steel-blue-light))",
-        },
-        ink: {
-          DEFAULT: "hsl(var(--ink-deep))",
-          medium: "hsl(var(--ink-medium))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -80,7 +98,9 @@ export default {
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 3px)",
+        sm: "calc(var(--radius) - 4px)",
+        pill: "var(--radius-pill)",
+        xl: "var(--radius-xl)",
       },
       keyframes: {
         "accordion-down": {

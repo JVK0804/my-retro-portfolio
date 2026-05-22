@@ -1,128 +1,149 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,400&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
+
+@import "./styles/tokens.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Surfaces load with design tokens immediately (no white flash before CSS vars). */
+html {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: hsl(var(--background));
+}
+
+::selection {
+  background: var(--color-teal-subtle);
+  color: hsl(var(--foreground));
+}
+
 @layer base {
   :root {
-    /* Inverted: bright orange background with cream/black text — slightly desaturated */
-    --background: 22 72% 60%;
-    --foreground: 225 28% 14%;
+    /* Shadcn HSL tokens — aligned with design-system.md (Heritage Cream × Cerulean Teal) */
+    --background: 43 21% 87%;
+    --foreground: 40 11% 9%;
 
-    --card: 22 85% 62%;
-    --card-foreground: 225 30% 10%;
+    --card: 42 22% 93%;
+    --card-foreground: 40 11% 9%;
 
-    --popover: 22 88% 60%;
-    --popover-foreground: 225 30% 10%;
+    --popover: 42 22% 92%;
+    --popover-foreground: 40 11% 9%;
 
-    --primary: 38 40% 94%;
-    --primary-foreground: 225 30% 10%;
+    --primary: 192 91% 31%;
+    --primary-foreground: 43 30% 97%;
 
-    --secondary: 22 70% 48%;
-    --secondary-foreground: 38 40% 94%;
+    --secondary: 44 14% 79%;
+    --secondary-foreground: 40 11% 12%;
 
-    --muted: 22 60% 64%;
-    --muted-foreground: 225 25% 18%;
+    --muted: 42 16% 82%;
+    --muted-foreground: 42 10% 35%;
 
-    --accent: 38 40% 94%;
-    --accent-foreground: 225 30% 10%;
+    --accent: 189 71% 50%;
+    --accent-foreground: 40 11% 9%;
 
-    --destructive: 0 65% 38%;
-    --destructive-foreground: 38 40% 94%;
+    --destructive: 0 65% 42%;
+    --destructive-foreground: 43 30% 97%;
 
-    --border: 22 50% 42%;
-    --input: 22 50% 42%;
-    --ring: 38 40% 94%;
+    --border: 44 14% 76%;
+    --input: 44 14% 76%;
+    --ring: 192 91% 31%;
 
-    --radius: 0.25rem;
+    --radius: 0.875rem;
 
-    /* Custom tokens — orange-forward palette with cream accents */
-    --heritage-cream: 38 40% 94%;
-    --accent-warm: 38 40% 94%;
-    --accent-glow: 38 60% 88%;
-    --accent-muted: 22 70% 40%;
-    --steel-blue: 225 30% 10%;
-    --steel-blue-light: 225 25% 22%;
-    --ink-deep: 225 30% 10%;
-    --ink-medium: 225 25% 22%;
-    --glass-bg: 22 85% 60% / 0.65;
-    --glass-border: 225 30% 10% / 0.25;
-    --glass-shadow: 225 30% 10% / 0.18;
-    --scanline-opacity: 0.05;
+    --heritage-cream: 43 21% 87%;
+    --accent-warm: 189 71% 50%;
+    --accent-glow: 189 85% 72%;
+    --accent-muted: 192 45% 28%;
+    --steel-blue: 192 91% 31%;
+    --steel-blue-light: 189 71% 50%;
+    --ink-deep: 40 11% 9%;
+    --ink-medium: 42 10% 35%;
+    --glass-bg: 43 22% 92% / 0.55;
+    --glass-border: 0 0% 100% / 0.45;
+    --glass-shadow: 40 11% 9% / 0.1;
+    --scanline-opacity: 0.04;
 
-    --teal-vibrant: 38 40% 94%;
-    --teal-glow: 38 60% 88%;
-    --teal-muted: 225 30% 10%;
+    --teal-vibrant: 192 91% 31%;
+    --teal-glow: 189 71% 50%;
+    --teal-muted: 192 45% 28%;
 
-    --font-heading: 'Abril Fatface', 'Courier Prime', serif;
-    --font-body: 'Space Mono', 'Courier Prime', monospace;
-    --font-display: 'Abril Fatface', 'Courier Prime', serif;
+    --font-heading: var(--font-serif-fraunces);
 
-    --sidebar-background: 38 25% 90%;
-    --sidebar-foreground: 225 25% 12%;
-    --sidebar-primary: 225 25% 12%;
-    --sidebar-primary-foreground: 38 30% 92%;
-    --sidebar-accent: 38 20% 85%;
-    --sidebar-accent-foreground: 225 25% 12%;
-    --sidebar-border: 38 18% 80%;
-    --sidebar-ring: 210 80% 50%;
+    --sidebar-background: 42 20% 90%;
+    --sidebar-foreground: 40 11% 12%;
+    --sidebar-primary: 192 91% 31%;
+    --sidebar-primary-foreground: 43 30% 97%;
+    --sidebar-accent: 42 18% 86%;
+    --sidebar-accent-foreground: 40 11% 12%;
+    --sidebar-border: 44 12% 82%;
+    --sidebar-ring: 192 91% 31%;
   }
 
   .dark {
-    --background: 225 22% 8%;
-    --foreground: 38 25% 78%;
+    --background: 40 11% 9%;
+    --foreground: 43 22% 93%;
 
-    --card: 225 20% 11%;
-    --card-foreground: 38 25% 78%;
+    --card: 40 9% 12%;
+    --card-foreground: 43 22% 93%;
 
-    --popover: 225 20% 10%;
-    --popover-foreground: 38 25% 78%;
+    --popover: 40 9% 11%;
+    --popover-foreground: 43 22% 93%;
 
-    --primary: 22 92% 58%;
-    --primary-foreground: 225 22% 8%;
+    --primary: 189 71% 50%;
+    --primary-foreground: 40 11% 9%;
 
-    --secondary: 22 30% 18%;
-    --secondary-foreground: 38 25% 78%;
+    --secondary: 40 8% 16%;
+    --secondary-foreground: 43 22% 93%;
 
-    --muted: 225 16% 14%;
-    --muted-foreground: 225 10% 55%;
+    --muted: 40 8% 15%;
+    --muted-foreground: 42 10% 62%;
 
-    --accent: 22 85% 55%;
-    --accent-foreground: 225 22% 8%;
+    --accent: 189 71% 45%;
+    --accent-foreground: 40 11% 9%;
 
-    --destructive: 0 65% 58%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62% 48%;
+    --destructive-foreground: 43 30% 97%;
 
-    --border: 225 16% 18%;
-    --input: 225 16% 18%;
-    --ring: 22 92% 58%;
+    --border: 40 8% 18%;
+    --input: 40 8% 18%;
+    --ring: 189 71% 50%;
 
-    --heritage-cream: 38 25% 78%;
-    --accent-warm: 22 92% 58%;
-    --accent-glow: 30 95% 65%;
-    --accent-muted: 18 70% 45%;
-    --steel-blue: 22 85% 55%;
-    --steel-blue-light: 30 90% 62%;
-    --ink-deep: 225 22% 8%;
-    --ink-medium: 225 10% 42%;
-    --glass-bg: 225 20% 11% / 0.85;
-    --glass-border: 22 60% 35% / 0.4;
-    --glass-shadow: 0 0% 0% / 0.4;
+    --heritage-cream: 40 11% 9%;
+    --accent-warm: 189 71% 50%;
+    --accent-glow: 189 85% 65%;
+    --accent-muted: 192 40% 35%;
+    --steel-blue: 189 71% 50%;
+    --steel-blue-light: 189 85% 72%;
+    --ink-deep: 43 22% 93%;
+    --ink-medium: 42 10% 62%;
+    --glass-bg: 40 9% 12% / 0.72;
+    --glass-border: 0 0% 100% / 0.12;
+    --glass-shadow: 0 0% 0% / 0.35;
     --scanline-opacity: 0.05;
 
-    --teal-vibrant: 22 92% 58%;
-    --teal-glow: 30 95% 65%;
-    --teal-muted: 18 70% 45%;
+    --teal-vibrant: 189 71% 50%;
+    --teal-glow: 189 85% 65%;
+    --teal-muted: 192 40% 35%;
 
-    --sidebar-background: 225 25% 6%;
-    --sidebar-foreground: 38 40% 84%;
-    --sidebar-primary: 22 92% 58%;
-    --sidebar-primary-foreground: 225 28% 5%;
-    --sidebar-accent: 225 20% 12%;
-    --sidebar-accent-foreground: 38 40% 84%;
-    --sidebar-border: 225 20% 13%;
-    --sidebar-ring: 22 92% 58%;
+    --sidebar-background: 40 10% 7%;
+    --sidebar-foreground: 43 22% 90%;
+    --sidebar-primary: 189 71% 50%;
+    --sidebar-primary-foreground: 40 11% 9%;
+    --sidebar-accent: 40 8% 14%;
+    --sidebar-accent-foreground: 43 22% 90%;
+    --sidebar-border: 40 8% 16%;
+    --sidebar-ring: 189 71% 50%;
   }
 }
 
@@ -135,15 +156,20 @@
     @apply bg-background text-foreground font-body antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif-fraunces);
   }
+
   .heading-font {
-    font-family: var(--font-heading);
+    font-family: var(--font-serif-fraunces);
   }
 }
 
-/* ===== GLOBAL SVG SKETCH FILTER ===== */
 svg.sketch-filters {
   position: absolute;
   width: 0;
@@ -152,34 +178,36 @@ svg.sketch-filters {
 }
 
 @layer components {
-  /* ===== GRAIN / NOISE TEXTURE ===== */
   .noise-overlay {
     position: relative;
   }
+
   .noise-overlay::before {
-    content: '';
+    content: "";
     position: fixed;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    opacity: 0.28;
+    opacity: 0.35;
     z-index: 50;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: var(--grain-scene);
     background-repeat: repeat;
-    background-size: 200px 200px;
+    background-size: var(--grain-size);
     animation: grain-shift 0.5s steps(3) infinite;
     mix-blend-mode: multiply;
+    will-change: transform;
+    transform: translateZ(0);
   }
+
   .dark .noise-overlay::before {
-    opacity: 0.35;
+    opacity: 0.28;
     mix-blend-mode: overlay;
   }
 
-  /* ===== SCANLINES — CRT retro effect ===== */
   .noise-overlay::after {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -192,92 +220,97 @@ svg.sketch-filters {
       0deg,
       transparent,
       transparent 2px,
-      hsl(var(--ink-deep) / 0.4) 2px,
-      hsl(var(--ink-deep) / 0.4) 4px
+      hsl(var(--ink-deep) / 0.35) 2px,
+      hsl(var(--ink-deep) / 0.35) 4px
     );
   }
 
-  /* ===== SKETCH EFFECT — hand-drawn wobbly borders ===== */
   .sketch-border {
     filter: url(#sketch-wobble);
   }
 
-  /* ===== RETRO GLASS CARD — sketch style ===== */
+  /* Design-system glass card (specular + glint) */
   .glass-card {
     @apply relative overflow-hidden;
-    background: hsl(var(--glass-bg));
-    border: 2px solid hsl(var(--glass-border));
-    backdrop-filter: blur(12px) saturate(1.2);
-    -webkit-backdrop-filter: blur(12px) saturate(1.2);
-    box-shadow:
-      0 2px 0 hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(0 0% 100% / 0.08),
-      3px 3px 0 hsl(var(--glass-shadow));
-    border-radius: 2px;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                border-color 0.3s ease;
-  }
-  .glass-card:hover {
-    transform: translateY(-2px) rotate(-0.3deg);
-    border-color: hsl(var(--accent-warm) / 0.4);
-    box-shadow:
-      0 4px 0 hsl(var(--glass-shadow)),
-      0 0 20px hsl(var(--accent-warm) / 0.08),
-      inset 0 1px 0 hsl(0 0% 100% / 0.1),
-      4px 4px 0 hsl(var(--glass-shadow));
+    isolation: isolate;
+    background: var(--color-glass-bg);
+    border: var(--border-glass);
+    border-radius: var(--radius-lg);
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    box-shadow: 0 4px 24px hsl(var(--foreground) / 0.06);
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s ease,
+      border-color 0.2s ease;
   }
 
-  /* ===== GLASS TOGGLE — sketch button ===== */
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--color-glass-specular-from), var(--color-glass-specular-to));
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glass-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-glass-glint), transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glass-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px hsl(var(--foreground) / 0.08);
+  }
+
   .glass-toggle {
     @apply inline-flex items-center justify-center;
-    background: hsl(var(--glass-bg));
-    border: 2px solid hsl(var(--glass-border));
-    backdrop-filter: blur(12px) saturate(1.2);
-    -webkit-backdrop-filter: blur(12px) saturate(1.2);
-    border-radius: 2px;
-    box-shadow:
-      0 2px 0 hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(0 0% 100% / 0.06),
-      2px 2px 0 hsl(var(--glass-shadow));
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .glass-toggle:hover {
-    background: hsl(var(--accent-warm) / 0.12);
-    border-color: hsl(var(--accent-warm) / 0.5);
-    transform: translateY(-1px) rotate(0.5deg);
-    box-shadow:
-      0 3px 0 hsl(var(--glass-shadow)),
-      0 0 16px hsl(var(--accent-warm) / 0.12),
-      3px 3px 0 hsl(var(--glass-shadow));
+    background: var(--color-glass-bg);
+    border: var(--border-glass);
+    border-radius: var(--radius-md);
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    transition: all 0.2s ease;
   }
 
-  /* ===== TICKER ===== */
+  .glass-toggle:hover {
+    border-color: var(--color-primary-border);
+    background: var(--color-teal-subtle);
+  }
+
   .ticker-scroll {
     display: flex;
     animation: ticker-slide 40s linear infinite;
   }
+
   .ticker-scroll:hover {
     animation-play-state: paused;
   }
 
-  /* ===== MONO HEADING — retro-futuristic sketch ===== */
   .mono-heading {
-    font-family: var(--font-heading);
-    letter-spacing: 0.04em;
-    line-height: 1.2;
+    font-family: var(--font-serif-fraunces);
+    font-variation-settings: var(--fraunces-heading);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
     text-transform: none;
-    
   }
 
-  /* ===== WARM SHIMMER (was teal) ===== */
   .teal-shimmer {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--accent-warm)),
-      hsl(var(--accent-glow)),
-      hsl(var(--accent-warm))
-    );
+    background: linear-gradient(135deg, var(--color-teal-deep), var(--color-teal-volt), var(--color-teal-deep));
     background-size: 200% 200%;
     animation: shimmer 3s ease-in-out infinite;
     -webkit-background-clip: text;
@@ -285,43 +318,39 @@ svg.sketch-filters {
     background-clip: text;
   }
 
-  /* ===== RETRO DIVIDER — sketch style ===== */
   .retro-divider {
     height: 2px;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(var(--accent-warm) / 0.4) 20%,
-      hsl(var(--accent-warm)) 50%,
-      hsl(var(--accent-warm) / 0.4) 80%,
+      var(--color-teal-border) 20%,
+      var(--color-teal-volt) 50%,
+      var(--color-teal-border) 80%,
       transparent 100%
     );
-    
   }
 
-  /* ===== RETRO TAG / BADGE — sketch ===== */
   .retro-tag {
     @apply font-heading text-[10px] px-3 py-1 tracking-wider;
-    border: 1px solid hsl(var(--steel-blue) / 0.4);
-    background: hsl(var(--steel-blue) / 0.1);
-    color: hsl(var(--steel-blue-light));
+    border: 1px solid var(--color-primary-border);
+    background: var(--color-teal-subtle);
+    color: var(--color-ink-muted);
     text-transform: none;
-    font-family: var(--font-body);
+    font-family: var(--font-mono-space);
     font-size: 11px;
+    border-radius: var(--radius-sm);
   }
 
-  /* ===== SKETCH SECTION BORDERS ===== */
   .sketch-section {
     border-style: solid;
     border-color: hsl(var(--border));
     filter: url(#sketch-wobble);
   }
 
-  /* ===== SKETCH UNDERLINE ===== */
   .sketch-underline {
     text-decoration: underline;
     text-decoration-style: wavy;
-    text-decoration-color: hsl(var(--accent-warm) / 0.4);
+    text-decoration-color: var(--color-teal-border);
     text-underline-offset: 4px;
   }
 }
@@ -330,26 +359,42 @@ svg.sketch-filters {
   .concentric-radius {
     border-radius: var(--radius);
   }
+
   .concentric-radius-inner {
     border-radius: calc(var(--radius) - 4px);
   }
 }
 
 @keyframes ticker-slide {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes shimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes grain-shift {
-  0% { transform: translate(0, 0); }
-  33% { transform: translate(-2%, -3%); }
-  66% { transform: translate(1%, 2%); }
-  100% { transform: translate(3%, -1%); }
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-2%, -3%);
+  }
+  66% {
+    transform: translate(1%, 2%);
+  }
+  100% {
+    transform: translate(3%, -1%);
+  }
 }
-
-/* Smooth card animations - glitch-flicker and glow-flash removed */

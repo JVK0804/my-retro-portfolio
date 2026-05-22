@@ -30,7 +30,7 @@ const About = () => {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="mono-heading text-5xl md:text-7xl font-bold text-center max-w-4xl mb-6"
           >
-            Digital Maturation
+            My Retro portfolio
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}

@@ -161,7 +161,7 @@ const CaseStudyTiles = () => {
             href="#work"
             onClick={() => play("click")}
             onMouseEnter={() => play("hover")}
-            className="glass-card px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary hover:opacity-90 transition-opacity tracking-wider uppercase cursor-pointer"
+            className="cursor-pointer rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
           >
             View all projects →
           </a>

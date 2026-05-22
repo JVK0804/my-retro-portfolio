@@ -1,0 +1,112 @@
+:root {
+  /* ─── Colors: Heritage Cream ─── */
+  --color-heritage-cream: #E8E4D9;
+  --color-heritage-bright: #F5F2EB;
+  --color-heritage-shadow: #D4CFBF;
+
+  /* ─── Colors: Cerulean Teal ─── */
+  --color-teal-deep: #0E7490;
+  --color-teal-volt: #22B8CF;
+  --color-teal-phosphor: #A5F3FC;
+  --color-teal-subtle: rgba(14, 116, 144, 0.1);
+  --color-teal-border: rgba(14, 116, 144, 0.28);
+
+  /* Semantic aliases */
+  --color-primary: #0e7490;
+  --color-primary-hover: #22b8cf;
+  --color-primary-phosphor: #a5f3fc;
+  --color-primary-subtle: rgba(14, 116, 144, 0.1);
+  --color-primary-border: rgba(14, 116, 144, 0.28);
+
+  /* ─── Colors: Ink ─── */
+  --color-ink-primary: #1c1a14;
+  --color-ink-muted: #5a5648;
+  --color-ink-disabled: #9a9488;
+
+  /* ─── Colors: Glass ─── */
+  --color-glass-bg: rgba(232, 228, 217, 0.45);
+  --color-glass-border: rgba(255, 255, 255, 0.55);
+  --color-glass-glint: rgba(255, 255, 255, 0.8);
+  --color-glass-specular-from: rgba(255, 255, 255, 0.28);
+  --color-glass-specular-to: rgba(255, 255, 255, 0.04);
+
+  /* ─── Glass composites ─── */
+  --border-glass: 1px solid var(--color-glass-border);
+  --blur-glass: blur(12px);
+  --blur-nav: blur(16px);
+
+  /* ─── Grain ─── */
+  --grain-scene: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+  --grain-size: 128px 128px;
+
+  /* ─── Typography: Font Families ─── */
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-mono-space: "Space Mono", ui-monospace, monospace;
+  --font-serif-fraunces: "Fraunces", Georgia, serif;
+  --font-serif-playfair: "Playfair Display", Georgia, serif;
+  --font-serif-dm: "DM Serif Display", Georgia, serif;
+
+  /* ─── Typography: Fraunces variation presets ─── */
+  --fraunces-display: "opsz" 144, "WONK" 1;
+  --fraunces-heading: "opsz" 72, "WONK" 1;
+  --fraunces-small: "opsz" 9, "WONK" 0;
+
+  /* ─── Typography: scale ─── */
+  --font-size-display: 80px;
+  --font-size-h1: 52px;
+  --font-size-h2: 28px;
+  --font-size-h3: 20px;
+  --font-size-body: 16px;
+  --font-size-caption: 13px;
+  --font-size-label: 11px;
+  --font-size-terminal: 13px;
+
+  /* ─── Spacing (4px base) ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+
+  /* ─── Border radius ─── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 100px;
+
+  /* ─── Motion (haptic spring) ─── */
+  --duration-press: 30ms;
+  --duration-spring: 280ms;
+  --scale-press: 0.955;
+  --scale-overshoot: 1.018;
+}
+
+/* Tailwind `dark` class + optional data attribute */
+:is(.dark, [data-theme="dark"]) {
+  --color-heritage-cream: #1c1a14;
+  --color-heritage-bright: #2a2720;
+  --color-heritage-shadow: #141210;
+
+  --color-teal-subtle: rgba(34, 184, 207, 0.12);
+  --color-teal-border: rgba(34, 184, 207, 0.25);
+
+  --color-ink-primary: #f5f2eb;
+  --color-ink-muted: #b8b3a6;
+  --color-ink-disabled: #6e6a5e;
+
+  --color-glass-bg: rgba(28, 26, 20, 0.65);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-glint: rgba(255, 255, 255, 0.15);
+  --color-glass-specular-from: rgba(255, 255, 255, 0.06);
+  --color-glass-specular-to: rgba(255, 255, 255, 0.01);
+}

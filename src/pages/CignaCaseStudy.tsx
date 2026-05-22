@@ -193,7 +193,7 @@ const CignaCaseStudy = () => {
               href="#system"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="glass-card px-7 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary tracking-wider uppercase"
+              className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
             >
               View Design Components
             </a>
@@ -654,7 +654,7 @@ const CignaCaseStudy = () => {
               to="/#work"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="glass-card inline-flex items-center gap-3 px-8 py-3 font-heading text-xs font-bold text-primary-foreground bg-primary tracking-wider uppercase"
+              className="inline-flex items-center gap-3 rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
             >
               <ArrowLeft size={14} /> Back to all projects
             </Link>

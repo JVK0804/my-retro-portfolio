@@ -25,7 +25,7 @@ const Footer = () => {
           href="https://calendly.com/kaushik-jv6/30min"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 glass-card px-8 py-4 font-heading text-[10px] font-bold tracking-widest uppercase text-primary hover:text-primary-foreground hover:bg-primary transition-all duration-300 mb-12"
+          className="mb-12 inline-flex items-center gap-3 rounded-[var(--radius-md)] border border-primary/30 bg-primary/10 px-8 py-4 font-heading text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
         >
           <Calendar size={16} />
           Schedule a 30-min call
