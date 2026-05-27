@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { Camera, MapPin } from "lucide-react";
-import vizag from "@/assets/landmark-vizag.png";
+import vizag from "@/assets/landmark-visakhapatnam.png";
 import hyderabad from "@/assets/landmark-hyderabad.png";
 import bloomington from "@/assets/landmark-bloomington.png";
 
@@ -135,7 +135,7 @@ const CityPanel = ({
             width={1536}
             height={1024}
             loading="lazy"
-            className="mt-8 w-full max-w-md h-auto opacity-80 dark:invert md:hidden"
+            className="landmark-illustration mt-8 max-w-md md:hidden"
           />
         </div>
 
@@ -148,7 +148,7 @@ const CityPanel = ({
             width={1536}
             height={1024}
             loading="lazy"
-            className="w-full h-auto opacity-60 dark:invert dark:opacity-75"
+            className="landmark-illustration"
           />
         </div>
       </div>

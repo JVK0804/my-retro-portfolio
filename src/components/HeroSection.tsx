@@ -44,12 +44,6 @@ const TypingWelcome = () => {
   );
 };
 
-const logos = [
-  { name: "Slack", url: "https://framerusercontent.com/images/Y1BLUOFjSoTgGkUdTbXiGf240.png?width=1600&height=572" },
-  { name: "Anthem", url: "https://framerusercontent.com/images/KfD31x5VYV55hirSEkUW5j4Vg.png?width=2853&height=512" },
-  { name: "Deloitte", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Deloitte.svg/200px-Deloitte.svg.png" },
-];
-
 const HeroSection = () => {
   const { play } = useSound();
 
@@ -57,56 +51,26 @@ const HeroSection = () => {
     <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
       <TypingWelcome />
 
-      <motion.h1
+      <motion.h2
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl mb-2"
+        className="mono-heading text-3xl md:text-5xl font-bold text-center max-w-4xl leading-tight"
       >
-        Product Designer
-      </motion.h1>
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl mb-2"
-      >
-        Crafting the <span className="teal-shimmer">handshake</span> between humans and AI.
-      </motion.h1>
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-4xl md:text-6xl lg:text-7xl font-bold text-center max-w-4xl"
-      >
-        Built to scale.
-      </motion.h1>
+        UX Engineer crafting handshake between Design and{" "}
+        <span className="font-mono-space font-normal text-primary">
+          &lt;<span className="teal-shimmer">Code</span>/&gt;
+        </span>
+      </motion.h2>
 
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="font-body text-foreground/50 text-[11px] mt-12 mb-5 tracking-[0.25em] uppercase"
-      >
-        Shipped at
-      </motion.p>
-
-      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-        className="flex items-center gap-8 flex-wrap justify-center opacity-40"
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="font-body text-foreground/60 text-sm md:text-base text-center max-w-xl mt-12"
       >
-        {logos.map((logo) => (
-          <img
-            key={logo.name}
-            src={logo.url}
-            alt={logo.name}
-            className="h-7 md:h-9 object-contain grayscale"
-            loading="lazy"
-          />
-        ))}
-      </motion.div>
+        Previously worked for Deloitte, Anthem and Cigna.
+      </motion.p>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}

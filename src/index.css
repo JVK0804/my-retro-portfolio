@@ -341,6 +341,21 @@ svg.sketch-filters {
     border-radius: var(--radius-sm);
   }
 
+  /* About page city art — export PNG with black strokes on transparent background */
+  .landmark-illustration {
+    @apply w-full h-auto max-w-full object-contain;
+    opacity: 0.88;
+  }
+
+  html:not(.dark) .landmark-illustration {
+    filter: none;
+  }
+
+  html.dark .landmark-illustration {
+    filter: invert(1) brightness(1.05);
+    opacity: 0.82;
+  }
+
   .sketch-section {
     border-style: solid;
     border-color: hsl(var(--border));

@@ -1,8 +1,6 @@
-Add your favicon here when ready:
+A temporary favicon.svg (K monogram) is active until you replace it.
 
-  • favicon.ico  — classic multi-size icon
-  • favicon.png  — e.g. 32×32 or 512×512
+To use your own:
+  • Replace public/favicon.svg, or add favicon.ico / favicon.png and update the <link rel="icon"> in index.html.
 
-Then uncomment the matching <link rel="icon" …> line in index.html (search for "Favicon").
-
-Hard-refresh the browser (Cmd+Shift+R) after adding the file.
+Hard-refresh the browser (Cmd+Shift+R) or clear site data for localhost after changing.
