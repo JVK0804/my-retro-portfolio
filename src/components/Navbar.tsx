@@ -39,8 +39,8 @@ const Navbar = () => {
 
   const renderNavItem = (item: typeof navItems[0], mobile = false) => {
     const baseClass = mobile
-      ? "font-heading text-[10px] tracking-widest uppercase text-muted-foreground"
-      : `font-heading text-[10px] tracking-widest uppercase transition-colors ${
+      ? "font-heading text-xs tracking-widest uppercase text-muted-foreground"
+      : `font-heading text-xs tracking-widest uppercase transition-colors ${
           location.pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-primary"
         }`;
 
@@ -88,29 +88,29 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-      <div className="glass-card px-6 py-3 flex items-center justify-between max-w-5xl mx-auto">
-        <Link to="/" className="heading-font text-sm font-bold tracking-[0.25em] uppercase text-foreground">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-5">
+      <div className="glass-card mx-auto flex max-w-6xl items-center justify-between px-8 py-4">
+        <Link to="/" className="heading-font text-base font-bold tracking-[0.25em] uppercase text-foreground">
           JVK
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => renderNavItem(item))}
           <SoundToggle />
           <ThemeToggle />
         </div>
 
         {/* Mobile toggle */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-4 md:hidden">
           <SoundToggle />
           <ThemeToggle />
           <button
-            className="text-foreground"
+            className="text-foreground p-1"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -122,7 +122,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="glass-card mt-2 px-6 py-4 flex flex-col gap-4 md:hidden"
+            className="glass-card mx-auto mt-2 flex max-w-6xl flex-col gap-5 px-8 py-5 md:hidden"
           >
             {navItems.map((item) => renderNavItem(item, true))}
           </motion.div>

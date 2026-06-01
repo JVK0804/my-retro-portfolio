@@ -28,10 +28,10 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggle}
-      className="glass-toggle w-9 h-9 text-muted-foreground hover:text-primary"
+      className="glass-toggle h-10 w-10 text-muted-foreground hover:text-primary"
       aria-label="Toggle theme"
     >
-      {dark ? <Sun size={16} /> : <Moon size={16} />}
+      {dark ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   );
 };

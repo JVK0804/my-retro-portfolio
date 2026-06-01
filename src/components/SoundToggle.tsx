@@ -15,11 +15,11 @@ const SoundToggle = () => {
   return (
     <button
       onClick={handleToggle}
-      className="glass-toggle w-9 h-9 text-muted-foreground hover:text-primary transition-colors"
+      className="glass-toggle h-10 w-10 text-muted-foreground transition-colors hover:text-primary"
       aria-label={enabled ? "Mute sound effects" : "Enable sound effects"}
       title={enabled ? "Sound on" : "Sound off"}
     >
-      {enabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
+      {enabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
     </button>
   );
 };

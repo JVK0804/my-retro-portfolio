@@ -1,4 +1,4 @@
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import { useScroll, useTransform, motion, MotionValue, useReducedMotion } from "framer-motion";
 import { toast } from "sonner";
 import crt from "@/assets/retro-crt.png";
 import cassette from "@/assets/retro-cassette.png";
@@ -115,12 +115,18 @@ const DoodleItem = ({
 };
 
 const ParallaxDoodles = () => {
+  const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const { play, loadingKey } = useEraSounds();
   const { enabled: soundEnabled } = useSound();
 
+  if (reduceMotion) return null;
+
   return (
-    <div className="absolute inset-0 pointer-events-none hidden md:block z-20">
+    <div
+      className="absolute inset-0 pointer-events-none hidden md:block z-20"
+      style={{ contain: "layout paint style" }}
+    >
       {doodles.map((d, i) => (
         <DoodleItem
           key={i}

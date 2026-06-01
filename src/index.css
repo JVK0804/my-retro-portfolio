@@ -197,8 +197,13 @@ svg.sketch-filters {
     background-size: var(--grain-size);
     animation: grain-shift 0.5s steps(3) infinite;
     mix-blend-mode: multiply;
-    will-change: transform;
     transform: translateZ(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .noise-overlay::before {
+      animation: none;
+    }
   }
 
   .dark .noise-overlay::before {
@@ -275,6 +280,117 @@ svg.sketch-filters {
   .glass-card:hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 32px hsl(var(--foreground) / 0.08);
+  }
+
+  /* Long case-study pages: skip backdrop-blur (repaints every scroll frame) */
+  .case-study-page .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: hsl(var(--card) / 0.94);
+  }
+
+  .case-study-page .glass-card:hover {
+    transform: none;
+  }
+
+  .glass-card--media {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: hsl(var(--muted) / 0.35);
+    box-shadow: none;
+  }
+
+  .glass-card--media::before,
+  .glass-card--media::after {
+    display: none;
+  }
+
+  .glass-card--media:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Pause animated grain on scroll-heavy pages */
+  .case-study-page.noise-overlay::before {
+    animation: none;
+    opacity: 0.2;
+  }
+
+  .case-study-page.noise-overlay::after {
+    opacity: calc(var(--scanline-opacity) * 0.55);
+  }
+
+  .case-study-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 480px;
+  }
+
+  .case-study-page {
+    scroll-snap-type: y proximity;
+  }
+
+  .case-study-viewport {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+
+  /* Hero hi-fi stills — portrait phones (iPhone-like corner radius) */
+  .case-study-phone-frame {
+    aspect-ratio: 9 / 19.5;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border) / 0.55);
+    background: hsl(var(--muted) / 0.2);
+    box-shadow: inset 0 0 0 1px hsl(var(--background) / 0.35);
+  }
+
+  .case-study-phone-frame--hero-center {
+    width: clamp(176px, 23vw, 224px);
+    border-radius: 1.65rem;
+  }
+
+  .case-study-phone-frame--hero-side {
+    width: clamp(162px, 20vw, 200px);
+    border-radius: 1.5rem;
+  }
+
+  .case-study-phone-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Prototype videos — aspect ratio set inline from real dimensions */
+  .case-study-media-frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .case-study-media-frame--landscape {
+    width: 100%;
+    max-width: min(100%, 42rem);
+  }
+
+  .case-study-media-frame--portrait {
+    margin-inline: auto;
+  }
+
+  .case-study-sketch-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .ticker-scroll .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: hsl(var(--card) / 0.92);
   }
 
   .glass-toggle {

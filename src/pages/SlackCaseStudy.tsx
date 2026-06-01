@@ -111,20 +111,27 @@ const slackPalette = [
   { name: "Dark Canvas", hex: "#1D1C21" },
 ];
 
-/** Served from /public/case-studies/slack/ (mirrors Framer “From Rough to Real” section). */
-const slackSketchImages = [
-  { src: "/case-studies/slack/sketches/IMG_7425.webp", alt: "Lo-fi paper sketch — Slack AI transparency concepts" },
-  { src: "/case-studies/slack/sketches/IMG_7426.webp", alt: "Lo-fi paper sketch — flows and annotations" },
-  { src: "/case-studies/slack/sketches/Z6eV1Vp9ggSp6mQkYuO6S60Mac.webp", alt: "Lo-fi sketch — channel and alert patterns" },
-  { src: "/case-studies/slack/sketches/e3e0Du4BwCDYKsSO2eLILmTRds.webp", alt: "Lo-fi sketch — moderation and privacy paths" },
+/** Evidence section — side-by-side ChatGPT comparison (Framer #evidence, before Process). */
+const slackEvidenceImages = [
+  { src: "/case-studies/slack/mid-fi/background-shadow.webp", alt: "ChatGPT read of Slack banter without channel context" },
+  { src: "/case-studies/slack/mid-fi/background-shadow-2.webp", alt: "ChatGPT read of the same banter with engagement context" },
 ];
 
+/** Lo-Fi column order matches Framer #sketches left column. */
+const slackSketchImages = [
+  { src: "/case-studies/slack/sketches/e3e0Du4BwCDYKsSO2eLILmTRds.webp", alt: "Lo-fi sketch — moderation and privacy paths" },
+  { src: "/case-studies/slack/sketches/Z6eV1Vp9ggSp6mQkYuO6S60Mac.webp", alt: "Lo-fi sketch — channel and alert patterns" },
+  { src: "/case-studies/slack/sketches/IMG_7425.webp", alt: "Lo-fi paper sketch — Slack AI transparency concepts" },
+  { src: "/case-studies/slack/sketches/IMG_7426.webp", alt: "Lo-fi paper sketch — flows and annotations" },
+  { src: "/case-studies/slack/mid-fi/img-8392.webp", alt: "Lo-fi photo — whiteboard iteration session" },
+];
+
+/** Mid-Fi column — screen flows only (Framer #sketches right column). */
 const slackMidFiImages = [
   { src: "/case-studies/slack/mid-fi/init-concepts-1.webp", alt: "Mid-fi prototype — initial concept exploration" },
   { src: "/case-studies/slack/mid-fi/initit-concept-2.webp", alt: "Mid-fi prototype — iteration on interaction model" },
   { src: "/case-studies/slack/mid-fi/init-concept-3.webp", alt: "Mid-fi prototype — refined flows" },
   { src: "/case-studies/slack/mid-fi/init-concepts-3-variant.webp", alt: "Mid-fi prototype — alternate concept direction" },
-  { src: "/case-studies/slack/mid-fi/img-8392.webp", alt: "Mid-fi prototype board — consolidated screens" },
 ];
 
 const reflections = [
@@ -162,7 +169,7 @@ const SlackCaseStudy = () => {
   const { play } = useSound();
 
   return (
-    <div className="noise-overlay min-h-screen bg-background text-foreground">
+    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground">
       <SketchFilter />
       <Navbar />
 
@@ -311,47 +318,46 @@ const SlackCaseStudy = () => {
         </div>
       </section>
 
-      {/* === EVIDENCE === */}
-      <section className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-5xl mx-auto">
+      {/* === EVIDENCE === — ~5% wider than sibling sections via tighter gutters + max-width */}
+      <section className="py-24 border-t border-border/40 px-[calc(1.5rem*0.95)] sm:px-[calc(1.5rem*0.95)]">
+        <div className="mx-auto w-full max-w-[calc(72rem*1.05)]">
           <SectionHeader
             kicker="The Evidence"
             title={<>We tested it ourselves. This is what AI thought a <span className="teal-shimmer">joke</span> looked like.</>}
           />
-          <div className="grid md:grid-cols-2 gap-6">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass-card p-8"
-            >
-              <p className="font-body text-[10px] tracking-widest uppercase text-foreground/50 mb-3">Without context</p>
-              <p className="mono-heading text-2xl font-bold text-foreground mb-4">"Documented conflict between teammates."</p>
-              <p className="font-body text-sm text-foreground/60">AI flagged casual banter as a workplace incident.</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass-card p-8 border-primary/40"
-            >
-              <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">With context</p>
-              <p className="mono-heading text-2xl font-bold text-foreground mb-4">"Friendly procrastination joke between project teammates."</p>
-              <p className="font-body text-sm text-foreground/60">Same words. Entirely different reading.</p>
-            </motion.div>
+          <p className="font-body text-foreground/60 mb-12 max-w-[calc(42rem*1.05)]">
+            We ran our own team&apos;s Slack banter through ChatGPT with and without context. The results became the core proof point for our Engagement Style feature.
+          </p>
+          <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 md:gap-[calc(2rem*1.05)] md:items-start">
+            {slackEvidenceImages.map((img, i) => (
+              <motion.div
+                key={img.src}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="w-full min-w-0 overflow-hidden rounded-lg border border-border/50 bg-muted/10"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="block w-full min-w-0 h-auto object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </motion.div>
+            ))}
           </div>
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="font-body text-foreground/70 text-center mt-10 max-w-2xl mx-auto italic"
+            className="font-body text-foreground/70 mt-12 max-w-[calc(48rem*1.05)] leading-relaxed italic"
           >
             Same message. Same conversation. Completely different AI understanding.
             <br />
-            <span className="text-primary not-italic font-bold">Context isn't optional — it's the entire product.</span>
+            <span className="text-primary not-italic font-bold">Context isn&apos;t optional — it&apos;s the entire product.</span>
           </motion.p>
         </div>
       </section>

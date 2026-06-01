@@ -108,7 +108,7 @@ const CignaCaseStudy = () => {
   const categories: CategoryKey[] = ["Color", "Typography", "Buttons", "Forms", "Spacing", "Cards", "Inputs"];
 
   return (
-    <div className="noise-overlay min-h-screen bg-background text-foreground">
+    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground">
       <SketchFilter />
       <Navbar />
 
