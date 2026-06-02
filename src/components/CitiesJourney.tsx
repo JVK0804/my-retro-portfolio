@@ -22,7 +22,7 @@ const cities: City[] = [
     region: "Andhra Pradesh, India",
     years: "Where it began",
     landmark: vizag,
-    text: "Born by the Bay of Bengal, raised under the watchful gaze of Dolphin's Nose hill. Where beauty meets innovation — the salt air, the steel plant, and the slow lighthouse blink taught me that craft and engineering can share a coastline.",
+    text: "Born by the Bay of Bengal, raised under the watchful gaze of Dolphin's Nose hill. Where beauty meets innovation: the salt air, the steel plant, and the slow lighthouse blink taught me that craft and engineering can share a coastline.",
     side: "left",
   },
   {
@@ -31,14 +31,14 @@ const cities: City[] = [
     region: "Telangana, India",
     years: "First job, first love",
     landmark: hyderabad,
-    text: "Charminar, biryani, and a city that evolves at terabytes-per-second. Hyderabad gave me my first design role and the chaotic creative pulse of HiTech City — where Mughal arches meet GPU clusters, and I fell in love with building for scale.",
+    text: "Charminar, biryani, and a city that evolves at terabytes-per-second. Hyderabad gave me my first design role and the chaotic creative pulse of HiTech City, where Mughal arches meet GPU clusters, and I fell in love with building for scale.",
     side: "right",
   },
   {
     era: "Home · Chapter III",
     city: "Bloomington",
     region: "Indiana, USA",
-    years: "Discovered — third home",
+    years: "Discovered, third home",
     landmark: bloomington,
     text: "Walked through the Sample Gates and walked out a sharper designer. Indiana University gave me the language of HCI, the rigor of research, and a quieter midwestern winter to upgrade everything I thought I knew about design.",
     side: "left",
@@ -179,7 +179,7 @@ const CitiesJourney = () => {
             Where I'm From
           </p>
           <p className="font-body text-xs text-foreground/60 mt-1">
-            Three cities. One zigzag.
+            Visakhapatnam · Hyderabad · Bloomington
           </p>
         </div>
 

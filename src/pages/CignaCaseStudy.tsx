@@ -5,9 +5,18 @@ import { ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
+import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
 import { useSound } from "@/contexts/SoundContext";
 
-const sectionNav = ["Context", "Role", "Process", "System", "Impact", "Learnings"];
+const caseStudyNav: CaseStudyNavItem[] = [
+  { label: "Overview", id: "overview" },
+  { label: "Context", id: "context" },
+  { label: "Role", id: "role" },
+  { label: "Process", id: "process" },
+  { label: "System", id: "system" },
+  { label: "Impact", id: "impact" },
+  { label: "Learnings", id: "learnings" },
+];
 
 type CategoryKey = "Color" | "Typography" | "Buttons" | "Forms" | "Spacing" | "Cards" | "Inputs";
 
@@ -98,7 +107,6 @@ const SectionHeader = ({ kicker, title }: { kicker: string; title: React.ReactNo
     <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
       {title}
     </h2>
-    <div className="retro-divider w-24 mt-6" />
   </motion.div>
 );
 
@@ -108,12 +116,13 @@ const CignaCaseStudy = () => {
   const categories: CategoryKey[] = ["Color", "Typography", "Buttons", "Forms", "Spacing", "Cards", "Inputs"];
 
   return (
-    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground">
+    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground xl:pl-28">
       <SketchFilter />
       <Navbar />
+      <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
-      <section className="pt-32 pb-24 px-6">
+      <section id="overview" className="pt-32 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -129,15 +138,15 @@ const CignaCaseStudy = () => {
             >
               <ArrowLeft size={14} /> Back to work
             </Link>
-            <div className="flex flex-wrap gap-3">
-              {sectionNav.map((s) => (
+            <div className="flex flex-wrap gap-3 xl:hidden">
+              {caseStudyNav.slice(1).map((item) => (
                 <a
-                  key={s}
-                  href={`#${s.toLowerCase()}`}
+                  key={item.id}
+                  href={`#${item.id}`}
                   onClick={() => play("click")}
                   className="font-body text-[10px] tracking-widest uppercase text-foreground/50 hover:text-primary transition-colors"
                 >
-                  {s}
+                  {item.label}
                 </a>
               ))}
             </div>

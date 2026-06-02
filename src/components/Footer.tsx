@@ -16,9 +16,8 @@ const Footer = () => {
         <p className="teal-shimmer mono-heading text-2xl md:text-3xl font-bold mb-6">
           Let's make it real.
         </p>
-        <div className="retro-divider w-16 mx-auto mb-8" />
         <p className="font-body text-muted-foreground text-base max-w-md mx-auto mb-12">
-          I love meeting new people and hearing fresh ideas. Whether it's a project, a collaboration, or just a friendly hello — I'd love to connect.
+          I love meeting new people and hearing fresh ideas. Whether it's a project, a collaboration, or just a friendly hello, I'd love to connect.
         </p>
 
         <a
@@ -48,7 +47,7 @@ const Footer = () => {
 
         <div className="mt-16 pt-8 border-t-2 border-border">
           <p className="font-heading text-[8px] tracking-[0.3em] uppercase text-muted-foreground">
-            © {new Date().getFullYear()} Kaushik JV — Designed & engineered with intent
+            © {new Date().getFullYear()} Kaushik JV · Designed & engineered with intent
           </p>
         </div>
       </div>

@@ -6,15 +6,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import LazyVideo from "@/components/LazyVideo";
+import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
 import { useSound } from "@/contexts/SoundContext";
 
-const sectionNav = [
-  "Problem",
-  "Process",
-  "Sketches",
-  "Designs",
-  "Design System",
-  "Reflections",
+const caseStudyNav: CaseStudyNavItem[] = [
+  { label: "Overview", id: "overview" },
+  { label: "Problem", id: "problem" },
+  { label: "Evidence", id: "evidence" },
+  { label: "Process", id: "process" },
+  { label: "Sketches", id: "sketches" },
+  { label: "Designs", id: "designs" },
+  { label: "System", id: "design-system" },
+  { label: "Reflections", id: "reflections" },
 ];
 
 const problems = [
@@ -22,7 +25,7 @@ const problems = [
     no: "01",
     label: "Bias Moderation",
     headline: "Two students discussed colonial history for class. AI flagged them both as threats.",
-    body: "AI interprets academic discussion as hostile content. Students are silenced. The chilling effect on free expression is immediate and severe — especially for international students whose visa status could be at risk.",
+    body: "AI interprets academic discussion as hostile content. Students are silenced. The chilling effect on free expression is immediate and severe, especially for international students whose visa status could be at risk.",
   },
   {
     no: "02",
@@ -34,7 +37,7 @@ const problems = [
     no: "03",
     label: "Opportunity",
     headline: "What if AI made privacy education feel like part of the conversation?",
-    body: "Instead of burying controls in documentation nobody reads, we designed privacy awareness directly into the moments students need it — inline, contextual, and human.",
+    body: "Instead of burying controls in documentation nobody reads, we designed privacy awareness directly into the moments students need it: inline, contextual, and human.",
   },
 ];
 
@@ -42,22 +45,22 @@ const tested = [
   {
     status: "Cut",
     title: "Personal Info Tagging",
-    body: "Real-time alerts every time a user typed personally identifiable information — student names, grades, contact details.",
-    quote: "\"Annoying. It fires on everything. I'd disable it immediately.\" — From User Testing",
+    body: "Real-time alerts every time a user typed personally identifiable information: student names, grades, contact details.",
+    quote: "\"Annoying. It fires on everything. I'd disable it immediately.\" From User Testing",
     tone: "destructive",
   },
   {
     status: "Evolve",
     title: "Seriousness Slider",
     body: "An emoji-based slider to indicate how serious a channel was. Confusing, ambiguous, and too playful for the use case.",
-    quote: "\"What does the emoji mean exactly?\" — Ambiguity killed it. Became the Engagement Style dropdown.",
+    quote: "\"What does the emoji mean exactly?\" Ambiguity killed it. Became the Engagement Style dropdown.",
     tone: "muted",
   },
   {
     status: "Shipped",
     title: "Contextual Training Overlay",
     body: "An inline explanation of what AI just did, why, and what data it used. Built directly into the moment.",
-    quote: "\"Finally. I know what it's doing and why.\" — Became core to all 3 final features.",
+    quote: "\"Finally. I know what it's doing and why.\" Became core to all 3 final features.",
     tone: "primary",
   },
 ];
@@ -166,25 +169,25 @@ const slackEvidenceImages = [
 
 /** Lo-Fi column order matches Framer #sketches left column. */
 const slackSketchImages = [
-  { src: "/case-studies/slack/sketches/e3e0Du4BwCDYKsSO2eLILmTRds.webp", alt: "Lo-fi sketch — moderation and privacy paths" },
-  { src: "/case-studies/slack/sketches/Z6eV1Vp9ggSp6mQkYuO6S60Mac.webp", alt: "Lo-fi sketch — channel and alert patterns" },
-  { src: "/case-studies/slack/sketches/IMG_7425.webp", alt: "Lo-fi paper sketch — Slack AI transparency concepts" },
-  { src: "/case-studies/slack/sketches/IMG_7426.webp", alt: "Lo-fi paper sketch — flows and annotations" },
-  { src: "/case-studies/slack/mid-fi/img-8392.webp", alt: "Lo-fi photo — whiteboard iteration session" },
+  { src: "/case-studies/slack/sketches/e3e0Du4BwCDYKsSO2eLILmTRds.webp", alt: "Lo-fi sketch, moderation and privacy paths" },
+  { src: "/case-studies/slack/sketches/Z6eV1Vp9ggSp6mQkYuO6S60Mac.webp", alt: "Lo-fi sketch, channel and alert patterns" },
+  { src: "/case-studies/slack/sketches/IMG_7425.webp", alt: "Lo-fi paper sketch, Slack AI transparency concepts" },
+  { src: "/case-studies/slack/sketches/IMG_7426.webp", alt: "Lo-fi paper sketch, flows and annotations" },
+  { src: "/case-studies/slack/mid-fi/img-8392.webp", alt: "Lo-fi photo, whiteboard iteration session" },
 ];
 
 /** Mid-Fi column — screen flows only (Framer #sketches right column). */
 const slackMidFiImages = [
-  { src: "/case-studies/slack/mid-fi/init-concepts-1.webp", alt: "Mid-fi prototype — initial concept exploration" },
-  { src: "/case-studies/slack/mid-fi/initit-concept-2.webp", alt: "Mid-fi prototype — iteration on interaction model" },
-  { src: "/case-studies/slack/mid-fi/init-concept-3.webp", alt: "Mid-fi prototype — refined flows" },
-  { src: "/case-studies/slack/mid-fi/init-concepts-3-variant.webp", alt: "Mid-fi prototype — alternate concept direction" },
+  { src: "/case-studies/slack/mid-fi/init-concepts-1.webp", alt: "Mid-fi prototype, initial concept exploration" },
+  { src: "/case-studies/slack/mid-fi/initit-concept-2.webp", alt: "Mid-fi prototype, iteration on interaction model" },
+  { src: "/case-studies/slack/mid-fi/init-concept-3.webp", alt: "Mid-fi prototype, refined flows" },
+  { src: "/case-studies/slack/mid-fi/init-concepts-3-variant.webp", alt: "Mid-fi prototype, alternate concept direction" },
 ];
 
 const reflections = [
   {
     title: "Turning Ethical Frameworks into Actionable Design Decisions",
-    body: "I took this challenge as an opportunity for exploring 'ethics by design' — and how critical it is to follow guidelines, especially on projects involving data privacy and AI.",
+    body: "I took this challenge as an opportunity for exploring 'ethics by design' and how critical it is to follow guidelines, especially on projects involving data privacy and AI.",
   },
   {
     title: "Learning from Ethical Design Mentors & Real-World Stakeholders",
@@ -274,7 +277,6 @@ const SectionHeader = ({ kicker, title }: { kicker: string; title: React.ReactNo
     <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
       {title}
     </h2>
-    <div className="retro-divider w-24 mt-6" />
   </motion.div>
 );
 
@@ -282,12 +284,13 @@ const SlackCaseStudy = () => {
   const { play } = useSound();
 
   return (
-    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground">
+    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground xl:pl-28">
       <SketchFilter />
       <Navbar />
+      <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
-      <section className="pt-32 pb-24 px-6">
+      <section id="overview" className="pt-32 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -303,15 +306,15 @@ const SlackCaseStudy = () => {
             >
               <ArrowLeft size={14} /> Back to work
             </Link>
-            <div className="flex flex-wrap gap-3">
-              {sectionNav.map((s) => (
+            <div className="flex flex-wrap gap-3 xl:hidden">
+              {caseStudyNav.slice(1).map((item) => (
                 <a
-                  key={s}
-                  href={`#${s.toLowerCase().replace(/\s+/g, "-")}`}
+                  key={item.id}
+                  href={`#${item.id}`}
                   onClick={() => play("click")}
                   className="font-body text-[10px] tracking-widest uppercase text-foreground/50 hover:text-primary transition-colors"
                 >
-                  {s}
+                  {item.label}
                 </a>
               ))}
             </div>
@@ -409,7 +412,7 @@ const SlackCaseStudy = () => {
             }
           />
           <p className="font-body text-foreground/60 max-w-2xl mb-12">
-            We didn't guess at problems. We ran Black Mirror brainstorming sessions to surface the worst realistic scenarios — then designed for each one.
+            We didn't guess at problems. We ran Black Mirror brainstorming sessions to surface the worst realistic scenarios, then designed for each one.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {problems.map((p, i) => (
@@ -432,7 +435,7 @@ const SlackCaseStudy = () => {
       </section>
 
       {/* === EVIDENCE === — ~5% wider than sibling sections via tighter gutters + max-width */}
-      <section className="py-24 border-t border-border/40 px-[calc(1.5rem*0.95)] sm:px-[calc(1.5rem*0.95)]">
+      <section id="evidence" className="py-24 border-t border-border/40 px-[calc(1.5rem*0.95)] sm:px-[calc(1.5rem*0.95)]">
         <div className="mx-auto w-full max-w-[calc(72rem*1.05)]">
           <SectionHeader
             kicker="The Evidence"
@@ -470,7 +473,7 @@ const SlackCaseStudy = () => {
           >
             Same message. Same conversation. Completely different AI understanding.
             <br />
-            <span className="text-primary not-italic font-bold">Context isn&apos;t optional — it&apos;s the entire product.</span>
+            <span className="text-primary not-italic font-bold">Context isn&apos;t optional: it&apos;s the entire product.</span>
           </motion.p>
         </div>
       </section>
@@ -498,7 +501,6 @@ const SlackCaseStudy = () => {
                 <span className="retro-tag self-start mb-4">{t.status}</span>
                 <h3 className="mono-heading text-xl font-bold text-foreground mb-3">{t.title}</h3>
                 <p className="font-body text-sm text-foreground/70 mb-4 leading-relaxed">{t.body}</p>
-                <div className="retro-divider w-full mt-auto mb-3" />
                 <p className="font-body text-xs italic text-primary leading-snug">{t.quote}</p>
               </motion.div>
             ))}
@@ -674,7 +676,7 @@ const SlackCaseStudy = () => {
             {[
               { tag: "Within System", title: "All Color Usage", body: "Zero custom colors across three features. Every token is Slack's existing semantic palette, used exactly as intended." },
               { tag: "Within System", title: "Engagement Style step", body: "Added Step 3 to Slack's 2-step channel creation modal using their exact dialog component. One new concept, zero structural deviation." },
-              { tag: "Within System", title: "No custom iconography", body: "Consciously chose not to introduce new icons. Every icon is from Slack's existing set — design system team review-friendly." },
+              { tag: "Within System", title: "No custom iconography", body: "Consciously chose not to introduce new icons. Every icon is from Slack's existing set, design system team review-friendly." },
             ].map((d, i) => (
               <motion.div
                 key={d.title}

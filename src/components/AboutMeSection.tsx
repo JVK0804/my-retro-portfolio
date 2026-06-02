@@ -31,7 +31,7 @@ const AboutMeSection = () => {
               I'm <span className="teal-shimmer font-bold">Kaushik JV</span>, a Product Designer & Design Engineer with 6+ years crafting digital experiences that bridge the gap between human intuition and technical precision.
             </p>
             <p className="font-body text-lg text-foreground/70 leading-relaxed">
-              My journey from rewinding cassette tapes to designing cloud-native interfaces shaped a unique perspective — where analog warmth meets digital clarity.
+              My journey from rewinding cassette tapes to designing cloud-native interfaces shaped a unique perspective, where analog warmth meets digital clarity.
             </p>
           </motion.div>
 
@@ -43,7 +43,7 @@ const AboutMeSection = () => {
             className="flex flex-col justify-between"
           >
             <p className="font-body text-lg text-foreground/70 leading-relaxed mb-8">
-              Combining a designer's eye and a <span className="font-heading text-primary">&lt;developer's mindset /&gt;</span> to create user-first experiences — backed by Privacy, Data, and relentless craft.
+              Combining a designer's eye and a <span className="font-heading text-primary">&lt;developer's mindset /&gt;</span> to create user-first experiences, backed by Privacy, Data, and relentless craft.
             </p>
             <Link
               to="/about"

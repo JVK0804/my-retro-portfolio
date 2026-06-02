@@ -1,4 +1,5 @@
 import { useScroll, useTransform, motion, MotionValue, useReducedMotion } from "framer-motion";
+import { VolumeX } from "lucide-react";
 import { toast } from "sonner";
 import crt from "@/assets/retro-crt.png";
 import cassette from "@/assets/retro-cassette.png";
@@ -70,9 +71,7 @@ const DoodleItem = ({
       type="button"
       onClick={() => {
         if (!soundEnabled) {
-          toast("Enable sound effects to hear device audio", {
-            description: "Tap the speaker icon in the top right.",
-          });
+          toast("Sound effects are off", { icon: <VolumeX size={16} /> });
           return;
         }
         onPlay(d.device);

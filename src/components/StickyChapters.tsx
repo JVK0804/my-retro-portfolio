@@ -12,32 +12,32 @@ export type Chapter = {
 
 export const stickyChapters: Chapter[] = [
   {
-    era: "Chapter I — Analog",
+    era: "Chapter I · Analog",
     title: "The Cassette",
     year: "1990s",
     icon: "📼",
-    text: "Growing up rewinding tapes taught me patience with process. The tactile click of a play button, the hiss before the music — these analog rituals shaped how I think about micro-interactions today.",
+    text: "Growing up rewinding tapes taught me patience with process. The tactile click of a play button, the hiss before the music. These analog rituals shaped how I think about micro-interactions today.",
   },
   {
-    era: "Chapter II — Digital Dawn",
+    era: "Chapter II · Digital Dawn",
     title: "The Compact Disc",
     year: "2000s",
     icon: "💿",
-    text: "CDs introduced perfection — skip-free, crystal clear. But also fragility. I learned that polish without resilience is meaningless. My design systems are built to be both precise and unbreakable.",
+    text: "CDs introduced perfection: skip-free, crystal clear. But also fragility. I learned that polish without resilience is meaningless. My design systems are built to be both precise and unbreakable.",
   },
   {
-    era: "Chapter III — Portable",
+    era: "Chapter III · Portable",
     title: "The MP3 Player",
-    year: "2005–2012",
+    year: "2005-2012",
     icon: "🎵",
-    text: "1,000 songs in your pocket changed everything. Compression forced choices — what's essential? This era taught me ruthless prioritization. Every pixel must earn its place.",
+    text: "1,000 songs in your pocket changed everything. Compression forced choices. What's essential? This era taught me ruthless prioritization. Every pixel must earn its place.",
   },
   {
-    era: "Chapter IV — Cloud",
+    era: "Chapter IV · Cloud",
     title: "Streaming",
-    year: "2012–Now",
+    year: "2012-Now",
     icon: "☁️",
-    text: "Now everything is everywhere, instantly. The challenge shifted from access to attention. I design for a world where the medium is invisible — only the experience remains.",
+    text: "Now everything is everywhere, instantly. The challenge shifted from access to attention. I design for a world where the medium is invisible: only the experience remains.",
   },
 ];
 

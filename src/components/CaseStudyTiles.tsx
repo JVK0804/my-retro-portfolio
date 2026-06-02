@@ -1,9 +1,23 @@
-import { motion, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
+import CaseStudyCardMedia from "@/components/CaseStudyCardMedia";
 
-const caseStudies = [
+type CaseStudy = {
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  impact: string;
+  readTime: string;
+  image: string;
+  mediaType: "video" | "image";
+  href: string;
+  priority?: boolean;
+};
+
+const caseStudies: CaseStudy[] = [
   {
     title: "Integrating AI Powered features in Slack, to enhance data privacy.",
     subtitle: "AI Design for Data Privacy",
@@ -25,6 +39,7 @@ const caseStudies = [
     image: "/case-study-cards/smart-align.webp",
     mediaType: "image" as const,
     href: "/work/smartalign",
+    priority: true,
   },
   {
     title: "Collaboration That Scales Trust (NDA)",
@@ -36,72 +51,52 @@ const caseStudies = [
     image: "/case-study-cards/cigna-thumb.webp",
     mediaType: "image" as const,
     href: "/work/cigna",
+    priority: true,
   },
 ];
 
 const CaseStudyTiles = () => {
   const { play } = useSound();
-  const gridRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(gridRef, { once: true, amount: 0.5 });
 
-  // Simple fade-in without flicker
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.5,
-        ease: [0.25, 0.1, 0.25, 1],
-      },
-    }),
-  };
+  useEffect(() => {
+    const links: HTMLLinkElement[] = [];
+    caseStudies.forEach((study) => {
+      if (study.mediaType !== "image" || !study.priority) return;
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = study.image;
+      document.head.appendChild(link);
+      links.push(link);
+    });
+    return () => links.forEach((el) => el.remove());
+  }, []);
 
   return (
     <section id="work" className="py-24 px-6">
       <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "50px" }}
-          transition={{ duration: 0.7 }}
-        >
+        <div>
           <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
             Selected Work
           </h2>
-          <div className="retro-divider w-24 mb-6" />
           <p className="font-body text-foreground/60 mb-16 max-w-lg">
-            Case studies spanning healthcare, AI, and enterprise — where craft meets complexity.
+            Case studies spanning healthcare, AI, and enterprise, where craft meets complexity.
           </p>
-        </motion.div>
+        </div>
 
-        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {caseStudies.map((study, idx) => {
             const isInternal = study.href.startsWith("/");
             const cardInner = (
               <>
                 <div className="relative overflow-hidden">
-                  {study.mediaType === "video" ? (
-                    <video
-                      src={study.image}
-                      aria-label={study.subtitle}
-                      muted
-                      playsInline
-                      loop
-                      autoPlay
-                      preload="metadata"
-                      className="block w-full h-auto"
-                    />
-                  ) : (
-                    <img
-                      src={study.image}
-                      alt={study.subtitle}
-                      loading="lazy"
-                      className="block w-full h-auto"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80" />
+                  <CaseStudyCardMedia
+                    src={study.image}
+                    alt={study.subtitle}
+                    mediaType={study.mediaType}
+                    priority={study.priority ?? idx === 0}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80 pointer-events-none" />
                 </div>
                 <div className="p-7 pt-4 flex flex-col flex-1 justify-between">
                   <div>
@@ -126,8 +121,7 @@ const CaseStudyTiles = () => {
                         </span>
                       ))}
                     </div>
-                    <div className="retro-divider w-full mt-4 mb-2" />
-                    <p className="font-body text-[11px]">
+                    <p className="font-body text-[11px] mt-4">
                       <span className="text-foreground/50 mr-2">IMPACT</span>
                       <span className="text-primary font-medium">{study.impact}</span>
                     </p>
@@ -141,10 +135,9 @@ const CaseStudyTiles = () => {
             return (
               <motion.div
                 key={study.title}
-                custom={idx}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                variants={cardVariants}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05, duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
@@ -160,23 +153,6 @@ const CaseStudyTiles = () => {
             );
           })}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6 }}
-          className="flex justify-center mt-14"
-        >
-          <a
-            href="#work"
-            onClick={() => play("click")}
-            onMouseEnter={() => play("hover")}
-            className="cursor-pointer rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
-          >
-            View all projects →
-          </a>
-        </motion.div>
       </div>
     </section>
   );

@@ -26,9 +26,8 @@ const PhotographyGrid = () => {
           <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
             Photography
           </h2>
-          <div className="retro-divider w-24 mb-6" />
           <p className="font-body text-foreground/60 max-w-lg">
-            Street and landscape photography inform my UI layout decisions — composition, negative space, and visual hierarchy transfer directly from lens to screen.
+            Street and landscape photography inform my UI layout decisions: composition, negative space, and visual hierarchy transfer directly from lens to screen.
           </p>
         </motion.div>
 

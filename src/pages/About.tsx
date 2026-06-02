@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, MapPin, Briefcase, Camera } from "lucide-react";
+import { ArrowRight, MapPin, Briefcase } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollFadeSection from "@/components/ScrollFadeSection";
@@ -38,7 +38,7 @@ const About = () => {
             transition={{ delay: 0.8 }}
             className="font-body text-foreground/70 text-lg text-center max-w-lg"
           >
-            A Zillennial's journey from analog tactility to cloud-native design — each era leaving its fingerprint on how I build.
+            A Zillennial's journey from analog tactility to cloud-native design. Each era leaving its fingerprint on how I build.
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -55,6 +55,26 @@ const About = () => {
       <ScrollFadeSection>
         <section className="pt-32 pb-12 px-6">
           <div className="max-w-3xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mx-auto mb-8 w-36 h-36 md:w-44 md:h-44"
+            >
+              <div className="relative size-full overflow-hidden rounded-full border-2 border-primary/30 bg-muted/20 shadow-md">
+                <img
+                  src="/headshot/portfolio-headshot.webp"
+                  alt="Portrait of Kaushik JV"
+                  width={352}
+                  height={352}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="size-full object-cover object-[50%_32%]"
+                />
+              </div>
+            </motion.div>
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -93,7 +113,7 @@ const About = () => {
               transition={{ delay: 0.2 }}
               className="font-body text-foreground/70 leading-relaxed"
             >
-              6+ years designing at the intersection of craft and code — shipping enterprise products at Deloitte for clients like Anthem, Cigna, and the Commonwealth of Massachusetts. Scroll to trace the three cities that shaped me.
+              6+ years designing at the intersection of craft and code, shipping enterprise products at Deloitte for clients like Anthem, Cigna, and the Commonwealth of Massachusetts. Scroll to trace the three cities that shaped me.
             </motion.p>
           </div>
         </section>
@@ -143,69 +163,6 @@ const About = () => {
       {/* ===== STICKY CHAPTERS — Era Journey ===== */}
       <StickyChapters />
 
-      {/* ===== PHOTOGRAPHY SECTION WITH CTA ===== */}
-      <ScrollFadeSection>
-        <section className="py-32 px-6">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8 }}
-            >
-              <p className="font-heading text-xs text-primary mb-4 tracking-widest uppercase">
-                Beyond the Screen
-              </p>
-              <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground mb-6">
-                Through the Lens
-              </h2>
-              <p className="font-body text-foreground/70 leading-relaxed max-w-xl mb-10">
-                Photography grounds my design work. Framing a shot teaches composition, light teaches contrast, and street photography teaches empathy — all skills that transfer directly to interface design.
-              </p>
-            </motion.div>
-
-            {/* Photo grid with placeholders */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-              {[1, 2, 3, 4, 5, 6].map((n) => (
-                <motion.div
-                  key={n}
-                  className={`bg-muted/30 border-2 border-border flex items-center justify-center relative overflow-hidden ${
-                    n === 1 ? "row-span-2 aspect-[3/4]" : "aspect-square"
-                  }`}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ delay: n * 0.08, duration: 0.6 }}
-                >
-                  <div className="text-center text-muted-foreground/40">
-                    <Camera size={20} className="mx-auto mb-2" />
-                    <p className="font-body text-[10px]">Photo {n}</p>
-                  </div>
-                  <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/20" />
-                  <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-primary/20" />
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <Link
-                to="/photography"
-                className="inline-flex items-center gap-3 glass-card px-6 py-3 font-heading text-sm text-primary hover:gap-5 transition-all duration-300 group"
-              >
-                <Camera size={16} />
-                View full photography gallery
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          </div>
-        </section>
-      </ScrollFadeSection>
-
       {/* ===== CLOSING — What drives me ===== */}
       <section className="py-32 px-6">
         <div className="max-w-3xl mx-auto text-center">
@@ -223,7 +180,7 @@ const About = () => {
               engineering for scale.
             </h2>
             <p className="font-body text-foreground/70 text-lg leading-relaxed mb-10">
-              Every project I take on starts with empathy and ends with precision. I believe great design is invisible — it just <em>works</em>. Whether it's a design system used by hundreds of engineers or a privacy-first AI feature, the goal is always the same: make technology feel human.
+              Every project I take on starts with empathy and ends with precision. I believe great design is invisible: it just <em>works</em>. Whether it's a design system used by hundreds of engineers or a privacy-first AI feature, the goal is always the same: make technology feel human.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
