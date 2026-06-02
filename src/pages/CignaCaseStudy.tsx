@@ -22,13 +22,13 @@ const processSteps = [
     no: "02",
     title: "Alignment",
     headline: "Then I got everyone in the same room.",
-    body: "The hardest design problem wasn't the UI — it was alignment. I facilitated working sessions between all three teams to surface conflicts early and establish shared principles before any code was written.",
+    body: "The hardest design problem wasn't the UI, it was alignment. I facilitated working sessions between all three teams to surface conflicts early and establish shared principles before any code was written.",
   },
   {
     no: "03",
     title: "Design + Build",
     headline: "Then I built things that could be used forever.",
-    body: "Rather than designing features one-off, I built a library of 20+ reusable React and JavaScript components aligned with the healthcare design system. Each was composable — engineers assembled new screens without reinventing UX patterns from scratch.",
+    body: "Rather than designing features one-off, I built a library of 20+ reusable React and JavaScript components aligned with the healthcare design system. Each was composable, and engineers assembled new screens without reinventing UX patterns from scratch.",
   },
   {
     no: "04",
@@ -41,7 +41,7 @@ const processSteps = [
 const contributions = [
   "Audited the existing Mednext component library to identify gaps between platform capabilities and Cigna's new feature requirements before writing a line of code.",
   "Architected 20+ React and JavaScript components from scratch, aligned with healthcare design tokens and Mednext's visual language.",
-  "Created a block design framework and cross-trained the broader team — designers and developers alike — so components were used correctly across all three organizations.",
+  "Created a block design framework and cross-trained the broader team, designers and developers alike, so components were used correctly across all three organizations.",
   "Documented component behavior, states, and edge cases to reduce ambiguity for developers working across three codebases with three different deadlines.",
   "Established design-to-engineering handoff conventions that reduced back-and-forth review cycles and accelerated iteration velocity by 35%.",
   "Mentored junior designers and engineers on system thinking, ensuring the design system kept growing with the product.",
@@ -65,14 +65,14 @@ const colorTokens = [
 const impactStats = [
   { value: "35%", label: "Faster Development", note: "Reduced dev time through reusable components" },
   { value: "20+", label: "Components Built", note: "React & JS, aligned to healthcare design system" },
-  { value: "3", label: "Orgs Aligned", note: "Cigna, Munich Re, Deloitte — one source of truth" },
+  { value: "3", label: "Orgs Aligned", note: "Cigna, Munich Re, Deloitte, one source of truth" },
 ];
 
 const learnings = [
   {
     no: "01",
     title: "A component library is really a trust contract.",
-    body: "The component library wasn't just about efficiency — it was a shared vocabulary that let three organizations talk about UI without talking past each other. A reusable button isn't just a button; it's a contract.",
+    body: "The component library wasn't just about efficiency, it was a shared vocabulary that let three organizations talk about UI without talking past each other. A reusable button isn't just a button; it's a contract.",
   },
   {
     no: "02",
@@ -82,7 +82,7 @@ const learnings = [
   {
     no: "03",
     title: "Constraints aren't blockers. They're the brief.",
-    body: "Adding features to a live product isn't the same as building new ones. You don't get to change the furniture — you work with what's there. That constraint forced a level of design discipline I now actively seek out.",
+    body: "Adding features to a live product isn't the same as building new ones. You don't get to change the furniture, you work with what's there. That constraint forced a level of design discipline I now actively seek out.",
   },
 ];
 
@@ -178,7 +178,7 @@ const CignaCaseStudy = () => {
             transition={{ delay: 0.6, duration: 0.5 }}
             className="flex flex-wrap gap-2 mb-10"
           >
-            {["Cigna × Deloitte", "Mednext — Munich Re HealthTech", "UX Designer + Engineer", "React · JavaScript", "35% faster development"].map((t) => (
+            {["Cigna × Deloitte", "Mednext Munich Re HealthTech", "UX Designer + Engineer", "React · JavaScript", "35% faster development"].map((t) => (
               <span key={t} className="retro-tag">{t}</span>
             ))}
           </motion.div>
@@ -212,7 +212,7 @@ const CignaCaseStudy = () => {
       <section id="context" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="01 — Context"
+            kicker="01 Context"
             title={<>System is well established with <span className="teal-shimmer">real data and real users</span>.</>}
           />
           <div className="grid md:grid-cols-5 gap-8 items-start">
@@ -225,7 +225,7 @@ const CignaCaseStudy = () => {
                 Cigna needed new features inside <strong>Mednext</strong>, <strong>Munich Re</strong> HealthTech's existing platform, delivered through <strong>Deloitte</strong>. Three organizations, three sets of priorities, one live healthcare product that couldn't break. I sat at the intersection of all three, translating between what each needed and what was actually possible.
               </p>
               <div className="inline-flex items-center gap-2 retro-tag">
-                <Lock size={12} /> UI components and data are limited for NDA compliance
+                <Lock size={12} /> UI components and data vary due to NDA compliance
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@ const CignaCaseStudy = () => {
       <section id="role" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="02 — My Role"
+            kicker="02 My Role"
             title={<>I was the person who <span className="teal-shimmer">spoke everyone's language</span>.</>}
           />
           <div className="glass-card p-8 md:p-12">
@@ -256,7 +256,7 @@ const CignaCaseStudy = () => {
       <section className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="03 — Design System"
+            kicker="03 Design System"
             title={<>The real deliverable wasn't features. It was <span className="teal-shimmer">trust</span>.</>}
           />
           <div className="grid md:grid-cols-5 gap-8 items-start">
@@ -266,7 +266,7 @@ const CignaCaseStudy = () => {
             </div>
             <div className="md:col-span-3 glass-card p-8 md:p-10">
               <p className="font-body text-foreground/80 leading-relaxed mb-6">
-                Design systems live or die by adoption. My approach was to build components so well-documented, well-named, and precisely scoped that the path of least resistance was also the path of consistency — the only way to keep three teams from diverging into three different products.
+                Design systems live or die by adoption. My approach was to build components so well-documented, well-named, and precisely scoped that the path of least resistance was also the path of consistency, the only way to keep three teams from diverging into three different products.
               </p>
               <a
                 href="#system"
@@ -284,7 +284,7 @@ const CignaCaseStudy = () => {
       <section id="process" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="04 — Process"
+            kicker="04 Process"
             title={<>So I started by <span className="teal-shimmer">listening</span> before I drew anything.</>}
           />
           <div className="space-y-8">
@@ -314,7 +314,7 @@ const CignaCaseStudy = () => {
       <section id="system" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="05 — Design System / Components"
+            kicker="05 Design System / Components"
             title={<>What I <span className="teal-shimmer">actually built</span>.</>}
           />
 
@@ -345,7 +345,7 @@ const CignaCaseStudy = () => {
             <p className="font-body text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-3">Component Categories</p>
             <h3 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-2">A representative slice of the system</h3>
             <p className="font-body text-foreground/60 text-sm mb-8 max-w-2xl">
-              Each tab shows a sample of one category — abstracted for NDA compliance, representative of the actual scope.
+              Each tab shows a sample of one category, abstracted for NDA compliance and representative of the actual scope.
             </p>
 
             {/* Tab Bar */}
@@ -400,7 +400,7 @@ const CignaCaseStudy = () => {
                   { label: "Subheading / H3", spec: "18px · Semibold · 1.4", sample: "Plan summary" },
                   { label: "Body / Default", spec: "16px · Regular · 1.5", sample: "Review your coverage details and next steps." },
                   { label: "Label / Form", spec: "14px · Medium · 1.4", sample: "Member ID" },
-                  { label: "Caption / Helper", spec: "12px · Regular · 1.4", sample: "Required field — enter as it appears on your card." },
+                  { label: "Caption / Helper", spec: "12px · Regular · 1.4", sample: "Required field, enter as it appears on your card." },
                 ].map((t, i) => (
                   <motion.div
                     key={t.label}
@@ -447,13 +447,13 @@ const CignaCaseStudy = () => {
             {activeCategory === "Forms" && (
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { label: "Text Input — Default", node: (
+                  { label: "Text Input Default", node: (
                     <div>
                       <label style={{ display: "block", fontSize: 13, color: "#666", marginBottom: 6 }}>Member ID</label>
                       <input placeholder="Enter your ID" style={{ width: "100%", padding: "10px 12px", border: "1px solid #E0E0E0", borderRadius: 4, fontSize: 14 }} />
                     </div>
                   )},
-                  { label: "Text Input — Error", node: (
+                  { label: "Text Input Error", node: (
                     <div>
                       <label style={{ display: "block", fontSize: 13, color: "#666", marginBottom: 6 }}>Member ID</label>
                       <input defaultValue="INVALID" style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #D32F2F", borderRadius: 4, fontSize: 14, background: "#FFEBEE" }} />
@@ -519,8 +519,8 @@ const CignaCaseStudy = () => {
             {activeCategory === "Cards" && (
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { label: "Info Card", body: <div style={{ background: "#E8F4FD", padding: 16, borderRadius: 6, borderLeft: "4px solid #0075C9" }}><p style={{ fontSize: 14, color: "#333", margin: 0 }}><strong>Coverage active</strong><br/>Effective Jan 1 — Dec 31, 2024</p></div> },
-                  { label: "Status Card — Success", body: <div style={{ background: "#fff", padding: 16, borderRadius: 6, border: "1px solid #E0E0E0", borderLeft: "4px solid #4CAF50" }}><p style={{ fontSize: 14, color: "#333", margin: 0 }}><strong style={{ color: "#4CAF50" }}>✓ Claim approved</strong><br/>Reimbursement on its way.</p></div> },
+                  { label: "Info Card", body: <div style={{ background: "#E8F4FD", padding: 16, borderRadius: 6, borderLeft: "4px solid #0075C9" }}><p style={{ fontSize: 14, color: "#333", margin: 0 }}><strong>Coverage active</strong><br/>Effective Jan 1 to Dec 31, 2024</p></div> },
+                  { label: "Status Card Success", body: <div style={{ background: "#fff", padding: 16, borderRadius: 6, border: "1px solid #E0E0E0", borderLeft: "4px solid #4CAF50" }}><p style={{ fontSize: 14, color: "#333", margin: 0 }}><strong style={{ color: "#4CAF50" }}>✓ Claim approved</strong><br/>Reimbursement on its way.</p></div> },
                   { label: "Plan Summary Card", body: <div style={{ background: "#fff", padding: 16, borderRadius: 6, border: "1px solid #E0E0E0" }}><p style={{ fontSize: 12, color: "#666", margin: 0, textTransform: "uppercase", letterSpacing: 1 }}>Cigna PPO</p><p style={{ fontSize: 18, fontWeight: 700, color: "#333", margin: "4px 0 8px" }}>Premium Plan</p><p style={{ fontSize: 13, color: "#666", margin: 0 }}>$0 deductible · $20 copay</p></div> },
                   { label: "Action Card", body: <div style={{ background: "#F5F5F5", padding: 16, borderRadius: 6 }}><p style={{ fontSize: 14, color: "#333", margin: "0 0 12px" }}>Find a doctor near you</p><button style={{ background: "#0075C9", color: "#fff", padding: "8px 16px", borderRadius: 4, fontSize: 13, fontWeight: 600, border: 0 }}>Search providers</button></div> },
                 ].map((c, i) => (
@@ -581,7 +581,7 @@ const CignaCaseStudy = () => {
       <section id="impact" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="06 — Impact"
+            kicker="06 Impact"
             title={<>Three months later, the numbers told their <span className="teal-shimmer">own story</span>.</>}
           />
           <div className="grid md:grid-cols-3 gap-6">
@@ -607,7 +607,7 @@ const CignaCaseStudy = () => {
       <section id="learnings" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="07 — Learnings"
+            kicker="07 Learnings"
             title={<>What this project changed about <span className="teal-shimmer">how I work</span>.</>}
           />
           <div className="space-y-8">
@@ -639,7 +639,7 @@ const CignaCaseStudy = () => {
             className="glass-card p-8 md:p-12 mt-12 text-center"
           >
             <p className="mono-heading text-xl md:text-2xl font-bold text-foreground leading-snug max-w-3xl mx-auto">
-              "The most underrated UX skill isn't craft — it's making everyone in the room feel like the design outcome was also their idea. <span className="teal-shimmer">That's how you actually ship things in enterprise.</span>"
+              "The most underrated UX skill isn't craft, it's making everyone in the room feel like the design outcome was also their idea. <span className="teal-shimmer">That's how you actually ship things in enterprise.</span>"
             </p>
           </motion.blockquote>
 

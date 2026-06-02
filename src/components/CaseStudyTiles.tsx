@@ -2,9 +2,6 @@ import { motion, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
-import caseStudyPrivacy from "@/assets/case-study-privacy.jpg";
-import caseStudyPhotography from "@/assets/case-study-photography.jpg";
-import caseStudyDesignSystem from "@/assets/case-study-designsystem.jpg";
 
 const caseStudies = [
   {
@@ -14,7 +11,8 @@ const caseStudies = [
     tags: ["AI", "Data Privacy", "UX Design"],
     impact: "20% increase in user engagement",
     readTime: "6 min Read",
-    image: caseStudyPrivacy,
+    image: "/case-study-cards/slack.webm",
+    mediaType: "video" as const,
     href: "/work/slack",
   },
   {
@@ -24,7 +22,8 @@ const caseStudies = [
     tags: ["Mobile AI", "Photography", "UX Research"],
     impact: "62% improved interaction · 35% less onboarding friction",
     readTime: "5 min Read",
-    image: caseStudyPhotography,
+    image: "/case-study-cards/smart-align.webp",
+    mediaType: "image" as const,
     href: "/work/smartalign",
   },
   {
@@ -34,7 +33,8 @@ const caseStudies = [
     tags: ["Design Systems", "Enterprise", "React"],
     impact: "Reduced development time by 35%",
     readTime: "4 min Read",
-    image: caseStudyDesignSystem,
+    image: "/case-study-cards/cigna-thumb.webp",
+    mediaType: "image" as const,
     href: "/work/cigna",
   },
 ];
@@ -81,15 +81,26 @@ const CaseStudyTiles = () => {
             const isInternal = study.href.startsWith("/");
             const cardInner = (
               <>
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={study.image}
-                    alt={study.subtitle}
-                    loading="lazy"
-                    width={800}
-                    height={512}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                <div className="relative overflow-hidden">
+                  {study.mediaType === "video" ? (
+                    <video
+                      src={study.image}
+                      aria-label={study.subtitle}
+                      muted
+                      playsInline
+                      loop
+                      autoPlay
+                      preload="metadata"
+                      className="block w-full h-auto"
+                    />
+                  ) : (
+                    <img
+                      src={study.image}
+                      alt={study.subtitle}
+                      loading="lazy"
+                      className="block w-full h-auto"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80" />
                 </div>
                 <div className="p-7 pt-4 flex flex-col flex-1 justify-between">
