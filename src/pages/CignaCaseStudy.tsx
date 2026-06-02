@@ -411,7 +411,7 @@ const CignaCaseStudy = () => {
                   >
                     <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-1">{t.label}</p>
                     <p className="font-body text-[11px] text-foreground/50 mb-3">{t.spec}</p>
-                    <p style={{ color: "#333" }}>{t.sample}</p>
+                    <p className="font-body text-foreground/85">{t.sample}</p>
                   </motion.div>
                 ))}
               </div>

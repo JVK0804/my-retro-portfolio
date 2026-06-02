@@ -1,9 +1,11 @@
+import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
+import LazyVideo from "@/components/LazyVideo";
 import { useSound } from "@/contexts/SoundContext";
 
 const sectionNav = [
@@ -78,29 +80,74 @@ const findings = [
   },
 ];
 
-const features = [
+type SlackFeatureDetail = {
+  title: string;
+  body: string;
+  quote?: string;
+};
+
+type SlackFeature = {
+  no: string;
+  title: string;
+  quote: string;
+  video: string;
+  details: SlackFeatureDetail[];
+};
+
+const features: SlackFeature[] = [
   {
     no: "Feature 01",
     title: "In-Line Privacy Alerts",
     quote: "\"Users weren't afraid of AI. They were afraid of not knowing what it knew.\"",
-    sub: "Custom Alert Control",
-    body: "Testing revealed alerts were triggering on everything, regardless of context. The fix: let users define what matters to them. Alerts become intentional, not noise.",
+    video: "/case-studies/slack/hifi/inline-alerts.webm",
+    details: [
+      {
+        title: "Custom Alert Control",
+        body: "Testing revealed alerts were triggering on everything, regardless of context. The fix: let users define what matters to them. Alerts become intentional, not noise.",
+        quote:
+          "\"The alerts are getting triggered for whatever topic, without understanding the context. I'd just turn it off.\"",
+      },
+    ],
   },
   {
     no: "Feature 02",
     title: "Bias Moderation Transparency",
     quote: "\"Users were scared to type anything after being wrongly flagged.\"",
-    sub: "Only Visible To You",
-    body: "Reports stay private. Cancel = ghost. Report = solid. Matches Slack's native modal pattern exactly — feels native, not bolted on.",
+    video: "/case-studies/slack/hifi/bias-moderation.webm",
+    details: [
+      {
+        title: "Only Visible To You",
+        body: "Flagged-message context stays private to the person reviewing it until they choose to report.",
+      },
+      {
+        title: "Modal = Dialog",
+        body: "Matches Slack's native modal pattern exactly, same surface. Feels native, not bolted on.",
+      },
+      {
+        title: "Button Hierarchy",
+        body: "Cancel = ghost. Report = solid green. Slack never uses two solid buttons side by side. Neither do we.",
+      },
+    ],
   },
   {
     no: "Feature 03",
     title: "Engagement Style",
     quote: "\"The same joke reads as aggressive in a serious channel, and friendly in a relaxed one.\"",
-    sub: "Set the tone, set the truth",
-    body: "Added Step 3 to Slack's 2-step channel creation. One new concept, zero structural deviation — context that follows the conversation.",
+    video: "/case-studies/slack/hifi/engagement-style.webm",
+    details: [
+      {
+        title: "Set the tone, set the truth",
+        body: "Added Step 3 to Slack's 2-step channel creation modal using their exact dialog component. One new concept, zero structural deviation.",
+      },
+    ],
   },
 ];
+
+const oneMoreThing = {
+  kicker: "One More Thing",
+  title: "Custom Alerts",
+  body: "Testing broke our assumption. Alerts were firing on everything, frustrating users. So I rebuilt the feature from scratch, making alerts user-defined, not AI-assumed.",
+};
 
 const slackPalette = [
   { name: "Aubergine", hex: "#4A154B" },
@@ -148,6 +195,72 @@ const reflections = [
     body: "Collaboration was my favorite part of this project. Coordinating across perspectives was the key that unlocked the work.",
   },
 ];
+
+/** Full-width video — frame follows each clip’s aspect ratio (Framer #final layout). */
+const SlackFeatureVideo = ({ src, label }: { src: string; label: string }) => {
+  const [aspectRatio, setAspectRatio] = useState("16 / 9");
+
+  const onLoadedMetadata = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const v = e.currentTarget;
+    if (v.videoWidth && v.videoHeight) {
+      setAspectRatio(`${v.videoWidth} / ${v.videoHeight}`);
+    }
+  }, []);
+
+  return (
+    <div className="w-full min-w-0 overflow-hidden rounded-lg border border-border/50 bg-muted/10">
+      <div className="w-full" style={{ aspectRatio }}>
+        <LazyVideo
+          src={src}
+          label={label}
+          className="block h-full w-full object-cover object-center"
+          onLoadedMetadata={onLoadedMetadata}
+        />
+      </div>
+    </div>
+  );
+};
+
+/** Stacked: title + quote row → video → detail copy (matches Framer slackbysalesforce). */
+const SlackFeatureBlock = ({ feature }: { feature: SlackFeature }) => (
+  <motion.article
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-80px" }}
+    transition={{ duration: 0.7 }}
+    className="flex flex-col gap-8 border-b border-border/40 py-16 last:border-b-0 md:gap-10"
+  >
+    <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
+      <div className="min-w-0">
+        <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{feature.no}</p>
+        <h3 className="mono-heading text-2xl font-bold text-foreground leading-snug md:text-3xl lg:text-4xl">
+          {feature.title}
+        </h3>
+      </div>
+      <p className="font-body max-w-xl text-sm italic leading-relaxed text-foreground/60 md:text-right md:text-base shrink-0">
+        {feature.quote}
+      </p>
+    </div>
+
+    <SlackFeatureVideo src={feature.video} label={`${feature.title} prototype`} />
+
+    <div className="flex flex-col gap-10">
+      {feature.details.map((detail) => (
+        <div key={detail.title} className="max-w-3xl">
+          <p className="font-body text-[10px] tracking-widest uppercase text-foreground/50 mb-2 md:text-xs">
+            {detail.title}
+          </p>
+          <p className="font-body text-foreground/80 leading-relaxed">{detail.body}</p>
+          {detail.quote && (
+            <p className="font-body text-sm italic text-primary mt-4 leading-relaxed border-l-2 border-primary/40 pl-4">
+              {detail.quote}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  </motion.article>
+);
 
 const SectionHeader = ({ kicker, title }: { kicker: string; title: React.ReactNode }) => (
   <motion.div
@@ -502,33 +615,27 @@ const SlackCaseStudy = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             kicker="The Solutions"
-            title={<>Three features. Each one <span className="teal-shimmer">earned</span>.</>}
+            title={<>Three <span className="teal-shimmer">features</span>.</>}
           />
-          <p className="font-body text-foreground/60 max-w-2xl mb-12">
+          <p className="font-body text-foreground/60 max-w-2xl mb-14">
             Each feature maps directly to an insight from testing. Nothing assumed. Everything earned.
           </p>
-          <div className="space-y-8">
-            {features.map((f, i) => (
-              <motion.article
-                key={f.no}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: i * 0.1, duration: 0.7 }}
-                className="glass-card p-8 md:p-12 grid md:grid-cols-5 gap-8 items-start"
-              >
-                <div className="md:col-span-2">
-                  <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{f.no}</p>
-                  <h3 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-4 leading-snug">{f.title}</h3>
-                  <p className="font-body text-sm italic text-foreground/60 leading-relaxed">{f.quote}</p>
-                </div>
-                <div className="md:col-span-3 border-l-0 md:border-l-2 border-primary/30 md:pl-8">
-                  <p className="font-body text-[10px] tracking-widest uppercase text-foreground/50 mb-3">{f.sub}</p>
-                  <p className="font-body text-foreground/80 leading-relaxed">{f.body}</p>
-                </div>
-              </motion.article>
+          <div>
+            {features.map((f) => (
+              <SlackFeatureBlock key={f.no} feature={f} />
             ))}
           </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="glass-card mt-6 p-8 md:p-10"
+          >
+            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{oneMoreThing.kicker}</p>
+            <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-4">{oneMoreThing.title}</h3>
+            <p className="font-body text-foreground/80 leading-relaxed max-w-3xl">{oneMoreThing.body}</p>
+          </motion.div>
         </div>
       </section>
 

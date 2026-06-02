@@ -378,6 +378,11 @@ svg.sketch-filters {
     margin-inline: auto;
   }
 
+  .case-study-media-frame--uniform video {
+    object-fit: cover;
+    object-position: center center;
+  }
+
   .case-study-sketch-card img {
     display: block;
     width: 100%;
