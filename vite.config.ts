@@ -7,9 +7,15 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    // Allow Vercel preview / sandbox hosts (e.g. *.vercel.app, *.vercel.run)
+    allowedHosts: [".vercel.app", ".vercel.run", "localhost"],
     hmr: {
       overlay: false,
     },
+  },
+  preview: {
+    host: true,
+    allowedHosts: [".vercel.app", ".vercel.run", "localhost"],
   },
   plugins: [react()],
   resolve: {
