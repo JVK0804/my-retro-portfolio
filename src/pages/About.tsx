@@ -22,7 +22,7 @@ const About = () => {
             transition={{ delay: 0.3 }}
             className="font-heading text-xs text-primary mb-4 tracking-widest uppercase"
           >
-            The Chaptered Journey
+            About
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ const About = () => {
             transition={{ delay: 0.8 }}
             className="font-body text-foreground/70 text-lg text-center max-w-lg"
           >
-            A Zillennial's journey from analog tactility to cloud-native design. Each era leaving its fingerprint on how I build.
+            Where I grew up, what I learned in each city, and the devices that taught me how to design.
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -160,7 +160,7 @@ const About = () => {
         </section>
       </ScrollFadeSection>
 
-      {/* ===== STICKY CHAPTERS — Era Journey ===== */}
+      {/* ===== TECH ERAS (devices) ===== */}
       <StickyChapters />
 
       {/* ===== CLOSING — What drives me ===== */}

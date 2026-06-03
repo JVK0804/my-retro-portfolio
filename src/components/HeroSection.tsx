@@ -28,7 +28,7 @@ const TypingWelcome = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.6 }}
-      className="font-mono-space text-foreground/70 text-sm mb-8 tracking-[0.12em] min-h-[1.5em]"
+      className="font-mono-space text-foreground/70 text-sm mb-8 tracking-[0.12em] min-h-[1.5em] w-full text-center"
       aria-label={WELCOME_TEXT}
     >
       <span className="text-primary mr-1">$</span>

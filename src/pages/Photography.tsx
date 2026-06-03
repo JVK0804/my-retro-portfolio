@@ -7,8 +7,8 @@ const Photography = () => {
   return (
     <div className="noise-overlay min-h-screen bg-background">
       <Navbar />
-      <section className="pt-32 pb-16 px-6">
-        <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto px-6">
+        <header className="pt-32 pb-10">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -21,7 +21,7 @@ const Photography = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6"
+            className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-5"
           >
             Photography
           </motion.h1>
@@ -29,13 +29,14 @@ const Photography = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="font-body text-foreground/70 text-lg max-w-xl leading-relaxed"
+            className="font-body text-foreground/70 text-lg max-w-2xl leading-relaxed"
           >
-            Photography grounds my design work. Framing a shot teaches composition, light teaches contrast, and street photography teaches empathy.
+            What I learn framing a shot carries straight into UI: composition, light, negative space, and hierarchy from viewfinder to screen.
           </motion.p>
-        </div>
-      </section>
-      <PhotographyGrid />
+        </header>
+
+        <PhotographyGrid />
+      </div>
       <Footer />
     </div>
   );

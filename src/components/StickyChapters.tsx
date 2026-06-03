@@ -12,28 +12,28 @@ export type Chapter = {
 
 export const stickyChapters: Chapter[] = [
   {
-    era: "Chapter I · Analog",
+    era: "Analog",
     title: "The Cassette",
     year: "1990s",
     icon: "📼",
     text: "Growing up rewinding tapes taught me patience with process. The tactile click of a play button, the hiss before the music. These analog rituals shaped how I think about micro-interactions today.",
   },
   {
-    era: "Chapter II · Digital Dawn",
+    era: "Digital dawn",
     title: "The Compact Disc",
     year: "2000s",
     icon: "💿",
     text: "CDs introduced perfection: skip-free, crystal clear. But also fragility. I learned that polish without resilience is meaningless. My design systems are built to be both precise and unbreakable.",
   },
   {
-    era: "Chapter III · Portable",
+    era: "Portable",
     title: "The MP3 Player",
     year: "2005-2012",
     icon: "🎵",
     text: "1,000 songs in your pocket changed everything. Compression forced choices. What's essential? This era taught me ruthless prioritization. Every pixel must earn its place.",
   },
   {
-    era: "Chapter IV · Cloud",
+    era: "Cloud",
     title: "Streaming",
     year: "2012-Now",
     icon: "☁️",
@@ -107,9 +107,18 @@ const StickyChapters = () => {
       ref={containerRef}
       className="relative"
       style={{ height: `${stickyChapters.length * 100}vh` }}
-      aria-label="The chaptered journey through music tech eras"
+      aria-label="How technology eras shaped my design thinking"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 text-center">
+          <p className="font-heading text-[11px] text-primary tracking-widest uppercase">
+            How Tech Shaped Me
+          </p>
+          <p className="font-body text-xs text-foreground/60 mt-1">
+            Cassette · CD · MP3 · Streaming
+          </p>
+        </div>
+
         {/* Backdrop */}
         <div className="absolute inset-0 bg-background" />
         <div

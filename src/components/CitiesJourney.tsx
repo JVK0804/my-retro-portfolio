@@ -17,16 +17,16 @@ type City = {
 
 const cities: City[] = [
   {
-    era: "Home · Chapter I",
+    era: "Roots",
     city: "Visakhapatnam",
     region: "Andhra Pradesh, India",
     years: "Where it began",
     landmark: vizag,
-    text: "Born by the Bay of Bengal, raised under the watchful gaze of Dolphin's Nose hill. Where beauty meets innovation: the salt air, the steel plant, and the slow lighthouse blink taught me that craft and engineering can share a coastline.",
+    text: "Born by the Bay of Bengal and raised under the watchful gaze of Dolphin's Nose hill, I grew up in a place where natural beauty and secure tech sit side by side. The salt air and the slow lighthouse blink taught me early that craft and engineering can share the same coastline.",
     side: "left",
   },
   {
-    era: "Home · Chapter II",
+    era: "First career",
     city: "Hyderabad",
     region: "Telangana, India",
     years: "First job, first love",
@@ -35,7 +35,7 @@ const cities: City[] = [
     side: "right",
   },
   {
-    era: "Home · Chapter III",
+    era: "Third home",
     city: "Bloomington",
     region: "Indiana, USA",
     years: "Discovered, third home",
