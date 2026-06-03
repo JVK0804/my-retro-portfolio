@@ -1,6 +1,13 @@
 import { createContext, useContext, useState, useCallback, useRef, useEffect } from "react";
 
-type SoundType = "click" | "hover" | "whoosh" | "toggle" | "success" | "fluorescent";
+type SoundType =
+  | "click"
+  | "hover"
+  | "whoosh"
+  | "toggle"
+  | "success"
+  | "fluorescent"
+  | "typing";
 
 const FLUORESCENT_DURATION = 3.0;
 const RECENT_GESTURE_WINDOW = 250;
@@ -9,6 +16,7 @@ type SoundContextType = {
   enabled: boolean;
   setEnabled: (next: boolean) => void;
   play: (type: SoundType) => void;
+  playTyping: () => void;
 };
 
 const noop = () => undefined;
@@ -17,6 +25,7 @@ const SoundContext = createContext<SoundContextType>({
   enabled: false,
   setEnabled: noop,
   play: noop,
+  playTyping: noop,
 });
 
 export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
@@ -204,6 +213,17 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
           osc.start(now);
           osc.stop(now + 0.35);
           break;
+        case "typing": {
+          const tick = 1180 + Math.random() * 180;
+          osc.type = "square";
+          osc.frequency.setValueAtTime(tick, now);
+          osc.frequency.exponentialRampToValueAtTime(tick * 0.72, now + 0.022);
+          gain.gain.setValueAtTime(0.028, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+          osc.start(now);
+          osc.stop(now + 0.03);
+          break;
+        }
       }
     },
     [stopFluorescent]
@@ -227,8 +247,22 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     [enabled, getCtx, scheduleSound, unlockContext]
   );
 
+  /** Hero typing ticks — unlocks audio without the short gesture window. */
+  const playTyping = useCallback(() => {
+    if (!enabled) return;
+    const ctx = getCtx();
+    if (ctx?.state === "running") {
+      scheduleSound(ctx, "typing");
+      return;
+    }
+    void unlockContext().then((runningCtx) => {
+      if (!runningCtx) return;
+      scheduleSound(runningCtx, "typing");
+    });
+  }, [enabled, getCtx, scheduleSound, unlockContext]);
+
   return (
-    <SoundContext.Provider value={{ enabled, setEnabled, play }}>
+    <SoundContext.Provider value={{ enabled, setEnabled, play, playTyping }}>
       {children}
     </SoundContext.Provider>
   );

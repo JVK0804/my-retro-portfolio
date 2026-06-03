@@ -2,10 +2,15 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSound } from "@/contexts/SoundContext";
+import {
+  KAUSHIK_HERE_HAPTIC_END,
+  pulseTypingHaptic,
+} from "@/lib/typing-haptic";
 
 const WELCOME_TEXT = "Kaushik here ✦ Welcome to my internet corner";
 
 const TypingWelcome = () => {
+  const { playTyping } = useSound();
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
 
@@ -16,9 +21,16 @@ const TypingWelcome = () => {
 
   useEffect(() => {
     if (!started || count >= WELCOME_TEXT.length) return;
-    const t = setTimeout(() => setCount((c) => c + 1), 32);
+    const t = setTimeout(() => {
+      const next = count + 1;
+      if (next < KAUSHIK_HERE_HAPTIC_END) {
+        playTyping();
+        pulseTypingHaptic();
+      }
+      setCount(next);
+    }, 32);
     return () => clearTimeout(t);
-  }, [count, started]);
+  }, [count, started, playTyping]);
 
   const shown = WELCOME_TEXT.slice(0, count);
   const isDone = count >= WELCOME_TEXT.length;
