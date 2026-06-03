@@ -10,13 +10,12 @@ const SIDE_PHONES = [
   {
     src: "/case-studies/smartalign/hifi/golden-triangle-1.webp",
     alt: "Smart Align golden triangle composition grid",
-    /** Collapsed offset toward center (px) */
-    collapsedX: 88,
+    collapsedX: 72,
   },
   {
     src: "/case-studies/smartalign/hifi/ready-to-align.webp",
     alt: "Smart Align ready to align framing",
-    collapsedX: -88,
+    collapsedX: -72,
   },
 ];
 
@@ -65,13 +64,13 @@ const SmartAlignHeroPhones = () => {
 
   return (
     <div
-      className="relative mx-auto flex w-full max-w-[min(100%,580px)] items-center justify-center px-1 py-4 sm:px-2"
+      className="relative mx-auto w-full max-w-full overflow-hidden px-2 py-2 sm:max-w-[min(100%,580px)] sm:px-1 sm:py-4"
       aria-hidden={false}
     >
-      <div className="flex items-center justify-center -space-x-9 sm:-space-x-11 md:-space-x-12">
-        {/* Left side */}
+      <div className="flex items-center justify-center sm:-space-x-11 md:-space-x-12">
+        {/* Side phones — hidden on small screens to avoid overflow */}
         <motion.div
-          className="shrink-0"
+          className="hidden sm:block shrink-0"
           initial={{ x: SIDE_PHONES[0].collapsedX, opacity: 0 }}
           animate={{
             x: showSides ? 0 : SIDE_PHONES[0].collapsedX,
@@ -92,8 +91,7 @@ const SmartAlignHeroPhones = () => {
           </div>
         </motion.div>
 
-        {/* Logo screen — visible on load */}
-        <div className="relative z-10 shrink-0">
+        <div className="relative z-10 mx-auto shrink-0">
           <div className="case-study-phone-frame case-study-phone-frame--hero-center shadow-lg shadow-foreground/10">
             <img
               src={CENTER_PHONE.src}
@@ -107,9 +105,8 @@ const SmartAlignHeroPhones = () => {
           </div>
         </div>
 
-        {/* Right side */}
         <motion.div
-          className="shrink-0"
+          className="hidden sm:block shrink-0"
           initial={{ x: SIDE_PHONES[1].collapsedX, opacity: 0 }}
           animate={{
             x: showSides ? 0 : SIDE_PHONES[1].collapsedX,

@@ -29,33 +29,33 @@ const TestimonialTicker = () => {
   const doubled = [...testimonials, ...testimonials];
 
   return (
-    <section className="py-16 overflow-hidden border-t-2 border-b-2 border-border">
-      <p className="font-heading text-[10px] text-primary text-center mb-8 tracking-widest uppercase">
+    <section className="py-12 sm:py-16 overflow-hidden border-t-2 border-b-2 border-border">
+      <p className="font-heading text-[10px] text-primary text-center mb-6 sm:mb-8 tracking-widest uppercase px-4">
         What colleagues say
       </p>
-      <div className="ticker-scroll">
+      <div className="ticker-scroll will-change-transform">
         {doubled.map((t, i) => (
           <div
             key={`${t.name}-${i}`}
-            className="flex-shrink-0 w-[360px] mx-4 glass-card p-6"
+            className="ticker-card glass-card shrink-0 p-5 sm:p-6"
           >
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <img
                 src={t.avatar}
                 alt={t.name}
-                className="w-9 h-9 rounded-full object-cover border border-border"
+                className="w-9 h-9 rounded-full object-cover border border-border shrink-0"
                 loading="lazy"
                 width={36}
                 height={36}
               />
-              <div>
-                <p className="font-heading text-[10px] tracking-wider uppercase font-bold text-foreground">{t.name}</p>
-                <p className="font-body text-xs text-muted-foreground">{t.role}</p>
+              <div className="min-w-0">
+                <p className="font-heading text-[10px] tracking-wider uppercase font-bold text-foreground truncate">
+                  {t.name}
+                </p>
+                <p className="font-body text-xs text-muted-foreground leading-snug line-clamp-2">{t.role}</p>
               </div>
             </div>
-            <p className="font-body text-sm text-muted-foreground leading-relaxed">
-              "{t.text}"
-            </p>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed">"{t.text}"</p>
           </div>
         ))}
       </div>

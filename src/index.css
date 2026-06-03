@@ -13,6 +13,16 @@ html {
   color-scheme: light;
 }
 
+html.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.smooth-scroll {
+    scroll-behavior: auto;
+  }
+}
+
 html.dark {
   color-scheme: dark;
 }
@@ -21,6 +31,12 @@ html.dark {
   min-height: 100vh;
   min-height: 100dvh;
   background-color: hsl(var(--background));
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 ::selection {
@@ -326,12 +342,11 @@ svg.sketch-filters {
   }
 
   .case-study-page {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: none;
   }
 
   .case-study-viewport {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
+    scroll-snap-align: none;
   }
 
   /* Hero hi-fi stills — portrait phones (iPhone-like corner radius) */
@@ -344,12 +359,12 @@ svg.sketch-filters {
   }
 
   .case-study-phone-frame--hero-center {
-    width: clamp(176px, 23vw, 224px);
+    width: clamp(148px, 52vw, 224px);
     border-radius: 1.65rem;
   }
 
   .case-study-phone-frame--hero-side {
-    width: clamp(162px, 20vw, 200px);
+    width: clamp(140px, 20vw, 200px);
     border-radius: 1.5rem;
   }
 
@@ -413,9 +428,31 @@ svg.sketch-filters {
     background: var(--color-teal-subtle);
   }
 
+  .ticker-card {
+    width: min(18.5rem, calc(100vw - 2.5rem));
+    margin-inline: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .ticker-card {
+      width: 20rem;
+      margin-inline: 0.75rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .ticker-card {
+      width: 22.5rem;
+      margin-inline: 1rem;
+    }
+  }
+
   .ticker-scroll {
     display: flex;
+    width: max-content;
     animation: ticker-slide 40s linear infinite;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .ticker-scroll:hover {

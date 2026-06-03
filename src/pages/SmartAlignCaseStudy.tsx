@@ -307,9 +307,9 @@ const SmartAlignCaseStudy = () => {
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
-      <CaseStudyViewport id="overview" className="!pt-28">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12 xl:gap-14">
-          <div className="flex w-full max-w-xl flex-col items-start text-left">
+      <CaseStudyViewport id="overview" className="!pt-28 !pb-12 sm:!pb-16">
+        <div className="flex flex-col items-center gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-12 xl:gap-14">
+          <div className="flex w-full max-w-xl flex-col items-start text-left order-2 lg:order-none">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -382,7 +382,7 @@ const SmartAlignCaseStudy = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="flex w-full items-center justify-center lg:justify-end"
+            className="order-1 w-full max-w-full overflow-hidden flex items-center justify-center lg:order-none lg:justify-end"
           >
             <SmartAlignHeroPhones />
           </motion.div>

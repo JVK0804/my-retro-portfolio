@@ -12,6 +12,7 @@ import SmartAlignCaseStudy from "./pages/SmartAlignCaseStudy.tsx";
 import CignaCaseStudy from "./pages/CignaCaseStudy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ScrollToTop from "./components/ScrollToTop";
+import SmoothScroll from "./components/SmoothScroll";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <SmoothScroll />
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
