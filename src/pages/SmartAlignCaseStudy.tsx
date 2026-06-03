@@ -382,7 +382,7 @@ const SmartAlignCaseStudy = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="order-1 w-full max-w-full overflow-hidden flex items-center justify-center lg:order-none lg:justify-end"
+            className="order-1 w-full max-w-full overflow-visible sm:overflow-hidden flex items-center justify-center lg:order-none lg:justify-end"
           >
             <SmartAlignHeroPhones />
           </motion.div>

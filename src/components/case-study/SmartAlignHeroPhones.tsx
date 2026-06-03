@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
+const MOBILE_MAX = 767;
+
+const getSideSpread = () =>
+  typeof window !== "undefined" && window.innerWidth <= MOBILE_MAX ? 36 : 72;
+
 const CENTER_PHONE = {
   src: "/case-studies/smartalign/hifi/launch-app.webp",
   alt: "Smart Align launch and logo screen",
@@ -10,12 +15,10 @@ const SIDE_PHONES = [
   {
     src: "/case-studies/smartalign/hifi/golden-triangle-1.webp",
     alt: "Smart Align golden triangle composition grid",
-    collapsedX: 72,
   },
   {
     src: "/case-studies/smartalign/hifi/ready-to-align.webp",
     alt: "Smart Align ready to align framing",
-    collapsedX: -72,
   },
 ];
 
@@ -26,6 +29,13 @@ const easeOut = [0.25, 0.1, 0.25, 1] as const;
 const SmartAlignHeroPhones = () => {
   const reduceMotion = useReducedMotion();
   const [sidesReady, setSidesReady] = useState(false);
+  const [sideSpread, setSideSpread] = useState(getSideSpread);
+
+  useEffect(() => {
+    const onResize = () => setSideSpread(getSideSpread());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     const links = ALL_HERO_IMAGES.map((src) => {
@@ -64,16 +74,15 @@ const SmartAlignHeroPhones = () => {
 
   return (
     <div
-      className="relative mx-auto w-full max-w-full overflow-hidden px-2 py-2 sm:max-w-[min(100%,580px)] sm:px-1 sm:py-4"
+      className="relative mx-auto w-full max-w-full overflow-visible px-1 py-2 sm:max-w-[min(100%,580px)] sm:overflow-hidden sm:px-1 sm:py-4"
       aria-hidden={false}
     >
-      <div className="flex items-center justify-center sm:-space-x-11 md:-space-x-12">
-        {/* Side phones — hidden on small screens to avoid overflow */}
+      <div className="flex items-center justify-center -space-x-5 sm:-space-x-11 md:-space-x-12">
         <motion.div
-          className="hidden sm:block shrink-0"
-          initial={{ x: SIDE_PHONES[0].collapsedX, opacity: 0 }}
+          className="shrink-0"
+          initial={{ x: sideSpread, opacity: 0 }}
           animate={{
-            x: showSides ? 0 : SIDE_PHONES[0].collapsedX,
+            x: showSides ? 0 : sideSpread,
             opacity: showSides ? 1 : 0,
           }}
           transition={{ delay: reduceMotion ? 0 : 0.18, duration: 0.6, ease: easeOut }}
@@ -106,10 +115,10 @@ const SmartAlignHeroPhones = () => {
         </div>
 
         <motion.div
-          className="hidden sm:block shrink-0"
-          initial={{ x: SIDE_PHONES[1].collapsedX, opacity: 0 }}
+          className="shrink-0"
+          initial={{ x: -sideSpread, opacity: 0 }}
           animate={{
-            x: showSides ? 0 : SIDE_PHONES[1].collapsedX,
+            x: showSides ? 0 : -sideSpread,
             opacity: showSides ? 1 : 0,
           }}
           transition={{ delay: reduceMotion ? 0 : 0.25, duration: 0.6, ease: easeOut }}

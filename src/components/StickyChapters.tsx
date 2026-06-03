@@ -131,14 +131,14 @@ const StickyChapters = () => {
         />
 
         {/* Single morphing illustration on the right — persists through all chapters */}
-        <div className="absolute inset-y-0 right-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none">
-          <div className="pointer-events-auto">
+        <div className="absolute inset-y-0 right-0 z-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-auto blur-[3px] md:blur-none">
             <MorphIllustration progress={scrollYProgress} rotate={illusRotate} />
           </div>
         </div>
 
         {/* Text slots cross-fade on the left */}
-        <div className="relative h-full w-full">
+        <div className="relative z-10 h-full w-full">
           {stickyChapters.map((ch, i) => (
             <ChapterText
               key={ch.title}
