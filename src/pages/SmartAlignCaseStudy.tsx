@@ -237,20 +237,40 @@ type ScreenBlockProps = {
   video: string;
   orientation?: "portrait" | "landscape";
   reverse?: boolean;
+  /** Tighter vertical rhythm (Product Features section). */
+  compact?: boolean;
 };
 
-const ScreenBlock = ({ no, title, titleLines, kicker, body, quote, video, orientation, reverse }: ScreenBlockProps) => {
+const ScreenBlock = ({
+  no,
+  title,
+  titleLines,
+  kicker,
+  body,
+  quote,
+  video,
+  orientation,
+  reverse,
+  compact,
+}: ScreenBlockProps) => {
   const isLandscape = orientation === "landscape";
 
   return (
     <div
       className={cn(
-        "grid min-h-[100dvh] items-center gap-10 py-16 lg:gap-14",
-        isLandscape ? "lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]" : "lg:grid-cols-2",
+        "grid items-center gap-10 px-0",
+        compact ? "min-h-0 py-10 md:py-12" : "min-h-[100dvh] py-16",
+        isLandscape ? "lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-14" : "lg:grid-cols-2",
+        !isLandscape && (reverse ? "lg:gap-24 xl:gap-32" : "lg:gap-14"),
         reverse && "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1",
       )}
     >
-      <div className="min-w-0 flex flex-col justify-center">
+      <div
+        className={cn(
+          "min-w-0 flex flex-col justify-center lg:py-8",
+          reverse && !isLandscape && "lg:pl-8 xl:pl-12",
+        )}
+      >
         <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{no}</p>
         <h3 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-3 leading-snug">
           {titleLines ? <LineBreakCopy lines={titleLines} /> : title}
@@ -263,7 +283,14 @@ const ScreenBlock = ({ no, title, titleLines, kicker, body, quote, video, orient
           </p>
         )}
       </div>
-      <div className={cn("flex min-w-0 w-full", isLandscape ? "justify-center lg:justify-end" : "justify-center lg:justify-end")}>
+      <div
+        className={cn(
+          "flex min-w-0 w-full justify-center lg:items-start lg:py-8",
+          reverse && !isLandscape
+            ? "lg:justify-start lg:pr-8 xl:pr-12"
+            : "lg:justify-end lg:pl-4",
+        )}
+      >
         <PrototypeMedia src={video} label={`${title} prototype`} orientation={orientation} />
       </div>
     </div>
@@ -640,10 +667,10 @@ const SmartAlignCaseStudy = () => {
         </div>
       </section>
 
-      {/* === FEATURES (one viewport per feature) === */}
+      {/* === FEATURES === */}
       <section id="features" className="border-t border-border/40">
-        <div className="mx-auto flex min-h-[100dvh] max-w-6xl flex-col justify-center px-6 py-20">
-          <motion.div {...fadeInView}>
+        <div className="max-w-6xl mx-auto px-6 pt-12 md:pt-16 pb-4">
+          <motion.div {...fadeInView} className="mb-8 md:mb-10">
             <SectionKicker>Product Features</SectionKicker>
             <SectionTitle className="max-w-3xl">
               <LineBreakCopy
@@ -654,8 +681,6 @@ const SmartAlignCaseStudy = () => {
               />
             </SectionTitle>
           </motion.div>
-        </div>
-        <div className="max-w-6xl mx-auto px-6">
           {features.map((f, i) => (
             <ScreenBlock
               key={f.no}
@@ -666,6 +691,7 @@ const SmartAlignCaseStudy = () => {
               video={f.video}
               orientation={f.orientation}
               reverse={i % 2 === 1}
+              compact
             />
           ))}
         </div>

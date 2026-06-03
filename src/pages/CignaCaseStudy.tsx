@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
+import CignaProcessTimeline from "@/components/case-study/CignaProcessTimeline";
 import { useSound } from "@/contexts/SoundContext";
 
 const caseStudyNav: CaseStudyNavItem[] = [
@@ -19,33 +20,6 @@ const caseStudyNav: CaseStudyNavItem[] = [
 ];
 
 type CategoryKey = "Color" | "Typography" | "Buttons" | "Forms" | "Spacing" | "Cards" | "Inputs";
-
-const processSteps = [
-  {
-    no: "01",
-    title: "Discovery",
-    headline: "First, I mapped what already existed.",
-    body: "Before designing a single new component, I mapped the existing Mednext design system. What patterns were already established? Where were the gaps? Understanding the existing system deeply was the only way to add to it without breaking it.",
-  },
-  {
-    no: "02",
-    title: "Alignment",
-    headline: "Then I got everyone in the same room.",
-    body: "The hardest design problem wasn't the UI, it was alignment. I facilitated working sessions between all three teams to surface conflicts early and establish shared principles before any code was written.",
-  },
-  {
-    no: "03",
-    title: "Design + Build",
-    headline: "Then I built things that could be used forever.",
-    body: "Rather than designing features one-off, I built a library of 20+ reusable React and JavaScript components aligned with the healthcare design system. Each was composable, and engineers assembled new screens without reinventing UX patterns from scratch.",
-  },
-  {
-    no: "04",
-    title: "Integration",
-    headline: "And we shipped, without breaking a thing.",
-    body: "Feature integration into an active healthcare platform requires discipline. I worked closely with QA and engineering to ensure new components fit within existing constraints. Nothing in production broke as a result of what we added. At launch: zero regression issues.",
-  },
-];
 
 const contributions = [
   "Audited the existing Mednext component library to identify gaps between platform capabilities and Cigna's new feature requirements before writing a line of code.",
@@ -296,26 +270,7 @@ const CignaCaseStudy = () => {
             kicker="04 Process"
             title={<>So I started by <span className="teal-shimmer">listening</span> before I drew anything.</>}
           />
-          <div className="space-y-8">
-            {processSteps.map((s, i) => (
-              <motion.article
-                key={s.no}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: i * 0.1, duration: 0.7 }}
-                className="glass-card p-8 md:p-12 grid md:grid-cols-5 gap-8 items-start"
-              >
-                <div className="md:col-span-2">
-                  <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">Step {s.no} · {s.title}</p>
-                  <h3 className="mono-heading text-2xl md:text-3xl font-bold text-foreground leading-snug">{s.headline}</h3>
-                </div>
-                <div className="md:col-span-3 border-l-0 md:border-l-2 border-primary/30 md:pl-8">
-                  <p className="font-body text-foreground/80 leading-relaxed">{s.body}</p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+          <CignaProcessTimeline />
         </div>
       </section>
 
