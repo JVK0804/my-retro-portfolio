@@ -7,12 +7,22 @@ import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
 import CignaProcessTimeline from "@/components/case-study/CignaProcessTimeline";
+import PrototypeMedia from "@/components/case-study/PrototypeMedia";
 import { useSound } from "@/contexts/SoundContext";
+
+const cignaHeroVideo = "/case-studies/cigna/cigna-hero.webm";
+
+const cignaPrototypes = [
+  { src: "/case-studies/cigna/main-login.webm", label: "Main login flow prototype", title: "Main Login" },
+  { src: "/case-studies/cigna/member-id-login.webm", label: "Member ID login prototype", title: "Member ID Login" },
+  { src: "/case-studies/cigna/registration-page.webm", label: "Registration page prototype", title: "Registration" },
+];
 
 const caseStudyNav: CaseStudyNavItem[] = [
   { label: "Overview", id: "overview" },
   { label: "Context", id: "context" },
   { label: "Role", id: "role" },
+  { label: "Prototypes", id: "prototypes" },
   { label: "Process", id: "process" },
   { label: "System", id: "system" },
   { label: "Impact", id: "impact" },
@@ -188,6 +198,21 @@ const CignaCaseStudy = () => {
               Read Our Story <ArrowRight size={14} />
             </a>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.7 }}
+            className="mt-16 w-full min-w-0"
+          >
+            <PrototypeMedia
+              src={cignaHeroVideo}
+              label="Cigna Mednext platform overview prototype"
+              orientation="landscape"
+              sizeScale={2}
+              className="mx-auto w-full"
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -263,11 +288,45 @@ const CignaCaseStudy = () => {
         </div>
       </section>
 
+      {/* === PROTOTYPES === */}
+      <section id="prototypes" className="py-24 px-6 border-t border-border/40">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            kicker="04 Prototypes"
+            title={<>Auth flows shipped into a <span className="teal-shimmer">live platform</span>.</>}
+          />
+          <p className="font-body text-foreground/65 max-w-2xl mb-12 leading-relaxed">
+            Login and registration screens built against Mednext patterns — prototyped in Figma, validated with stakeholders, then implemented in React.
+          </p>
+          <div className="flex flex-col gap-14">
+            {cignaPrototypes.map((proto, i) => (
+              <motion.div
+                key={proto.src}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: i * 0.08, duration: 0.6 }}
+                className="flex flex-col gap-4"
+              >
+                <p className="font-body text-[10px] tracking-[0.3em] uppercase text-foreground/50">{proto.title}</p>
+                <PrototypeMedia
+                  src={proto.src}
+                  label={proto.label}
+                  orientation="landscape"
+                  sizeScale={1.75}
+                  className="w-full"
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* === PROCESS === */}
       <section id="process" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="04 Process"
+            kicker="05 Process"
             title={<>So I started by <span className="teal-shimmer">listening</span> before I drew anything.</>}
           />
           <CignaProcessTimeline />
@@ -278,7 +337,7 @@ const CignaCaseStudy = () => {
       <section id="system" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="05 Design System / Components"
+            kicker="06 Design System / Components"
             title={<>What I <span className="teal-shimmer">actually built</span>.</>}
           />
 
@@ -545,7 +604,7 @@ const CignaCaseStudy = () => {
       <section id="impact" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="06 Impact"
+            kicker="07 Impact"
             title={<>Three months later, the numbers told their <span className="teal-shimmer">own story</span>.</>}
           />
           <div className="grid md:grid-cols-3 gap-6">
@@ -571,7 +630,7 @@ const CignaCaseStudy = () => {
       <section id="learnings" className="py-24 px-6 border-t border-border/40">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
-            kicker="07 Learnings"
+            kicker="08 Learnings"
             title={<>What this project changed about <span className="teal-shimmer">how I work</span>.</>}
           />
           <div className="space-y-8">
