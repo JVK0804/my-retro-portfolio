@@ -8,6 +8,7 @@ import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study
 import CignaProcessTimeline from "@/components/case-study/CignaProcessTimeline";
 import CignaComponentLibrary from "@/components/case-study/CignaComponentLibrary";
 import PrototypeMedia from "@/components/case-study/PrototypeMedia";
+import CaseStudyShell, { CaseStudyContent } from "@/components/case-study/CaseStudyShell";
 import { useSound } from "@/contexts/SoundContext";
 
 const cignaHeroVideo = "/case-studies/cigna/cigna-hero.webm";
@@ -22,7 +23,7 @@ const caseStudyNav: CaseStudyNavItem[] = [
   { label: "Overview", id: "overview" },
   { label: "Context", id: "context" },
   { label: "Role", id: "role" },
-  { label: "Prototypes", id: "prototypes" },
+  { label: "Solutions", id: "solutions" },
   { label: "Process", id: "process" },
   { label: "System", id: "system" },
   { label: "Impact", id: "impact" },
@@ -72,14 +73,14 @@ const CignaCaseStudy = () => {
   const { play } = useSound();
 
   return (
-    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground xl:pl-28">
+    <CaseStudyShell>
       <SketchFilter />
       <Navbar />
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
-      <section id="overview" className="pt-32 pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section id="overview" className="pt-32 pb-24">
+        <CaseStudyContent>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,12 +156,12 @@ const CignaCaseStudy = () => {
             className="flex items-center gap-6 flex-wrap"
           >
             <a
-              href="#system"
+              href="#solutions"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
               className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
             >
-              Explore the library
+              Feature Breakdown
             </a>
             <a
               href="#context"
@@ -175,7 +176,7 @@ const CignaCaseStudy = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85, duration: 0.7 }}
-            className="mt-16 w-full min-w-0"
+            className="mt-16 w-full min-w-0 overflow-hidden"
           >
             <PrototypeMedia
               src={cignaHeroVideo}
@@ -185,12 +186,12 @@ const CignaCaseStudy = () => {
               className="mx-auto w-full"
             />
           </motion.div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === CONTEXT === */}
-      <section id="context" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="context" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="01 Context"
             title={<>System is well established with <span className="teal-shimmer">real data and real users</span>.</>}
@@ -209,12 +210,12 @@ const CignaCaseStudy = () => {
               </div>
             </div>
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === ROLE === */}
-      <section id="role" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="role" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="02 My Role"
             title={<>I was the person who <span className="teal-shimmer">spoke everyone's language</span>.</>}
@@ -229,12 +230,12 @@ const CignaCaseStudy = () => {
               ))}
             </div>
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === DESIGN SYSTEM TEASER === */}
-      <section className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="03 Design System"
             title={<>The real deliverable wasn't features. It was <span className="teal-shimmer">trust</span>.</>}
@@ -257,12 +258,12 @@ const CignaCaseStudy = () => {
               </a>
             </div>
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
-      {/* === PROTOTYPES === */}
-      <section id="prototypes" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      {/* === SOLUTIONS === */}
+      <section id="solutions" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="04 Prototypes"
             title={<>Auth flows shipped into a <span className="teal-shimmer">live platform</span>.</>}
@@ -291,23 +292,23 @@ const CignaCaseStudy = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === PROCESS === */}
-      <section id="process" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="process" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="05 Process"
             title={<>So I started by <span className="teal-shimmer">listening</span> before I drew anything.</>}
           />
           <CignaProcessTimeline />
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === SYSTEM / COMPONENTS === */}
-      <section id="system" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="system" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="06 Design System"
             title={<>The <span className="teal-shimmer">component library</span> in practice.</>}
@@ -336,12 +337,12 @@ const CignaCaseStudy = () => {
               "Building a Design System isn't the hard part. Building one that three teams, with three different codebases and opinions, will actually use consistently? <span className="teal-shimmer">That's the design problem.</span>"
             </p>
           </motion.blockquote>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === IMPACT === */}
-      <section id="impact" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="impact" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="07 Impact"
             title={<>Three months later, the numbers told their <span className="teal-shimmer">own story</span>.</>}
@@ -362,12 +363,12 @@ const CignaCaseStudy = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === LEARNINGS === */}
-      <section id="learnings" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="learnings" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="08 Learnings"
             title={<>What this project changed about <span className="teal-shimmer">how I work</span>.</>}
@@ -421,11 +422,11 @@ const CignaCaseStudy = () => {
               <ArrowLeft size={14} /> Back to all projects
             </Link>
           </motion.div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       <Footer />
-    </div>
+    </CaseStudyShell>
   );
 };
 

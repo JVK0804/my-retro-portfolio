@@ -69,7 +69,7 @@ const PrototypeMedia = ({
 
   return (
     <div
-      className={cn("glass-card glass-card--media w-full shrink-0 p-2", className)}
+      className={cn("glass-card glass-card--media w-full max-w-full min-w-0 shrink-0 p-2", className)}
       style={{
         maxWidth: landscape ? `min(100%, ${landscapeMaxRem}rem)` : `min(100%, ${portraitMaxPx}px)`,
       }}

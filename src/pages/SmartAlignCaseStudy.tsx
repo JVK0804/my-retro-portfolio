@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import PrototypeMedia from "@/components/case-study/PrototypeMedia";
 import CaseStudyViewport from "@/components/case-study/CaseStudyViewport";
+import CaseStudyShell, { CaseStudyContent } from "@/components/case-study/CaseStudyShell";
 import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
 import SmartAlignHeroPhones from "@/components/case-study/SmartAlignHeroPhones";
 import { useSound } from "@/contexts/SoundContext";
@@ -301,7 +302,7 @@ const SmartAlignCaseStudy = () => {
   const { play } = useSound();
 
   return (
-    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground xl:pl-28">
+    <CaseStudyShell>
       <SketchFilter />
       <Navbar />
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
@@ -637,7 +638,7 @@ const SmartAlignCaseStudy = () => {
 
       {/* === FINAL PROTOTYPES (one viewport per screen) === */}
       <section id="final-prototypes" className="border-t border-border/40 scroll-snap-align-start">
-        <div className="mx-auto flex min-h-[100dvh] max-w-6xl flex-col justify-center px-6 py-20">
+        <CaseStudyContent className="flex min-h-[100dvh] flex-col justify-center py-20">
           <motion.div {...fadeInView} className="mb-4">
             <SectionKicker>Final Prototypes</SectionKicker>
             <SectionTitle className="max-w-3xl">
@@ -649,8 +650,8 @@ const SmartAlignCaseStudy = () => {
               />
             </SectionTitle>
           </motion.div>
-        </div>
-        <div className="max-w-6xl mx-auto px-6">
+        </CaseStudyContent>
+        <CaseStudyContent>
           {finalScreens.map((s, i) => (
             <ScreenBlock
               key={s.no}
@@ -664,12 +665,12 @@ const SmartAlignCaseStudy = () => {
               reverse={i % 2 === 1}
             />
           ))}
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === FEATURES === */}
       <section id="features" className="border-t border-border/40">
-        <div className="max-w-6xl mx-auto px-6 pt-12 md:pt-16 pb-4">
+        <CaseStudyContent className="pt-12 md:pt-16 pb-4">
           <motion.div {...fadeInView} className="mb-8 md:mb-10">
             <SectionKicker>Product Features</SectionKicker>
             <SectionTitle className="max-w-3xl">
@@ -694,7 +695,7 @@ const SmartAlignCaseStudy = () => {
               compact
             />
           ))}
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === DESIGN SYSTEM === */}
@@ -739,7 +740,7 @@ const SmartAlignCaseStudy = () => {
       </CaseStudyViewport>
 
       <Footer />
-    </div>
+    </CaseStudyShell>
   );
 };
 

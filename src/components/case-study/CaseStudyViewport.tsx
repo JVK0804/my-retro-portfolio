@@ -19,13 +19,13 @@ const CaseStudyViewport = ({
   <section
     id={id}
     className={cn(
-      "case-study-viewport relative flex min-h-[100dvh] flex-col justify-center px-6 py-28 md:py-32",
+      "case-study-viewport relative flex min-h-[100dvh] flex-col justify-center py-28 md:py-32",
       variant === "emphasis" && "bg-muted/30 border-y border-border/60",
       variant === "quote" && "bg-background",
       className,
     )}
   >
-    <div className={cn("mx-auto w-full max-w-6xl", innerClassName)}>{children}</div>
+    <div className={cn("mx-auto w-full min-w-0 max-w-6xl px-6", innerClassName)}>{children}</div>
   </section>
 );
 

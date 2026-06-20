@@ -7,15 +7,20 @@ import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import LazyVideo from "@/components/LazyVideo";
 import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
+import PrototypeMedia from "@/components/case-study/PrototypeMedia";
+import CaseStudyShell, { CaseStudyContent } from "@/components/case-study/CaseStudyShell";
 import { useSound } from "@/contexts/SoundContext";
+import { cn } from "@/lib/utils";
+
+const slackHeroVideo = "/case-studies/slack/hifi/slack-full.webm";
 
 const caseStudyNav: CaseStudyNavItem[] = [
   { label: "Overview", id: "overview" },
   { label: "Problem", id: "problem" },
   { label: "Evidence", id: "evidence" },
   { label: "Process", id: "process" },
+  { label: "Solutions", id: "solutions" },
   { label: "Sketches", id: "sketches" },
-  { label: "Designs", id: "designs" },
   { label: "System", id: "design-system" },
   { label: "Reflections", id: "reflections" },
 ];
@@ -232,7 +237,7 @@ const SlackFeatureBlock = ({ feature }: { feature: SlackFeature }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-80px" }}
     transition={{ duration: 0.7 }}
-    className="flex flex-col gap-8 border-b border-border/40 py-16 last:border-b-0 md:gap-10"
+    className="flex min-w-0 flex-col gap-8 border-b border-border/40 py-10 last:border-b-0 md:gap-10 md:py-12 first:pt-2"
   >
     <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
       <div className="min-w-0">
@@ -248,13 +253,24 @@ const SlackFeatureBlock = ({ feature }: { feature: SlackFeature }) => (
 
     <SlackFeatureVideo src={feature.video} label={`${feature.title} prototype`} />
 
-    <div className="flex flex-col gap-10">
+    <div
+      className={cn(
+        "grid min-w-0 gap-6 md:gap-8",
+        feature.details.length > 1 ? "md:grid-cols-2 lg:grid-cols-3" : "max-w-3xl",
+      )}
+    >
       {feature.details.map((detail) => (
-        <div key={detail.title} className="max-w-3xl">
-          <p className="font-body text-[10px] tracking-widest uppercase text-foreground/50 mb-2 md:text-xs">
+        <div
+          key={detail.title}
+          className={cn(
+            "glass-card min-w-0 p-5 md:p-6",
+            feature.details.length === 1 && "max-w-3xl",
+          )}
+        >
+          <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-2 md:text-xs">
             {detail.title}
           </p>
-          <p className="font-body text-foreground/80 leading-relaxed">{detail.body}</p>
+          <p className="font-body text-sm md:text-base text-foreground/80 leading-relaxed">{detail.body}</p>
           {detail.quote && (
             <p className="font-body text-sm italic text-primary mt-4 leading-relaxed border-l-2 border-primary/40 pl-4">
               {detail.quote}
@@ -266,13 +282,28 @@ const SlackFeatureBlock = ({ feature }: { feature: SlackFeature }) => (
   </motion.article>
 );
 
-const SectionHeader = ({ kicker, title }: { kicker: string; title: React.ReactNode }) => (
+const scrollToCaseSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 96;
+  window.scrollTo({ top, behavior: "smooth" });
+};
+
+const SectionHeader = ({
+  kicker,
+  title,
+  className,
+}: {
+  kicker: string;
+  title: React.ReactNode;
+  className?: string;
+}) => (
   <motion.div
     initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-80px" }}
     transition={{ duration: 0.6 }}
-    className="mb-12"
+    className={cn("mb-12", className)}
   >
     <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">{kicker}</p>
     <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
@@ -285,14 +316,14 @@ const SlackCaseStudy = () => {
   const { play } = useSound();
 
   return (
-    <div className="noise-overlay case-study-page min-h-screen bg-background text-foreground xl:pl-28">
+    <CaseStudyShell>
       <SketchFilter />
       <Navbar />
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
-      <section id="overview" className="pt-32 pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section id="overview" className="pt-32 pb-24">
+        <CaseStudyContent>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -383,12 +414,16 @@ const SlackCaseStudy = () => {
             className="flex items-center gap-6 flex-wrap"
           >
             <a
-              href="#designs"
-              onClick={() => play("click")}
+              href="#solutions"
+              onClick={(e) => {
+                e.preventDefault();
+                play("click");
+                scrollToCaseSection("solutions");
+              }}
               onMouseEnter={() => play("hover")}
               className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
             >
-              Final Designs
+              Feature Breakdown
             </a>
             <a
               href="#problem"
@@ -398,12 +433,27 @@ const SlackCaseStudy = () => {
               Read the Story <ArrowRight size={14} />
             </a>
           </motion.div>
-        </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.7 }}
+            className="mt-16 w-full min-w-0 overflow-hidden"
+          >
+            <PrototypeMedia
+              src={slackHeroVideo}
+              label="Slack AI transparency prototypes overview"
+              orientation="landscape"
+              sizeScale={2}
+              className="mx-auto w-full"
+            />
+          </motion.div>
+        </CaseStudyContent>
       </section>
 
       {/* === PROBLEM === */}
-      <section id="problem" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="problem" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="The Problem"
             title={
@@ -432,20 +482,20 @@ const SlackCaseStudy = () => {
               </motion.article>
             ))}
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
-      {/* === EVIDENCE === — ~5% wider than sibling sections via tighter gutters + max-width */}
-      <section id="evidence" className="py-24 border-t border-border/40 px-[calc(1.5rem*0.95)] sm:px-[calc(1.5rem*0.95)]">
-        <div className="mx-auto w-full max-w-[calc(72rem*1.05)]">
+      {/* === EVIDENCE === */}
+      <section id="evidence" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="The Evidence"
             title={<>We tested it ourselves. This is what AI thought a <span className="teal-shimmer">joke</span> looked like.</>}
           />
-          <p className="font-body text-foreground/60 mb-12 max-w-[calc(42rem*1.05)]">
+          <p className="font-body text-foreground/60 mb-12 max-w-2xl">
             We ran our own team&apos;s Slack banter through ChatGPT with and without context. The results became the core proof point for our Engagement Style feature.
           </p>
-          <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 md:gap-[calc(2rem*1.05)] md:items-start">
+          <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
             {slackEvidenceImages.map((img, i) => (
               <motion.div
                 key={img.src}
@@ -470,18 +520,18 @@ const SlackCaseStudy = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="font-body text-foreground/70 mt-12 max-w-[calc(48rem*1.05)] leading-relaxed italic"
+            className="font-body text-foreground/70 mt-12 max-w-3xl leading-relaxed italic"
           >
             Same message. Same conversation. Completely different AI understanding.
             <br />
             <span className="text-primary not-italic font-bold">Context isn&apos;t optional: it&apos;s the entire product.</span>
           </motion.p>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === PROCESS === */}
-      <section id="process" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="process" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="Design Process"
             title={<>What we tried. What we killed. What <span className="teal-shimmer">survived</span>.</>}
@@ -532,12 +582,40 @@ const SlackCaseStudy = () => {
               ))}
             </div>
           </motion.div>
-        </div>
+        </CaseStudyContent>
+      </section>
+
+      {/* === SOLUTIONS === */}
+      <section id="solutions" className="scroll-mt-28 border-t border-border/40 py-20 md:py-24">
+        <CaseStudyContent>
+          <SectionHeader
+            className="mb-6 md:mb-8"
+            kicker="Feature Breakdown"
+            title={<>Three <span className="teal-shimmer">features</span>.</>}
+          />
+          <div className="flex flex-col">
+            {features.map((f) => (
+              <SlackFeatureBlock key={f.no} feature={f} />
+            ))}
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="glass-card mt-4 p-8 md:p-10"
+          >
+            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{oneMoreThing.kicker}</p>
+            <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-4">{oneMoreThing.title}</h3>
+            <p className="font-body text-foreground/80 leading-relaxed max-w-3xl mb-8">{oneMoreThing.body}</p>
+            <SlackFeatureVideo src={oneMoreThing.video} label="Custom Alerts prototype" />
+          </motion.div>
+        </CaseStudyContent>
       </section>
 
       {/* === SKETCHES === */}
-      <section id="sketches" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="sketches" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="From Rough to Real"
             title={<>Lo-Fi sketches. <span className="teal-shimmer">Mid-Fi</span> prototypes.</>}
@@ -610,42 +688,12 @@ const SlackCaseStudy = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* === DESIGNS === */}
-      <section id="designs" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
-          <SectionHeader
-            kicker="The Solutions"
-            title={<>Three <span className="teal-shimmer">features</span>.</>}
-          />
-          <p className="font-body text-foreground/60 max-w-2xl mb-14">
-            Each feature maps directly to an insight from testing. Nothing assumed. Everything earned.
-          </p>
-          <div>
-            {features.map((f) => (
-              <SlackFeatureBlock key={f.no} feature={f} />
-            ))}
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6 }}
-            className="glass-card mt-6 p-8 md:p-10"
-          >
-            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{oneMoreThing.kicker}</p>
-            <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-4">{oneMoreThing.title}</h3>
-            <p className="font-body text-foreground/80 leading-relaxed max-w-3xl mb-8">{oneMoreThing.body}</p>
-            <SlackFeatureVideo src={oneMoreThing.video} label="Custom Alerts prototype" />
-          </motion.div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === DESIGN SYSTEM === */}
-      <section id="design-system" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
+      <section id="design-system" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="Design System"
             title={<>We didn't design <em>with</em> Slack. We designed <span className="teal-shimmer">inside it</span>.</>}
@@ -694,12 +742,12 @@ const SlackCaseStudy = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       {/* === REFLECTIONS === */}
-      <section id="reflections" className="py-24 px-6 border-t border-border/40">
-        <div className="max-w-5xl mx-auto">
+      <section id="reflections" className="py-24 border-t border-border/40">
+        <CaseStudyContent>
           <SectionHeader
             kicker="Reflections"
             title={<>Human-centered lessons from building <span className="teal-shimmer">AI for students</span>.</>}
@@ -736,11 +784,11 @@ const SlackCaseStudy = () => {
               <ArrowLeft size={14} /> Back to all projects
             </Link>
           </motion.div>
-        </div>
+        </CaseStudyContent>
       </section>
 
       <Footer />
-    </div>
+    </CaseStudyShell>
   );
 };
 

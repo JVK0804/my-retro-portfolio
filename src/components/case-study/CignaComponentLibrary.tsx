@@ -8,7 +8,7 @@ type CignaComponentLibraryProps = {
 };
 
 const CignaComponentLibrary = ({ onTabClick, onTabHover }: CignaComponentLibraryProps) => (
-  <div>
+  <div className="min-w-0">
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
