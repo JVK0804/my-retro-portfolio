@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { InterfaceReadyProvider } from "@/contexts/InterfaceReadyContext";
 
 const LOADING_DURATION = 3200;
 const RESET_INTERVAL = 10 * 60 * 1000;
@@ -22,7 +23,8 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
   }, [loading]);
 
   return (
-    <>
+    <InterfaceReadyProvider value={!loading}>
+      <>
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div
@@ -129,7 +131,8 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
       >
         {children}
       </motion.div>
-    </>
+      </>
+    </InterfaceReadyProvider>
   );
 };
 

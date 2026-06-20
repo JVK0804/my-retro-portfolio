@@ -1,35 +1,58 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useSound } from "@/contexts/SoundContext";
+import { useInterfaceReady } from "@/contexts/InterfaceReadyContext";
 import {
   KAUSHIK_HERE_HAPTIC_END,
   pulseTypingHaptic,
 } from "@/lib/typing-haptic";
 
 const WELCOME_TEXT = "Kaushik here ✦ Welcome to my internet corner";
+const TYPING_INTERVAL_MS = 32;
+const TYPING_START_DELAY_MS = 500;
 
 const TypingWelcome = () => {
-  const { playTyping } = useSound();
+  const { playTyping, prepareTypingAudio } = useSound();
+  const interfaceReady = useInterfaceReady();
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setStarted(true), 1000);
-    return () => clearTimeout(t);
-  }, []);
+    if (!interfaceReady) {
+      setStarted(false);
+      setCount(0);
+      return;
+    }
+
+    const primeTimer = window.setTimeout(() => {
+      void prepareTypingAudio();
+    }, TYPING_START_DELAY_MS - 120);
+
+    const startTimer = window.setTimeout(() => {
+      setStarted(true);
+    }, TYPING_START_DELAY_MS);
+
+    return () => {
+      window.clearTimeout(primeTimer);
+      window.clearTimeout(startTimer);
+    };
+  }, [interfaceReady, prepareTypingAudio]);
 
   useEffect(() => {
     if (!started || count >= WELCOME_TEXT.length) return;
-    const t = setTimeout(() => {
-      const next = count + 1;
-      if (next < KAUSHIK_HERE_HAPTIC_END) {
-        playTyping();
-        pulseTypingHaptic();
-      }
-      setCount(next);
-    }, 32);
-    return () => clearTimeout(t);
+    const timer = window.setTimeout(() => {
+      setCount((current) => current + 1);
+    }, TYPING_INTERVAL_MS);
+    return () => window.clearTimeout(timer);
+  }, [count, started]);
+
+  useLayoutEffect(() => {
+    if (!started || count === 0) return;
+    playTyping();
+    if (count < KAUSHIK_HERE_HAPTIC_END) {
+      pulseTypingHaptic();
+    }
   }, [count, started, playTyping]);
 
   const shown = WELCOME_TEXT.slice(0, count);
@@ -69,7 +92,7 @@ const HeroSection = () => {
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="mono-heading text-3xl md:text-5xl font-bold text-center max-w-4xl leading-tight"
       >
-        UX Engineer crafting handshake between Design and{" "}
+        Product Designer crafting handshake between Design and{" "}
         <span className="font-mono-space font-normal text-primary">
           &lt;<span className="teal-shimmer">Code</span>/&gt;
         </span>

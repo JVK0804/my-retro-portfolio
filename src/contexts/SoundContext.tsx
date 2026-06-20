@@ -17,6 +17,7 @@ type SoundContextType = {
   setEnabled: (next: boolean) => void;
   play: (type: SoundType) => void;
   playTyping: () => void;
+  prepareTypingAudio: () => Promise<void>;
 };
 
 const noop = () => undefined;
@@ -26,6 +27,7 @@ const SoundContext = createContext<SoundContextType>({
   setEnabled: noop,
   play: noop,
   playTyping: noop,
+  prepareTypingAudio: async () => undefined,
 });
 
 export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
@@ -215,13 +217,14 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
           break;
         case "typing": {
           const tick = 1180 + Math.random() * 180;
+          const startAt = ctx.currentTime;
           osc.type = "square";
-          osc.frequency.setValueAtTime(tick, now);
-          osc.frequency.exponentialRampToValueAtTime(tick * 0.72, now + 0.022);
-          gain.gain.setValueAtTime(0.028, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
-          osc.start(now);
-          osc.stop(now + 0.03);
+          osc.frequency.setValueAtTime(tick, startAt);
+          osc.frequency.exponentialRampToValueAtTime(tick * 0.72, startAt + 0.022);
+          gain.gain.setValueAtTime(0.028, startAt);
+          gain.gain.exponentialRampToValueAtTime(0.001, startAt + 0.028);
+          osc.start(startAt);
+          osc.stop(startAt + 0.03);
           break;
         }
       }
@@ -247,6 +250,12 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     [enabled, getCtx, scheduleSound, unlockContext]
   );
 
+  /** Resume AudioContext before hero typing so ticks are not delayed. */
+  const prepareTypingAudio = useCallback(async () => {
+    if (!enabled) return;
+    await unlockContext();
+  }, [enabled, unlockContext]);
+
   /** Hero typing ticks — unlocks audio without the short gesture window. */
   const playTyping = useCallback(() => {
     if (!enabled) return;
@@ -262,7 +271,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   }, [enabled, getCtx, scheduleSound, unlockContext]);
 
   return (
-    <SoundContext.Provider value={{ enabled, setEnabled, play, playTyping }}>
+    <SoundContext.Provider value={{ enabled, setEnabled, play, playTyping, prepareTypingAudio }}>
       {children}
     </SoundContext.Provider>
   );

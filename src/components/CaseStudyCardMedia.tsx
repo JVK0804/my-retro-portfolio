@@ -1,17 +1,40 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type CaseStudyCardMediaProps = {
   src: string;
   alt: string;
   mediaType: "video" | "image";
   priority?: boolean;
+  className?: string;
 };
 
-/** Card thumbnail: eager images; video decodes only when near the viewport. */
-const CaseStudyCardMedia = ({ src, alt, mediaType, priority }: CaseStudyCardMediaProps) => {
+/** Full-width stack thumbnail — preserves aspect ratio, no crop. */
+const CaseStudyCardMedia = ({
+  src,
+  alt,
+  mediaType,
+  priority,
+  className,
+}: CaseStudyCardMediaProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { margin: "240px 0px", amount: 0.01 });
+  const [aspectRatio, setAspectRatio] = useState<string | null>(null);
+
+  const onLoadedMetadata = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const v = e.currentTarget;
+    if (v.videoWidth && v.videoHeight) {
+      setAspectRatio(`${v.videoWidth} / ${v.videoHeight}`);
+    }
+  }, []);
+
+  const onImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    if (img.naturalWidth && img.naturalHeight) {
+      setAspectRatio(`${img.naturalWidth} / ${img.naturalHeight}`);
+    }
+  }, []);
 
   useEffect(() => {
     if (mediaType !== "video" || !inView) return;
@@ -21,9 +44,19 @@ const CaseStudyCardMedia = ({ src, alt, mediaType, priority }: CaseStudyCardMedi
     if (playPromise) playPromise.catch(() => {});
   }, [inView, mediaType]);
 
+  const frameStyle = aspectRatio ? { aspectRatio } : undefined;
+
   if (mediaType === "video") {
     return (
-      <div ref={ref} className="relative overflow-hidden">
+      <div
+        ref={ref}
+        className={cn(
+          "relative w-full overflow-hidden rounded-[1.1rem] border border-border/50 bg-muted/15",
+          !aspectRatio && "aspect-video",
+          className,
+        )}
+        style={frameStyle}
+      >
         <video
           src={src}
           aria-label={alt}
@@ -32,21 +65,32 @@ const CaseStudyCardMedia = ({ src, alt, mediaType, priority }: CaseStudyCardMedi
           loop
           preload={priority ? "metadata" : "none"}
           autoPlay={inView}
-          className="block w-full h-auto"
+          onLoadedMetadata={onLoadedMetadata}
+          className="block h-full w-full object-contain object-center"
         />
       </div>
     );
   }
 
   return (
-    <img
-      src={src}
-      alt={alt}
-      loading="eager"
-      fetchPriority={priority ? "high" : "low"}
-      decoding="async"
-      className="block w-full h-auto"
-    />
+    <div
+      className={cn(
+        "relative w-full overflow-hidden rounded-[1.1rem] border border-border/50 bg-muted/15",
+        !aspectRatio && "aspect-[4/3]",
+        className,
+      )}
+      style={frameStyle}
+    >
+      <img
+        src={src}
+        alt={alt}
+        loading="eager"
+        fetchPriority={priority ? "high" : "low"}
+        decoding="async"
+        onLoad={onImageLoad}
+        className="block h-full w-full object-contain object-center"
+      />
+    </div>
   );
 };
 
