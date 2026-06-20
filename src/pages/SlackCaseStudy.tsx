@@ -150,6 +150,7 @@ const oneMoreThing = {
   kicker: "One More Thing",
   title: "Custom Alerts",
   body: "Testing broke our assumption. Alerts were firing on everything, frustrating users. So I rebuilt the feature from scratch, making alerts user-defined, not AI-assumed.",
+  video: "/case-studies/slack/hifi/one-more-thing.webm",
 };
 
 const slackPalette = [
@@ -636,7 +637,8 @@ const SlackCaseStudy = () => {
           >
             <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{oneMoreThing.kicker}</p>
             <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-4">{oneMoreThing.title}</h3>
-            <p className="font-body text-foreground/80 leading-relaxed max-w-3xl">{oneMoreThing.body}</p>
+            <p className="font-body text-foreground/80 leading-relaxed max-w-3xl mb-8">{oneMoreThing.body}</p>
+            <SlackFeatureVideo src={oneMoreThing.video} label="Custom Alerts prototype" />
           </motion.div>
         </div>
       </section>
