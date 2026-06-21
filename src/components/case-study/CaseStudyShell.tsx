@@ -10,7 +10,7 @@ type CaseStudyShellProps = {
 export const CaseStudyShell = ({ children, className }: CaseStudyShellProps) => (
   <div
     className={cn(
-      "noise-overlay case-study-page min-h-screen overflow-x-hidden bg-background text-foreground",
+      "noise-overlay case-study-page min-h-screen overflow-x-clip bg-background text-foreground",
       className,
     )}
   >

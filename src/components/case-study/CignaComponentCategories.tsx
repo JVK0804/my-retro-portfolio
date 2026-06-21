@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type CategoryKey = "Color" | "Typography" | "Buttons" | "Forms" | "Spacing" | "Cards" | "Inputs";
@@ -378,111 +378,152 @@ const panelVariants = {
 };
 
 const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCategoriesProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const tabStripRef = useRef<HTMLDivElement>(null);
+  const clickLockRef = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const setIndexFromScroll = useCallback((index: number) => {
+    setActiveIndex((prev) => {
+      if (prev === index) return prev;
+      setDirection(index > prev ? 1 : -1);
+      return index;
+    });
+  }, []);
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (clickLockRef.current) return;
+    const idx = Math.min(
+      categories.length - 1,
+      Math.max(0, Math.floor(progress * categories.length)),
+    );
+    setIndexFromScroll(idx);
+  });
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const onScroll = () => {
+      if (clickLockRef.current) return;
+      const rect = container.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+      const idx = Math.min(
+        categories.length - 1,
+        Math.max(0, Math.floor(progress * categories.length)),
+      );
+      setIndexFromScroll(idx);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [setIndexFromScroll]);
+
+  useEffect(() => {
+    tabStripRef.current?.children[activeIndex]?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeIndex]);
+
+  const scrollToCategory = useCallback((index: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    clickLockRef.current = true;
+    setActiveIndex((prev) => {
+      if (prev !== index) setDirection(index > prev ? 1 : -1);
+      return index;
+    });
+
+    const rect = container.getBoundingClientRect();
+    const scrollTop = window.scrollY + rect.top;
+    const segment = container.offsetHeight / categories.length;
+    const target = scrollTop + segment * index + 2;
+
+    window.scrollTo({ top: target, behavior: "smooth" });
+
+    window.setTimeout(() => {
+      clickLockRef.current = false;
+    }, 800);
+  }, []);
+
   const activeCategory = categories[activeIndex];
 
-  const selectTab = useCallback(
-    (index: number) => {
-      onTabClick?.();
-      setActiveIndex((current) => {
-        if (index === current) return current;
-        setDirection(index > current ? 1 : -1);
-        return index;
-      });
-      tabStripRef.current?.children[index]?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "center",
-      });
-    },
-    [onTabClick],
-  );
-
   return (
-    <div className="mb-12 min-w-0">
+    <div className="mb-12">
       <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">Browse by category</p>
       <p className="font-body text-foreground/60 text-sm mb-8 max-w-2xl leading-relaxed">
-        Click a tab or use the arrows to explore each token and pattern. Panels slide horizontally without scrolling the page.
+        Scroll to walk each token and pattern. Tabs advance as you move. Click any tab to jump.
       </p>
 
-      <div className="rounded-xl border border-border/50 bg-background/80 p-4 md:p-6">
-        <div
-          ref={tabStripRef}
-          className="mb-6 flex gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          role="tablist"
-          aria-label="Component categories"
-        >
-          {categories.map((cat, i) => (
-            <button
-              key={cat}
-              type="button"
-              role="tab"
-              aria-selected={activeCategory === cat}
-              aria-controls={`cigna-panel-${cat}`}
-              id={`cigna-tab-${cat}`}
-              onClick={() => selectTab(i)}
-              onMouseEnter={onTabHover}
-              className={cn(
-                "shrink-0 font-body text-[11px] tracking-widest uppercase px-4 py-2 transition-all",
-                activeCategory === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "text-foreground/60 hover:text-primary border border-border/60",
-              )}
+      <div
+        ref={containerRef}
+        className="relative isolate"
+        style={{ height: `${categories.length * 100}vh` }}
+      >
+        <div className="sticky top-0 z-10 flex h-[100svh] w-full items-center justify-center py-16 md:py-20">
+          <div className="flex w-full max-h-[min(85svh,820px)] flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
+            <div
+              ref={tabStripRef}
+              className="mb-5 flex shrink-0 gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              role="tablist"
+              aria-label="Component categories"
             >
-              {cat}
-            </button>
-          ))}
-        </div>
+              {categories.map((cat, i) => (
+                <button
+                  key={cat}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeCategory === cat}
+                  onClick={() => {
+                    onTabClick?.();
+                    scrollToCategory(i);
+                  }}
+                  onMouseEnter={onTabHover}
+                  className={cn(
+                    "shrink-0 font-body text-[11px] tracking-widest uppercase px-4 py-2 transition-all",
+                    activeCategory === cat
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground/60 hover:text-primary border border-border/60",
+                  )}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
 
-        <div className="relative min-h-[320px] overflow-hidden md:min-h-[360px]">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={activeCategory}
-              id={`cigna-panel-${activeCategory}`}
-              role="tabpanel"
-              aria-labelledby={`cigna-tab-${activeCategory}`}
-              custom={direction}
-              variants={panelVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.28, ease: "easeOut" }}
-              className="w-full"
-            >
-              <CategoryPanel category={activeCategory} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            <div className="relative min-h-0 flex-1 overflow-hidden">
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={activeCategory}
+                  custom={direction}
+                  variants={panelVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  className="h-full overflow-y-auto overscroll-y-contain pr-1"
+                >
+                  <CategoryPanel category={activeCategory} />
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-        <div className="mt-6 flex items-center justify-between gap-4 border-t border-border/40 pt-4">
-          <button
-            type="button"
-            onClick={() => {
-              onTabClick?.();
-              selectTab(Math.max(0, activeIndex - 1));
-            }}
-            disabled={activeIndex === 0}
-            className="font-body text-[11px] tracking-widest uppercase text-foreground/60 hover:text-primary disabled:opacity-30 disabled:pointer-events-none"
-          >
-            ← Previous
-          </button>
-          <p className="font-body text-[10px] tracking-widest uppercase text-foreground/40 text-center">
-            {activeIndex + 1} / {categories.length} · {activeCategory}
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              onTabClick?.();
-              selectTab(Math.min(categories.length - 1, activeIndex + 1));
-            }}
-            disabled={activeIndex === categories.length - 1}
-            className="font-body text-[11px] tracking-widest uppercase text-foreground/60 hover:text-primary disabled:opacity-30 disabled:pointer-events-none"
-          >
-            Next →
-          </button>
+            <p className="mt-4 shrink-0 font-body text-[10px] tracking-widest uppercase text-foreground/40 text-center">
+              {activeIndex + 1} / {categories.length} · {activeCategory}
+            </p>
+          </div>
         </div>
       </div>
     </div>
