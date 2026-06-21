@@ -321,7 +321,7 @@ const CignaCaseStudy = () => {
             transition={{ duration: 0.5 }}
             className="font-body text-foreground/65 text-sm md:text-base leading-relaxed max-w-2xl mb-10 md:mb-12 -mt-4"
           >
-            Built for production healthcare flows. The interactive collage shows components working together. Scroll below to explore tokens and patterns by category.
+            Built for production healthcare flows. The interactive collage shows components working together. Use the tabs below to explore tokens and patterns by category.
           </motion.p>
 
           <CignaComponentLibrary onTabClick={() => play("click")} onTabHover={() => play("hover")} />
