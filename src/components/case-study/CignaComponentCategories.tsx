@@ -379,10 +379,20 @@ const panelVariants = {
 
 const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCategoriesProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const tabStripRef = useRef<HTMLDivElement>(null);
   const clickLockRef = useRef(false);
+  const skipTabStripScrollRef = useRef(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+
+  const scrollTabIntoStrip = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
+    const strip = tabStripRef.current;
+    const tab = strip?.children[index] as HTMLElement | undefined;
+    if (!strip || !tab) return;
+    const targetLeft = tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, targetLeft), behavior });
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -429,12 +439,26 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
   }, [setIndexFromScroll]);
 
   useEffect(() => {
-    tabStripRef.current?.children[activeIndex]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
-  }, [activeIndex]);
+    if (skipTabStripScrollRef.current) {
+      skipTabStripScrollRef.current = false;
+      return;
+    }
+    scrollTabIntoStrip(activeIndex);
+  }, [activeIndex, scrollTabIntoStrip]);
+
+  useEffect(() => {
+    const sticky = stickyRef.current;
+    if (!sticky) return;
+
+    const onWheel = (event: WheelEvent) => {
+      if (clickLockRef.current || Math.abs(event.deltaY) < 1) return;
+      window.scrollBy({ top: event.deltaY, behavior: "auto" });
+      event.preventDefault();
+    };
+
+    sticky.addEventListener("wheel", onWheel, { passive: false });
+    return () => sticky.removeEventListener("wheel", onWheel);
+  }, []);
 
   const scrollToCategory = useCallback((index: number) => {
     const container = containerRef.current;
@@ -452,11 +476,12 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
     const target = scrollTop + segment * index + 2;
 
     window.scrollTo({ top: target, behavior: "smooth" });
+    scrollTabIntoStrip(index);
 
     window.setTimeout(() => {
       clickLockRef.current = false;
     }, 800);
-  }, []);
+  }, [scrollTabIntoStrip]);
 
   const activeCategory = categories[activeIndex];
 
@@ -472,7 +497,10 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
         className="relative isolate"
         style={{ height: `${categories.length * 100}vh` }}
       >
-        <div className="sticky top-0 z-10 flex h-[100svh] w-full items-center justify-center py-16 md:py-20">
+        <div
+          ref={stickyRef}
+          className="sticky top-0 z-10 flex h-[100svh] w-full items-center justify-center py-16 md:py-20"
+        >
           <div className="flex w-full max-h-[min(85svh,820px)] flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
             <div
               ref={tabStripRef}
@@ -513,7 +541,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.28, ease: "easeOut" }}
-                  className="h-full overflow-y-auto overscroll-y-contain pr-1"
+                  className="h-full overflow-hidden pr-1"
                 >
                   <CategoryPanel category={activeCategory} />
                 </motion.div>
