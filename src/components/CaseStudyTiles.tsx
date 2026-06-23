@@ -34,20 +34,6 @@ const caseStudies: CaseStudy[] = [
     priority: true,
   },
   {
-    projectName: "Smart Align",
-    title: "AI Powered features to learn Mobile Photography",
-    subtitle: "Mobile AI",
-    description:
-      "Designed Smart Align, an AI-powered mobile photography app that improved user interaction through iterative testing and feedback.",
-    tags: ["Mobile AI", "Photography", "UX Research"],
-    impact: "62% improved interaction · 35% less onboarding friction",
-    readTime: "5 min Read",
-    image: "/case-study-cards/smart-align.webp",
-    mediaType: "image",
-    href: "/work/smartalign",
-    priority: true,
-  },
-  {
     projectName: "Cigna Healthcare",
     title: "Collaboration That Scales Trust (NDA)",
     subtitle: "Design Systems",
@@ -59,6 +45,20 @@ const caseStudies: CaseStudy[] = [
     image: "/case-studies/cigna/cigna-hero.webm",
     mediaType: "video",
     href: "/work/cigna",
+    priority: true,
+  },
+  {
+    projectName: "Smart Align",
+    title: "AI Powered features to learn Mobile Photography",
+    subtitle: "Mobile AI",
+    description:
+      "Designed Smart Align, an AI-powered mobile photography app that improved user interaction through iterative testing and feedback.",
+    tags: ["Mobile AI", "Photography", "UX Research"],
+    impact: "62% improved interaction · 35% less onboarding friction",
+    readTime: "5 min Read",
+    image: "/case-study-cards/smart-align.webp",
+    mediaType: "image",
+    href: "/work/smartalign",
     priority: true,
   },
 ];

@@ -144,11 +144,11 @@ const CategoryPanel = ({ category }: { category: CategoryKey }) => {
 
     case "Typography":
       return (
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid auto-rows-min items-start gap-4 md:grid-cols-2 md:gap-5">
           {typographySamples.map((t) => (
-            <DemoCard key={t.label} label={t.label} usage={t.usage}>
+            <DemoCard key={t.label} label={t.label} usage={t.usage} className="h-auto">
               <p className="font-body text-[11px] text-[#666666] mb-3">{t.spec}</p>
-              <p className="font-body" style={t.style}>
+              <p className="font-body break-words" style={t.style}>
                 {t.sample}
               </p>
             </DemoCard>
@@ -380,6 +380,7 @@ const panelVariants = {
 const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCategoriesProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
+  const panelScrollRef = useRef<HTMLDivElement>(null);
   const tabStripRef = useRef<HTMLDivElement>(null);
   const clickLockRef = useRef(false);
   const skipTabStripScrollRef = useRef(true);
@@ -447,11 +448,27 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
   }, [activeIndex, scrollTabIntoStrip]);
 
   useEffect(() => {
+    panelScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+  }, [activeIndex]);
+
+  useEffect(() => {
     const sticky = stickyRef.current;
     if (!sticky) return;
 
     const onWheel = (event: WheelEvent) => {
       if (clickLockRef.current || Math.abs(event.deltaY) < 1) return;
+
+      const panel = panelScrollRef.current;
+      const target = event.target as Node | null;
+
+      if (panel && target && panel.contains(target) && panel.scrollHeight > panel.clientHeight + 1) {
+        const atTop = panel.scrollTop <= 0;
+        const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1;
+
+        if (event.deltaY > 0 && !atBottom) return;
+        if (event.deltaY < 0 && !atTop) return;
+      }
+
       window.scrollBy({ top: event.deltaY, behavior: "auto" });
       event.preventDefault();
     };
@@ -501,7 +518,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
           ref={stickyRef}
           className="sticky top-0 z-10 flex h-[100svh] w-full items-center justify-center py-16 md:py-20"
         >
-          <div className="flex w-full max-h-[min(85svh,820px)] flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
+          <div className="flex h-[min(85svh,820px)] w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
             <div
               ref={tabStripRef}
               className="mb-5 flex shrink-0 gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -531,7 +548,10 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
               ))}
             </div>
 
-            <div className="relative min-h-0 flex-1 overflow-hidden">
+            <div
+              ref={panelScrollRef}
+              className="relative min-h-0 flex-1 overflow-y-auto overscroll-y-contain pr-1"
+            >
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={activeCategory}
@@ -541,7 +561,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.28, ease: "easeOut" }}
-                  className="h-full overflow-hidden pr-1"
+                  className="w-full"
                 >
                   <CategoryPanel category={activeCategory} />
                 </motion.div>
