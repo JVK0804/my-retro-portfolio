@@ -10,7 +10,7 @@ const navItems = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/about" },
   { label: "Photography", href: "/photography" },
-  { label: "Resume", href: "https://drive.google.com/file/d/1oC6U60QwFzmwh7x_uw2EmpQbeJY5Ea1K/view?usp=sharing", external: true },
+  { label: "Resume", href: "https://drive.google.com/file/d/1b7kSeKXclG8XpTwW15Q86AWGVHVum8ME/view?usp=sharing", external: true },
 ];
 
 const Navbar = () => {
