@@ -486,6 +486,49 @@ svg.sketch-filters {
     background-clip: text;
   }
 
+  .thinking-shimmer {
+    display: inline-grid;
+    grid-template-areas: "title";
+    overflow: visible;
+    line-height: 1.3;
+  }
+
+  .thinking-shimmer-base,
+  .thinking-shimmer-overlay {
+    grid-area: title;
+  }
+
+  .thinking-shimmer-base {
+    color: hsl(var(--foreground) / 0.32);
+  }
+
+  .thinking-shimmer-overlay {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 36%,
+      hsl(var(--foreground)) 50%,
+      transparent 64%,
+      transparent 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: thinking-shimmer 2.4s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .thinking-shimmer-overlay {
+      display: none;
+    }
+
+    .thinking-shimmer-base {
+      color: hsl(var(--foreground));
+    }
+  }
+
   .retro-divider {
     height: 2px;
     background: linear-gradient(
@@ -564,6 +607,15 @@ svg.sketch-filters {
   }
   50% {
     background-position: 100% 50%;
+  }
+}
+
+@keyframes thinking-shimmer {
+  0% {
+    background-position: 120% center;
+  }
+  100% {
+    background-position: -20% center;
   }
 }
 

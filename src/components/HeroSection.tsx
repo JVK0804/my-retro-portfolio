@@ -86,32 +86,46 @@ const HeroSection = () => {
     <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
       <TypingWelcome />
 
-      <motion.h2
+      <motion.h1
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="mono-heading text-3xl md:text-5xl font-bold text-center max-w-4xl leading-tight"
+        className="font-heading text-4xl md:text-6xl font-bold text-center overflow-visible"
       >
-        Product Designer crafting handshake between Design and{" "}
-        <span className="font-mono-space font-normal text-primary">
-          &lt;<span className="teal-shimmer">Code</span>/&gt;
+        <span className="thinking-shimmer" aria-label="Product Designer">
+          <span className="thinking-shimmer-base" aria-hidden="true">
+            Product Designer
+          </span>
+          <span className="thinking-shimmer-overlay" aria-hidden="true">
+            Product Designer
+          </span>
         </span>
-      </motion.h2>
+      </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="font-body text-foreground/60 text-sm md:text-base text-center max-w-xl mt-12"
+        transition={{ delay: 0.7, duration: 0.6 }}
+        className="font-body text-foreground/90 text-base md:text-lg text-center max-w-2xl mt-8 leading-relaxed"
       >
-        Previously worked for Deloitte, Anthem and Cigna.
+        I design B2B SaaS, design system & AI products. I design in Figma and ship in React,
+        built around data privacy and user trust.
+      </motion.p>
+
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.6 }}
+        className="font-body text-foreground/70 text-sm md:text-base text-center max-w-2xl mt-6 italic"
+      >
+        Previously designed @ Deloitte, Cigna, Anthem, Commonwealth of Massachusetts & Slack
       </motion.p>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
-        className="flex gap-4 mt-14"
+        transition={{ delay: 1.3, duration: 0.6 }}
+        className="flex flex-wrap justify-center gap-4 mt-12"
       >
         <a
           href="#letsconnect"
@@ -121,15 +135,15 @@ const HeroSection = () => {
             document.getElementById("letsconnect")?.scrollIntoView({ behavior: "smooth" });
           }}
           onMouseEnter={() => play("hover")}
-          className="rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold tracking-wider text-primary-foreground shadow-md uppercase cursor-pointer transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
+          className="rounded-[var(--radius-md)] border border-foreground bg-background px-8 py-3 font-heading text-xs font-bold tracking-wider text-foreground uppercase cursor-pointer transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
         >
-          Let's Connect
+          Let&apos;s Connect
         </a>
         <Link
           to="/about"
           onClick={() => play("whoosh")}
           onMouseEnter={() => play("hover")}
-          className="glass-card px-8 py-3 font-heading text-xs font-bold tracking-wider text-foreground uppercase transition-colors hover:text-primary"
+          className="rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold tracking-wider text-primary-foreground shadow-md uppercase transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
         >
           About me →
         </Link>
