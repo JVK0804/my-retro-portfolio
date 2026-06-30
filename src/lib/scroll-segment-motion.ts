@@ -1,4 +1,28 @@
-import { type MotionValue, useTransform } from "framer-motion";
+import { type MotionValue, useScroll, useTransform, type RefObject } from "framer-motion";
+
+/** Navbar clearance — matches sticky `top-[5.5rem]`. */
+export const STICKY_TOP_PX = 88;
+
+/**
+ * Progress 0 until the section top reaches the sticky line, then 0→1 across the scroll track.
+ * Prevents chapters from advancing before the user enters the section.
+ */
+export const useStickySectionProgress = (
+  containerRef: RefObject<HTMLElement | null>,
+  stickyTopPx = STICKY_TOP_PX,
+) => {
+  const { scrollY } = useScroll();
+  return useTransform(scrollY, () => {
+    const container = containerRef.current;
+    if (!container) return 0;
+
+    const rect = container.getBoundingClientRect();
+    const scrollable = container.offsetHeight - (window.innerHeight - stickyTopPx);
+    if (scrollable <= 0) return 0;
+
+    return Math.min(1, Math.max(0, (stickyTopPx - rect.top) / scrollable));
+  });
+};
 
 /** Short crossfade at segment edges so only one panel is readable at a time. */
 const CROSSFADE_RATIO = 0.07;

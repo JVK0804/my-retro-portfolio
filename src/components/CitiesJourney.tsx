@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useTransform, type MotionValue } from "framer-motion";
 import { Camera, MapPin } from "lucide-react";
-import { useSegmentOpacity, useSegmentY } from "@/lib/scroll-segment-motion";
+import { useSegmentOpacity, useSegmentY, useStickySectionProgress } from "@/lib/scroll-segment-motion";
 import vizag from "@/assets/landmark-visakhapatnam.png";
 import hyderabad from "@/assets/landmark-hyderabad.png";
 import bloomington from "@/assets/landmark-bloomington.png";
@@ -147,12 +147,9 @@ const CityPanel = ({
 
 const CitiesJourney = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 5.5rem", "end end"],
-  });
+  const journeyProgress = useStickySectionProgress(containerRef);
 
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const progressWidth = useTransform(journeyProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <section
@@ -182,7 +179,7 @@ const CitiesJourney = () => {
               city={c}
               index={i}
               total={cities.length}
-              progress={scrollYProgress}
+              progress={journeyProgress}
             />
           ))}
         </div>

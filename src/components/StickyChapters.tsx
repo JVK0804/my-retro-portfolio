@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useTransform, type MotionValue } from "framer-motion";
 import MorphIllustration from "@/components/MorphIllustration";
-import { useSegmentOpacity, useSegmentY } from "@/lib/scroll-segment-motion";
+import { useSegmentOpacity, useSegmentY, useStickySectionProgress } from "@/lib/scroll-segment-motion";
 
 export type Chapter = {
   era: string;
@@ -82,14 +82,10 @@ const ChapterText = ({
 
 const StickyChapters = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 5.5rem", "end end"],
-  });
+  const chapterProgress = useStickySectionProgress(containerRef);
 
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  // Subtle continuous rotation tied to scroll for extra life
-  const illusRotate = useTransform(scrollYProgress, [0, 1], [-12, 12]);
+  const progressWidth = useTransform(chapterProgress, [0, 1], ["0%", "100%"]);
+  const illusRotate = useTransform(chapterProgress, [0, 1], [-12, 12]);
 
   return (
     <section
@@ -122,7 +118,7 @@ const StickyChapters = () => {
         {/* Single morphing illustration on the right — persists through all chapters */}
         <div className="absolute inset-y-0 right-0 z-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none">
           <div className="pointer-events-auto">
-            <MorphIllustration progress={scrollYProgress} rotate={illusRotate} />
+            <MorphIllustration progress={chapterProgress} rotate={illusRotate} />
           </div>
         </div>
 
@@ -134,7 +130,7 @@ const StickyChapters = () => {
               chapter={ch}
               index={i}
               total={stickyChapters.length}
-              progress={scrollYProgress}
+              progress={chapterProgress}
             />
           ))}
         </div>
