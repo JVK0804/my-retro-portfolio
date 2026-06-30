@@ -46,7 +46,7 @@ export const CaseStudySection = ({
   <section
     id={id}
     className={cn(
-      "case-study-section py-24",
+      "case-study-section scroll-mt-28 py-24",
       bordered && "border-t border-border/40",
       className,
     )}

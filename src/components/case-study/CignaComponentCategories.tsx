@@ -144,11 +144,14 @@ const CategoryPanel = ({ category }: { category: CategoryKey }) => {
 
     case "Typography":
       return (
-        <div className="grid auto-rows-min items-start gap-4 md:grid-cols-2 md:gap-5">
+        <div className="grid auto-rows-min items-start gap-5 pb-4 md:grid-cols-2 md:gap-6">
           {typographySamples.map((t) => (
-            <DemoCard key={t.label} label={t.label} usage={t.usage} className="h-auto">
+            <DemoCard key={t.label} label={t.label} usage={t.usage} className="h-auto overflow-visible">
               <p className="font-body text-[11px] text-[#666666] mb-3">{t.spec}</p>
-              <p className="font-body break-words" style={t.style}>
+              <p
+                className="font-body break-words overflow-visible block pb-1"
+                style={{ ...t.style, paddingBottom: "0.2em" }}
+              >
                 {t.sample}
               </p>
             </DemoCard>
@@ -504,8 +507,8 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
 
   return (
     <div className="mb-12">
-      <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">Browse by category</p>
-      <p className="font-body text-foreground/60 text-sm mb-8 max-w-2xl leading-relaxed">
+      <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">Browse by category</p>
+      <p className="font-body text-foreground/60 text-sm mb-10 max-w-2xl leading-relaxed">
         Scroll to walk each token and pattern. Tabs advance as you move. Click any tab to jump.
       </p>
 
@@ -516,12 +519,12 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
       >
         <div
           ref={stickyRef}
-          className="sticky top-0 z-10 flex h-[100svh] w-full items-center justify-center py-16 md:py-20"
+          className="sticky top-[5.5rem] z-10 flex h-[calc(100svh-5.5rem)] w-full items-center justify-center py-4 md:py-6"
         >
-          <div className="flex h-[min(85svh,820px)] w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
+          <div className="flex h-[min(calc(100svh-8.5rem),760px)] w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
             <div
               ref={tabStripRef}
-              className="mb-5 flex shrink-0 gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="mb-6 flex shrink-0 gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               role="tablist"
               aria-label="Component categories"
             >
@@ -550,7 +553,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
 
             <div
               ref={panelScrollRef}
-              className="relative min-h-0 flex-1 overflow-y-auto overscroll-y-contain pr-1"
+              className="relative min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 py-2 pb-5"
             >
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div

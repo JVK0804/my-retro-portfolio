@@ -190,7 +190,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === CONTEXT === */}
-      <section id="context" className="py-24 border-t border-border/40">
+      <section id="context" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="01 Context"
@@ -214,7 +214,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === ROLE === */}
-      <section id="role" className="py-24 border-t border-border/40">
+      <section id="role" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="02 My Role"
@@ -262,7 +262,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === SOLUTIONS === */}
-      <section id="solutions" className="py-24 border-t border-border/40">
+      <section id="solutions" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="04 Prototypes"
@@ -296,7 +296,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === PROCESS === */}
-      <section id="process" className="py-24 border-t border-border/40">
+      <section id="process" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="05 Process"
@@ -307,7 +307,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === SYSTEM / COMPONENTS === */}
-      <section id="system" className="py-24 border-t border-border/40">
+      <section id="system" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="06 Design System"
@@ -341,7 +341,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === IMPACT === */}
-      <section id="impact" className="py-24 border-t border-border/40">
+      <section id="impact" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="07 Impact"
@@ -367,7 +367,7 @@ const CignaCaseStudy = () => {
       </section>
 
       {/* === LEARNINGS === */}
-      <section id="learnings" className="py-24 border-t border-border/40">
+      <section id="learnings" className="scroll-mt-28 py-24 border-t border-border/40">
         <CaseStudyContent>
           <SectionHeader
             kicker="08 Learnings"
