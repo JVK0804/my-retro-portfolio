@@ -1,11 +1,12 @@
-import { ReactNode, useRef } from "react";
-import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
+import { type ReactNode, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface ScrollFadeSectionProps {
   children: ReactNode;
   className?: string;
 }
 
+/** Lightweight scroll fade — opacity only (no blur) for smooth scrolling. */
 const ScrollFadeSection = ({ children, className = "" }: ScrollFadeSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -13,18 +14,10 @@ const ScrollFadeSection = ({ children, className = "" }: ScrollFadeSectionProps)
     offset: ["start start", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.45, 0.72, 1], [1, 1, 0.38, 0]);
-  const blur = useTransform(scrollYProgress, [0.55, 1], [0, 14]);
-  const y = useTransform(scrollYProgress, [0.55, 1], [0, -44]);
-  const scale = useTransform(scrollYProgress, [0.55, 1], [1, 0.985]);
-  const filter = useMotionTemplate`blur(${blur}px)`;
+  const opacity = useTransform(scrollYProgress, [0, 0.75, 1], [1, 1, 0], { clamp: true });
 
   return (
-    <motion.div
-      ref={ref}
-      className={className}
-      style={{ opacity, y, scale, filter, willChange: "transform, filter, opacity" }}
-    >
+    <motion.div ref={ref} className={className} style={{ opacity }}>
       {children}
     </motion.div>
   );

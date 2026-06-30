@@ -1,6 +1,7 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Camera, MapPin } from "lucide-react";
+import { useSegmentOpacity, useSegmentY } from "@/lib/scroll-segment-motion";
 import vizag from "@/assets/landmark-visakhapatnam.png";
 import hyderabad from "@/assets/landmark-hyderabad.png";
 import bloomington from "@/assets/landmark-bloomington.png";
@@ -90,25 +91,13 @@ const CityPanel = ({
   total: number;
   progress: MotionValue<number>;
 }) => {
-  const segment = 1 / total;
-  const start = index * segment;
-  const end = start + segment;
-  const fadeInStart = Math.max(0, start - segment * 0.15);
-  const fadeInEnd = start + segment * 0.35;
-  const fadeOutStart = end - segment * 0.15;
-  const fadeOutEnd = Math.min(1, end + segment * 0.15);
-
-  const opacity = useTransform(
-    progress,
-    [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
-    [0, 1, 1, 0]
-  );
-  const y = useTransform(progress, [fadeInStart, start, end, fadeOutEnd], [24, 0, 0, -24]);
+  const opacity = useSegmentOpacity(progress, index, total);
+  const y = useSegmentY(progress, index, total);
 
   return (
     <motion.div
       className="absolute inset-0 flex items-center"
-      style={{ opacity, y }}
+      style={{ opacity, y, zIndex: index }}
     >
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-center">
         {/* Text — always left column, never overlapped by portrait */}
@@ -160,7 +149,7 @@ const CitiesJourney = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start 5.5rem", "end end"],
   });
 
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
@@ -172,7 +161,7 @@ const CitiesJourney = () => {
       style={{ height: `${cities.length * 100}vh` }}
       aria-label="Cities I've called home"
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-[5.5rem] h-[calc(100svh-5.5rem)] w-full overflow-hidden">
         {/* Section intro tag */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 text-center">
           <p className="font-heading text-[11px] text-primary tracking-widest uppercase">

@@ -1,6 +1,7 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import MorphIllustration from "@/components/MorphIllustration";
+import { useSegmentOpacity, useSegmentY } from "@/lib/scroll-segment-motion";
 
 export type Chapter = {
   era: string;
@@ -53,25 +54,13 @@ const ChapterText = ({
   total: number;
   progress: MotionValue<number>;
 }) => {
-  const segment = 1 / total;
-  const start = index * segment;
-  const end = start + segment;
-  const fadeInStart = Math.max(0, start - segment * 0.12);
-  const fadeInEnd = start + segment * 0.14;
-  const fadeOutStart = end - segment * 0.14;
-  const fadeOutEnd = Math.min(1, end + segment * 0.12);
-
-  const opacity = useTransform(
-    progress,
-    [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
-    [0, 1, 1, 0]
-  );
-  const y = useTransform(progress, [fadeInStart, start, end, fadeOutEnd], [18, 0, 0, -18]);
+  const opacity = useSegmentOpacity(progress, index, total);
+  const y = useSegmentY(progress, index, total);
 
   return (
     <motion.div
       className="absolute inset-y-0 left-0 w-full md:w-1/2 flex items-center justify-center px-6 md:px-16"
-      style={{ opacity, y }}
+      style={{ opacity, y, zIndex: index }}
     >
       <div className="max-w-md">
         <div className="flex items-center gap-3 mb-4">
@@ -95,7 +84,7 @@ const StickyChapters = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start 5.5rem", "end end"],
   });
 
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
@@ -109,7 +98,7 @@ const StickyChapters = () => {
       style={{ height: `${stickyChapters.length * 100}vh` }}
       aria-label="How technology eras shaped my design thinking"
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-[5.5rem] h-[calc(100svh-5.5rem)] w-full overflow-hidden">
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 text-center">
           <p className="font-heading text-[11px] text-primary tracking-widest uppercase">
             How Tech Shaped Me
@@ -132,7 +121,7 @@ const StickyChapters = () => {
 
         {/* Single morphing illustration on the right — persists through all chapters */}
         <div className="absolute inset-y-0 right-0 z-0 w-full md:w-1/2 flex items-center justify-center pointer-events-none">
-          <div className="pointer-events-auto blur-[3px] md:blur-none">
+          <div className="pointer-events-auto">
             <MorphIllustration progress={scrollYProgress} rotate={illusRotate} />
           </div>
         </div>

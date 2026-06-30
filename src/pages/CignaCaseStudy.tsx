@@ -325,18 +325,6 @@ const CignaCaseStudy = () => {
           </motion.p>
 
           <CignaComponentLibrary onTabClick={() => play("click")} onTabHover={() => play("hover")} />
-
-          <motion.blockquote
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="glass-card p-8 md:p-12 mt-12 border-l-4 border-primary"
-          >
-            <p className="mono-heading text-xl md:text-2xl font-bold text-foreground leading-snug">
-              "Building a Design System isn't the hard part. Building one that three teams, with three different codebases and opinions, will actually use consistently? <span className="teal-shimmer">That's the design problem.</span>"
-            </p>
-          </motion.blockquote>
         </CaseStudyContent>
       </section>
 

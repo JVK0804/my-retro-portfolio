@@ -367,7 +367,7 @@ const CategoryPanel = ({ category }: { category: CategoryKey }) => {
 
 const panelVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 48 : -48,
+    x: direction > 0 ? 32 : -32,
     opacity: 0,
   }),
   center: {
@@ -375,9 +375,22 @@ const panelVariants = {
     opacity: 1,
   },
   exit: (direction: number) => ({
-    x: direction > 0 ? -48 : 48,
+    x: direction > 0 ? -32 : 32,
     opacity: 0,
   }),
+};
+
+const STICKY_TOP_PX = 88;
+const CATEGORY_SEGMENT_VH = 80;
+
+const progressToIndex = (progress: number) =>
+  Math.min(categories.length - 1, Math.max(0, Math.floor(progress * categories.length)));
+
+const getContainerScrollProgress = (container: HTMLElement) => {
+  const rect = container.getBoundingClientRect();
+  const scrollable = container.offsetHeight - (window.innerHeight - STICKY_TOP_PX);
+  if (scrollable <= 0) return 0;
+  return Math.min(1, Math.max(0, (STICKY_TOP_PX - rect.top) / scrollable));
 };
 
 const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCategoriesProps) => {
@@ -400,7 +413,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start 5.5rem", "end end"],
   });
 
   const setIndexFromScroll = useCallback((index: number) => {
@@ -411,36 +424,24 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
     });
   }, []);
 
+  const updateIndexFromScroll = useCallback(() => {
+    if (clickLockRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
+    setIndexFromScroll(progressToIndex(getContainerScrollProgress(container)));
+  }, [setIndexFromScroll]);
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (clickLockRef.current) return;
-    const idx = Math.min(
-      categories.length - 1,
-      Math.max(0, Math.floor(progress * categories.length)),
-    );
-    setIndexFromScroll(idx);
+    setIndexFromScroll(progressToIndex(progress));
   });
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onScroll = () => {
-      if (clickLockRef.current) return;
-      const rect = container.getBoundingClientRect();
-      const scrollable = rect.height - window.innerHeight;
-      if (scrollable <= 0) return;
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-      const idx = Math.min(
-        categories.length - 1,
-        Math.max(0, Math.floor(progress * categories.length)),
-      );
-      setIndexFromScroll(idx);
-    };
-
+    const onScroll = () => updateIndexFromScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, [setIndexFromScroll]);
+  }, [updateIndexFromScroll]);
 
   useEffect(() => {
     if (skipTabStripScrollRef.current) {
@@ -490,10 +491,10 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
       return index;
     });
 
-    const rect = container.getBoundingClientRect();
-    const scrollTop = window.scrollY + rect.top;
-    const segment = container.offsetHeight / categories.length;
-    const target = scrollTop + segment * index + 2;
+    const scrollable = container.offsetHeight - (window.innerHeight - STICKY_TOP_PX);
+    const start = container.offsetTop - STICKY_TOP_PX;
+    const segment = scrollable / categories.length;
+    const target = start + segment * index + 2;
 
     window.scrollTo({ top: target, behavior: "smooth" });
     scrollTabIntoStrip(index);
@@ -507,21 +508,23 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
 
   return (
     <div className="mb-12">
-      <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">Browse by category</p>
-      <p className="font-body text-foreground/60 text-sm mb-10 max-w-2xl leading-relaxed">
-        Scroll to walk each token and pattern. Tabs advance as you move. Click any tab to jump.
-      </p>
-
       <div
         ref={containerRef}
         className="relative isolate"
-        style={{ height: `${categories.length * 100}vh` }}
+        style={{ height: `${categories.length * CATEGORY_SEGMENT_VH}vh` }}
       >
         <div
           ref={stickyRef}
-          className="sticky top-[5.5rem] z-10 flex h-[calc(100svh-5.5rem)] w-full items-center justify-center py-4 md:py-6"
+          className="sticky top-[5.5rem] z-10 w-full pt-2 md:pt-3"
         >
-          <div className="flex h-[min(calc(100svh-8.5rem),760px)] w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
+          <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">
+            Browse by category
+          </p>
+          <p className="font-body text-foreground/60 text-sm mb-6 max-w-2xl leading-relaxed">
+            Scroll to walk each token and pattern. Tabs advance as you move. Click any tab to jump.
+          </p>
+
+          <div className="flex w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
             <div
               ref={tabStripRef}
               className="mb-6 flex shrink-0 gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -553,7 +556,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
 
             <div
               ref={panelScrollRef}
-              className="relative min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-1 py-2 pb-5"
+              className="relative overflow-visible px-1 py-2 pb-4"
             >
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
@@ -563,7 +566,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
                   className="w-full"
                 >
                   <CategoryPanel category={activeCategory} />

@@ -10,7 +10,7 @@ import CitiesJourney from "@/components/CitiesJourney";
 /* ───── Main About Page ───── */
 const About = () => {
   return (
-    <div className="noise-overlay min-h-screen bg-background">
+    <div className="about-page noise-overlay min-h-screen bg-background">
       <Navbar />
 
       {/* ===== HERO INTRO ===== */}

@@ -1,6 +1,6 @@
-import { motion, MotionValue, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, type MotionValue, useTransform, useMotionValueEvent } from "framer-motion";
 import { interpolate } from "flubber";
-import { useState } from "react";
+import { useRef } from "react";
 import { Loader2, VolumeX } from "lucide-react";
 import { useEraSounds, type Era } from "@/hooks/useEraSounds";
 import { useSound } from "@/contexts/SoundContext";
@@ -108,12 +108,6 @@ interface MorphIllustrationProps {
 }
 
 const ERAS: Era[] = ["cassette", "cd", "mp3", "streaming"];
-const ERA_LABELS: Record<Era, string> = {
-  cassette: "cassette",
-  cd: "compact disc",
-  mp3: "MP3 player",
-  streaming: "streaming",
-};
 
 const MorphIllustration = ({ progress, rotate = 0 }: MorphIllustrationProps) => {
   const shellD = useMorph(progress, SHELLS);
@@ -121,11 +115,10 @@ const MorphIllustration = ({ progress, rotate = 0 }: MorphIllustrationProps) => 
   const accentD = useMorph(progress, ACCENTS);
   const { play, loadingEra } = useEraSounds();
   const { enabled: soundEnabled } = useSound();
-  const [currentEra, setCurrentEra] = useState<Era>("cassette");
-  // Track which era we're closest to as scroll progresses.
+  const progressRef = useRef(0);
+
   useMotionValueEvent(progress, "change", (v) => {
-    const idx = Math.min(ERAS.length - 1, Math.max(0, Math.floor(v * ERAS.length)));
-    setCurrentEra(ERAS[idx]);
+    progressRef.current = v;
   });
 
   const handleClick = () => {
@@ -133,10 +126,12 @@ const MorphIllustration = ({ progress, rotate = 0 }: MorphIllustrationProps) => 
       toast("Sound effects are off", { icon: <VolumeX size={16} /> });
       return;
     }
-    void play(currentEra);
+    const idx = Math.min(ERAS.length - 1, Math.max(0, Math.floor(progressRef.current * ERAS.length)));
+    const era = ERAS[idx];
+    void play(era);
   };
 
-  const isLoading = loadingEra === currentEra;
+  const isLoading = loadingEra !== null;
 
   return (
     <div className="relative pointer-events-auto">
@@ -147,7 +142,7 @@ const MorphIllustration = ({ progress, rotate = 0 }: MorphIllustrationProps) => 
         whileTap={{ scale: 0.97 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         className="block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-lg"
-        aria-label={`Play ${ERA_LABELS[currentEra]} sound`}
+        aria-label="Play era sound"
       >
         <motion.svg
           viewBox="0 0 200 200"
