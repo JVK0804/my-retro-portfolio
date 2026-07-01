@@ -29,7 +29,7 @@ const TestimonialTicker = () => {
   const doubled = [...testimonials, ...testimonials];
 
   return (
-    <section className="py-12 sm:py-16 overflow-hidden border-t-2 border-b-2 border-border">
+    <section className="py-12 sm:py-16 overflow-hidden border-t-2 border-b-2 border-border" data-parallax-blur-zone>
       <p className="font-heading text-[10px] text-primary text-center mb-6 sm:mb-8 tracking-widest uppercase px-4">
         What colleagues say
       </p>

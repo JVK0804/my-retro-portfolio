@@ -1,15 +1,19 @@
 import { Volume2, VolumeX } from "lucide-react";
 import { useSound } from "@/contexts/SoundContext";
+import { primeAudioContext } from "@/lib/audio-context";
 
 const SoundToggle = () => {
   const { enabled, setEnabled, play } = useSound();
 
   const handleToggle = () => {
-    setEnabled(!enabled);
-    if (!enabled) {
-      // Play a little confirmation beep when turning on
-      setTimeout(() => play("toggle"), 50);
+    if (enabled) {
+      setEnabled(false);
+      return;
     }
+
+    primeAudioContext();
+    setEnabled(true);
+    play("toggle", { force: true });
   };
 
   return (

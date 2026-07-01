@@ -88,8 +88,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-5">
-      <div className="glass-card mx-auto flex max-w-6xl items-center justify-between px-8 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50">
+      <div className="relative px-6 py-5">
+        <div className="navbar-bar glass-card mx-auto flex max-w-6xl items-center justify-between px-8 py-4">
         <Link to="/" className="heading-font text-base font-bold tracking-[0.25em] uppercase text-foreground">
           JVK
         </Link>
@@ -122,12 +123,13 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="glass-card mx-auto mt-2 flex max-w-6xl flex-col gap-5 px-8 py-5 md:hidden"
+            className="navbar-bar glass-card relative mx-6 mt-2 flex max-w-6xl flex-col gap-5 px-8 py-5 md:hidden"
           >
             {navItems.map((item) => renderNavItem(item, true))}
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </nav>
   );
 };

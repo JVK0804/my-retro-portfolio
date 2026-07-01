@@ -81,7 +81,7 @@ const CaseStudyTiles = () => {
   }, []);
 
   return (
-    <section id="work" className="py-24 px-6">
+    <section id="work" className="py-24 px-6" data-parallax-blur-zone>
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="mb-14 md:mb-16">
           <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-3">
@@ -146,7 +146,7 @@ const CaseStudyTiles = () => {
             );
 
             const wrapperClass =
-              "glass-card group block w-full cursor-pointer overflow-hidden transition-colors hover:border-primary/30";
+              "glass-card group relative z-10 block w-full cursor-pointer overflow-hidden transition-colors hover:border-primary/30";
 
             return (
               <motion.article

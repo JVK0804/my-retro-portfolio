@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, useRef, useEffect } from "react";
+import { getSharedAudioContext, primeAudioContext, withRunningAudioContext } from "@/lib/audio-context";
 
 type SoundType =
   | "click"
@@ -10,12 +11,11 @@ type SoundType =
   | "typing";
 
 const FLUORESCENT_DURATION = 3.0;
-const RECENT_GESTURE_WINDOW = 250;
 
 type SoundContextType = {
   enabled: boolean;
   setEnabled: (next: boolean) => void;
-  play: (type: SoundType) => void;
+  play: (type: SoundType, options?: { force?: boolean }) => void;
   playTyping: () => void;
   prepareTypingAudio: () => Promise<void>;
 };
@@ -35,8 +35,6 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem("retro-sfx") === "true";
   });
-  const ctxRef = useRef<AudioContext | null>(null);
-  const lastGestureAtRef = useRef(0);
   const fluorescentCleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -44,30 +42,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     window.localStorage.setItem("retro-sfx", String(enabled));
   }, [enabled]);
 
-  const getCtx = useCallback(() => {
-    if (typeof window === "undefined") return null;
-    if (!ctxRef.current) {
-      const Ctor =
-        window.AudioContext ||
-        (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!Ctor) return null;
-      ctxRef.current = new Ctor();
-    }
-    return ctxRef.current;
-  }, []);
-
-  const unlockContext = useCallback(async () => {
-    const ctx = getCtx();
-    if (!ctx) return null;
-    if (ctx.state !== "running") {
-      try {
-        await ctx.resume();
-      } catch {
-        return null;
-      }
-    }
-    return ctx.state === "running" ? ctx : null;
-  }, [getCtx]);
+  const getCtx = useCallback(() => getSharedAudioContext(), []);
 
   const stopFluorescent = useCallback(() => {
     fluorescentCleanupRef.current?.();
@@ -77,22 +52,21 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (typeof document === "undefined") return;
     const prime = () => {
-      lastGestureAtRef.current = Date.now();
-      void unlockContext();
+      primeAudioContext();
     };
     const opts = { passive: true } as AddEventListenerOptions;
     document.addEventListener("pointerdown", prime, opts);
-    document.addEventListener("keydown", prime, opts);
     document.addEventListener("touchstart", prime, opts);
-    document.addEventListener("wheel", prime, opts);
+    document.addEventListener("click", prime, opts);
+    document.addEventListener("keydown", prime, opts);
     return () => {
       document.removeEventListener("pointerdown", prime);
-      document.removeEventListener("keydown", prime);
       document.removeEventListener("touchstart", prime);
-      document.removeEventListener("wheel", prime);
+      document.removeEventListener("click", prime);
+      document.removeEventListener("keydown", prime);
       stopFluorescent();
     };
-  }, [stopFluorescent, unlockContext]);
+  }, [stopFluorescent]);
 
   const scheduleSound = useCallback(
     (ctx: AudioContext, type: SoundType) => {
@@ -116,18 +90,13 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         bandpass.frequency.value = 2000;
         bandpass.Q.value = 0.8;
 
-        // Flicker bursts span 0–2.5s, perfectly matching the CSS glitch-flicker keyframes
-        // (which pulse at 0%, 6%, 14%, 22%, 32%, 44%, 56%, 68%, 78%, 88%, 100% over 2.5s)
         noiseGain.gain.setValueAtTime(0.0001, now);
-        [0, 0.15, 0.35, 0.55, 0.8, 1.1, 1.4, 1.7, 1.95, 2.2].forEach(
-          (offset) => {
-            const start = now + offset;
-            noiseGain.gain.setValueAtTime(0.0001, start);
-            noiseGain.gain.exponentialRampToValueAtTime(0.09, start + 0.012);
-            noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 0.07);
-          }
-        );
-        // Final "click on" burst — lands exactly at 2.5s when cards finish flickering and glow ignites
+        [0, 0.15, 0.35, 0.55, 0.8, 1.1, 1.4, 1.7, 1.95, 2.2].forEach((offset) => {
+          const start = now + offset;
+          noiseGain.gain.setValueAtTime(0.0001, start);
+          noiseGain.gain.exponentialRampToValueAtTime(0.09, start + 0.012);
+          noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 0.07);
+        });
         noiseGain.gain.setValueAtTime(0.001, now + 2.35);
         noiseGain.gain.exponentialRampToValueAtTime(0.2, now + 2.5);
         noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + FLUORESCENT_DURATION);
@@ -151,8 +120,16 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         hum.stop(now + FLUORESCENT_DURATION);
 
         fluorescentCleanupRef.current = () => {
-          try { noise.stop(); } catch { /* noop */ }
-          try { hum.stop(); } catch { /* noop */ }
+          try {
+            noise.stop();
+          } catch {
+            /* noop */
+          }
+          try {
+            hum.stop();
+          } catch {
+            /* noop */
+          }
           noise.disconnect();
           bandpass.disconnect();
           noiseGain.disconnect();
@@ -229,46 +206,34 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         }
       }
     },
-    [stopFluorescent]
+    [stopFluorescent],
   );
 
   const play = useCallback(
-    (type: SoundType) => {
-      if (!enabled) return;
-      const ctx = getCtx();
-      if (!ctx) return;
-      if (ctx.state === "running") {
-        scheduleSound(ctx, type);
-        return;
-      }
-      if (Date.now() - lastGestureAtRef.current > RECENT_GESTURE_WINDOW) return;
-      void unlockContext().then((runningCtx) => {
-        if (!runningCtx) return;
-        scheduleSound(runningCtx, type);
-      });
+    (type: SoundType, options?: { force?: boolean }) => {
+      if (!enabled && !options?.force) return;
+      withRunningAudioContext((ctx) => scheduleSound(ctx, type));
     },
-    [enabled, getCtx, scheduleSound, unlockContext]
+    [enabled, scheduleSound],
   );
 
-  /** Resume AudioContext before hero typing so ticks are not delayed. */
   const prepareTypingAudio = useCallback(async () => {
     if (!enabled) return;
-    await unlockContext();
-  }, [enabled, unlockContext]);
+    primeAudioContext();
+    const ctx = getCtx();
+    if (ctx?.state === "suspended") {
+      try {
+        await ctx.resume();
+      } catch {
+        // ignore
+      }
+    }
+  }, [enabled, getCtx]);
 
-  /** Hero typing ticks — unlocks audio without the short gesture window. */
   const playTyping = useCallback(() => {
     if (!enabled) return;
-    const ctx = getCtx();
-    if (ctx?.state === "running") {
-      scheduleSound(ctx, "typing");
-      return;
-    }
-    void unlockContext().then((runningCtx) => {
-      if (!runningCtx) return;
-      scheduleSound(runningCtx, "typing");
-    });
-  }, [enabled, getCtx, scheduleSound, unlockContext]);
+    withRunningAudioContext((ctx) => scheduleSound(ctx, "typing"));
+  }, [enabled, scheduleSound]);
 
   return (
     <SoundContext.Provider value={{ enabled, setEnabled, play, playTyping, prepareTypingAudio }}>

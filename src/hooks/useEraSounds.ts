@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+import { withRunningAudioContext } from "@/lib/audio-context";
 
 export type Era = "cassette" | "cd" | "mp3" | "streaming";
 
@@ -16,20 +17,6 @@ export type DeviceKey =
   | "ar"
   | "laptop"
   | "drone";
-
-let sharedCtx: AudioContext | null = null;
-const getCtx = (): AudioContext | null => {
-  if (typeof window === "undefined") return null;
-  if (!sharedCtx) {
-    const Ctor =
-      window.AudioContext ||
-      (window as Window & { webkitAudioContext?: typeof AudioContext })
-        .webkitAudioContext;
-    if (!Ctor) return null;
-    sharedCtx = new Ctor();
-  }
-  return sharedCtx;
-};
 
 let activeStop: (() => void) | null = null;
 const stopActive = () => {
@@ -224,28 +211,24 @@ export const useEraSounds = () => {
   const [loadingKey, setLoadingKey] = useState<DeviceKey | null>(null);
   const playingTimerRef = useRef<number | null>(null);
 
-  const play = useCallback(async (key: DeviceKey) => {
+  const play = useCallback((key: DeviceKey) => {
     stopActive();
-    const ctx = getCtx();
-    if (!ctx) return;
-    if (ctx.state !== "running") {
-      try { await ctx.resume(); } catch { return; }
-    }
 
-    const make = synths[key];
-    if (!make) return;
+    withRunningAudioContext((ctx) => {
+      const make = synths[key];
+      if (!make) return;
 
-    const startAt = ctx.currentTime + 0.02;
-    const voices = make(ctx, startAt);
+      const startAt = ctx.currentTime + 0.02;
+      const voices = make(ctx, startAt);
 
-    activeStop = () => voices.forEach((v) => v.stop());
+      activeStop = () => voices.forEach((v) => v.stop());
 
-    // brief loading flash for visual feedback (kept short since playback is instant)
-    setLoadingKey(key);
-    if (playingTimerRef.current) window.clearTimeout(playingTimerRef.current);
-    playingTimerRef.current = window.setTimeout(() => {
-      setLoadingKey((cur) => (cur === key ? null : cur));
-    }, 250);
+      setLoadingKey(key);
+      if (playingTimerRef.current) window.clearTimeout(playingTimerRef.current);
+      playingTimerRef.current = window.setTimeout(() => {
+        setLoadingKey((cur) => (cur === key ? null : cur));
+      }, 250);
+    });
   }, []);
 
   return { play, loadingKey, loadingEra: loadingKey as Era | null };

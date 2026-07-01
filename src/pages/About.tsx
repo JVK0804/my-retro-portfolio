@@ -38,7 +38,7 @@ const About = () => {
             transition={{ delay: 0.8 }}
             className="font-body text-foreground/70 text-lg text-center max-w-lg"
           >
-            Where I grew up, what I learned in each city, and the devices that taught me how to design.
+            Where I grew up, what I learned all the way from Bay of Bengal to Bay Area, and the devices that taught me how to design.
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}
@@ -113,7 +113,7 @@ const About = () => {
               transition={{ delay: 0.2 }}
               className="font-body text-foreground/70 leading-relaxed"
             >
-              6+ years designing at the intersection of craft and code, shipping enterprise products at Deloitte for clients like Anthem, Cigna, and the Commonwealth of Massachusetts. Scroll to trace the three cities that shaped me.
+              6+ years designing at the intersection of craft and code, shipping enterprise products at Deloitte for clients like Anthem, Cigna, and the Commonwealth of Massachusetts. Scroll to trace the four places that shaped me.
             </motion.p>
           </div>
         </section>
@@ -135,9 +135,9 @@ const About = () => {
             >
               {[
                 { value: "6+", label: "Years in Design" },
-                { value: "4", label: "Countries Lived" },
+                { value: "2", label: "Countries" },
+                { value: "4", label: "Places" },
                 { value: "50+", label: "Products Shipped" },
-                { value: "∞", label: "Cups of Coffee" },
               ].map((stat, i) => (
                 <motion.div
                   key={stat.label}

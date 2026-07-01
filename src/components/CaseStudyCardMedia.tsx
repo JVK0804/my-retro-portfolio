@@ -51,7 +51,7 @@ const CaseStudyCardMedia = ({
       <div
         ref={ref}
         className={cn(
-          "relative w-full overflow-hidden rounded-[1.1rem] border border-border/50 bg-muted/15",
+          "relative w-full overflow-hidden rounded-[1.1rem] border border-border/50 bg-background",
           !aspectRatio && "aspect-video",
           className,
         )}
@@ -75,7 +75,7 @@ const CaseStudyCardMedia = ({
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-[1.1rem] border border-border/50 bg-muted/15",
+        "relative w-full overflow-hidden rounded-[1.1rem] border border-border/50 bg-background",
         !aspectRatio && "aspect-[4/3]",
         className,
       )}

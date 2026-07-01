@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useTransform, type MotionValue } from "framer-motion";
-import { Camera, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useSegmentOpacity, useSegmentY, useStickySectionProgress } from "@/lib/scroll-segment-motion";
 import vizag from "@/assets/landmark-visakhapatnam.png";
 import hyderabad from "@/assets/landmark-hyderabad.png";
@@ -9,74 +9,78 @@ import bloomington from "@/assets/landmark-bloomington.png";
 type City = {
   era: string;
   city: string;
+  shortName: string;
   region: string;
   years: string;
-  landmark: string;
+  landmark?: string;
   text: string;
-  side: "left" | "right";
 };
 
 const cities: City[] = [
   {
     era: "Roots",
     city: "Visakhapatnam",
+    shortName: "Vizag",
     region: "Andhra Pradesh, India",
     years: "Where it began",
     landmark: vizag,
     text: "Born by the Bay of Bengal and raised under the watchful gaze of Dolphin's Nose hill, I grew up in a place where natural beauty and secure tech sit side by side. The salt air and the slow lighthouse blink taught me early that craft and engineering can share the same coastline.",
-    side: "left",
   },
   {
     era: "First career",
     city: "Hyderabad",
+    shortName: "Hyderabad",
     region: "Telangana, India",
     years: "First job, first love",
     landmark: hyderabad,
     text: "Charminar, biryani, and a city that evolves at terabytes-per-second. Hyderabad gave me my first design role and the chaotic creative pulse of HiTech City, where Mughal arches meet GPU clusters, and I fell in love with building for scale.",
-    side: "right",
   },
   {
     era: "Third home",
     city: "Bloomington",
+    shortName: "Bloomington",
     region: "Indiana, USA",
     years: "Discovered, third home",
     landmark: bloomington,
     text: "Walked through the Sample Gates and walked out a sharper designer. Indiana University gave me the language of HCI, the rigor of research, and a quieter midwestern winter to upgrade everything I thought I knew about design.",
-    side: "left",
+  },
+  {
+    era: "Now",
+    city: "San Francisco",
+    shortName: "SF",
+    region: "California, USA",
+    years: "Bay Area",
+    text: "From the Bay of Bengal to the Bay Area — designing B2B SaaS, design systems, and AI products where craft meets code. San Francisco is where the portfolio, the systems thinking, and the builder mindset finally share one desk.",
   },
 ];
 
-/* Photo that floats in zigzag inside the right column — never overlaps text */
-const FloatingPortrait = ({ progress }: { progress: MotionValue<number> }) => {
-  // Zigzag confined to the right half of the screen
-  const x = useTransform(
-    progress,
-    [0, 0.33, 0.66, 1],
-    ["-12%", "12%", "-10%", "10%"]
-  );
-  const scale = useTransform(progress, [0, 1], [1, 0.55]);
-  const rotate = useTransform(progress, [0, 0.33, 0.66, 1], [-5, 4, -3, 5]);
-  const y = useTransform(progress, [0, 0.5, 1], [0, -8, 8]);
+const LandmarkArt = ({ city, className }: { city: City; className?: string }) => {
+  if (city.landmark) {
+    return (
+      <img
+        src={city.landmark}
+        alt={`${city.city} landmark`}
+        width={1536}
+        height={1024}
+        loading="lazy"
+        className={className}
+      />
+    );
+  }
 
   return (
-    <motion.div
-      style={{ x, scale, rotate, y }}
-      className="hidden md:block absolute top-1/2 right-[12%] -translate-y-1/2 z-10 pointer-events-none"
+    <div
+      className={`flex aspect-[3/2] w-full max-w-md items-center justify-center rounded-xl border border-dashed border-border/70 bg-muted/20 px-6 text-center ${className ?? ""}`}
+      aria-label={`${city.city} landmark illustration placeholder`}
     >
-      <div className="relative w-[170px] lg:w-[210px] aspect-[3/4] glass-card flex items-center justify-center bg-muted/40">
-        <div className="text-center text-muted-foreground/70 p-3">
-          <div className="w-10 h-10 mx-auto mb-2 rounded-full border-2 border-dashed border-foreground/30 flex items-center justify-center">
-            <Camera size={16} className="text-foreground/50" />
-          </div>
-          <p className="font-heading text-[9px] tracking-widest uppercase">Kaushik</p>
-          <p className="font-body text-[8px] mt-1 opacity-70">Portrait</p>
-        </div>
-        <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-primary/50" />
-        <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-primary/50" />
-        <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-primary/50" />
-        <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-primary/50" />
+      <div>
+        <p className="font-heading text-[10px] tracking-[0.3em] uppercase text-primary mb-2">
+          Bay Area
+        </p>
+        <p className="mono-heading text-2xl font-bold text-foreground/80">{city.city}</p>
+        <p className="font-body text-xs text-muted-foreground mt-2">Illustration coming soon</p>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -96,49 +100,31 @@ const CityPanel = ({
 
   return (
     <motion.div
-      className="absolute inset-0 flex items-center"
+      className="absolute inset-0 flex items-start md:items-center md:overflow-hidden"
       style={{ opacity, y, zIndex: index }}
     >
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 items-center">
-        {/* Text — always left column, never overlapped by portrait */}
-        <div>
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-36 md:py-0 grid md:grid-cols-2 gap-6 md:gap-8 items-center min-h-full md:min-h-0">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 mb-3">
-            <MapPin size={14} className="text-primary" />
-            <p className="font-heading text-[11px] text-primary tracking-widest uppercase">
+            <MapPin size={14} className="text-primary shrink-0" />
+            <p className="font-heading text-[10px] sm:text-[11px] text-primary tracking-widest uppercase">
               {city.era} · {city.years}
             </p>
           </div>
-          <h3 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-2">
+          <h3 className="mono-heading text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-2 leading-tight">
             {city.city}
           </h3>
-          <p className="font-body text-xs text-muted-foreground tracking-wider uppercase mb-6">
+          <p className="font-body text-[10px] sm:text-xs text-muted-foreground tracking-wider uppercase mb-5 md:mb-6">
             {city.region}
           </p>
-          <p className="font-body text-base md:text-lg text-foreground/80 leading-relaxed max-w-md">
+          <p className="font-body text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed max-w-md">
             {city.text}
           </p>
-          {/* Mobile landmark below text */}
-          <img
-            src={city.landmark}
-            alt={`${city.city} landmark`}
-            width={1536}
-            height={1024}
-            loading="lazy"
-            className="landmark-illustration mt-8 max-w-md md:hidden"
-          />
+          <LandmarkArt city={city} className="landmark-illustration mt-8 max-w-md md:hidden" />
         </div>
 
-        {/* Right column: rectangular landmark illustration */}
         <div className="hidden md:flex relative items-center justify-center min-h-[520px]">
-          <img
-            src={city.landmark}
-            alt=""
-            aria-hidden="true"
-            width={1536}
-            height={1024}
-            loading="lazy"
-            className="landmark-illustration"
-          />
+          <LandmarkArt city={city} className="landmark-illustration" />
         </div>
       </div>
     </motion.div>
@@ -156,22 +142,18 @@ const CitiesJourney = () => {
       ref={containerRef}
       className="relative"
       style={{ height: `${cities.length * 100}vh` }}
-      aria-label="Cities I've called home"
+      aria-label="Places I've called home"
     >
       <div className="sticky top-[5.5rem] h-[calc(100svh-5.5rem)] w-full overflow-hidden">
-        {/* Section intro tag */}
-        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 text-center">
-          <p className="font-heading text-[11px] text-primary tracking-widest uppercase">
-            Where I'm From
+        <div className="absolute top-4 md:top-8 inset-x-0 z-20 px-6 pointer-events-none">
+          <p className="font-heading text-[10px] md:text-[11px] text-primary tracking-widest uppercase text-center">
+            Where I&apos;m From
           </p>
-          <p className="font-body text-xs text-foreground/60 mt-1">
-            Visakhapatnam · Hyderabad · Bloomington
+          <p className="hidden sm:block font-body text-xs text-foreground/60 mt-1 text-center">
+            Visakhapatnam · Hyderabad · Bloomington · San Francisco
           </p>
         </div>
 
-        {/* Floating zigzag portrait — temporarily hidden */}
-
-        {/* City panels cross-fade */}
         <div className="relative h-full w-full">
           {cities.map((c, i) => (
             <CityPanel
@@ -184,21 +166,22 @@ const CitiesJourney = () => {
           ))}
         </div>
 
-        {/* Progress + city markers */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 w-[min(420px,80vw)]">
+        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 w-[min(480px,92vw)] px-2">
           <div className="relative h-[2px] w-full bg-border/40">
             <motion.div
               className="absolute inset-y-0 left-0 bg-primary"
               style={{ width: progressWidth }}
             />
           </div>
-          <div className="flex items-center justify-between w-full">
+          <div className="grid grid-cols-4 gap-1 w-full">
             {cities.map((c) => (
               <span
                 key={c.city}
-                className="font-heading text-[10px] text-foreground/50 tracking-wider"
+                className="font-heading text-[8px] sm:text-[10px] text-foreground/50 tracking-wider text-center truncate"
+                title={c.city}
               >
-                {c.city}
+                <span className="sm:hidden">{c.shortName}</span>
+                <span className="hidden sm:inline">{c.city}</span>
               </span>
             ))}
           </div>

@@ -83,7 +83,7 @@ const HeroSection = () => {
   const { play } = useSound();
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16" data-parallax-blur-zone>
       <TypingWelcome />
 
       <motion.h1
