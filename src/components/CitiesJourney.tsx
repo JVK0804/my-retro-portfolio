@@ -5,6 +5,7 @@ import { useSegmentOpacity, useSegmentY, useStickySectionProgress } from "@/lib/
 import vizag from "@/assets/landmark-visakhapatnam.png";
 import hyderabad from "@/assets/landmark-hyderabad.png";
 import bloomington from "@/assets/landmark-bloomington.png";
+import sfBridge from "@/assets/SF Bridge PNG.png";
 
 type City = {
   era: string;
@@ -13,8 +14,18 @@ type City = {
   region: string;
   years: string;
   landmark?: string;
-  text: string;
+  text?: string;
+  paragraphs?: string[];
 };
+
+const renderEmphasis = (text: string) =>
+  text.split(/(\*[^*]+\*)/g).map((part, i) =>
+    part.startsWith("*") && part.endsWith("*") ? (
+      <em key={i}>{part.slice(1, -1)}</em>
+    ) : (
+      part
+    ),
+  );
 
 const cities: City[] = [
   {
@@ -50,7 +61,11 @@ const cities: City[] = [
     shortName: "SF",
     region: "California, USA",
     years: "Bay Area",
-    text: "From the Bay of Bengal to the Bay Area — designing B2B SaaS, design systems, and AI products where craft meets code. San Francisco is where the portfolio, the systems thinking, and the builder mindset finally share one desk.",
+    landmark: sfBridge,
+    paragraphs: [
+      "I grew up in Visakhapatnam on the Bay of Bengal, where curiosity shaped how I see the world. I started my career in frontend development, but I was drawn to a different question: not *how* interfaces were built, but *why* they were designed that way. That curiosity led me from building screens to designing products.",
+      "Photography sharpened my eye for composition and detail, while product design gave me a way to turn those observations into meaningful experiences. Today in the Bay Area, I design B2B SaaS products, AI experiences, and design systems—and still enjoy bringing ideas to life through code.",
+    ],
   },
 ];
 
@@ -117,9 +132,22 @@ const CityPanel = ({
           <p className="font-body text-[10px] sm:text-xs text-muted-foreground tracking-wider uppercase mb-5 md:mb-6">
             {city.region}
           </p>
-          <p className="font-body text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed max-w-md">
-            {city.text}
-          </p>
+          <div className="space-y-4 max-w-md">
+            {city.paragraphs ? (
+              city.paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 32)}
+                  className="font-body text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed"
+                >
+                  {renderEmphasis(paragraph)}
+                </p>
+              ))
+            ) : (
+              <p className="font-body text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed">
+                {city.text}
+              </p>
+            )}
+          </div>
           <LandmarkArt city={city} className="landmark-illustration mt-8 max-w-md md:hidden" />
         </div>
 
