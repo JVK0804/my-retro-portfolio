@@ -158,11 +158,16 @@ const CaseStudyTiles = () => {
                 onMouseEnter={() => play("hover")}
               >
                 {isInternal ? (
-                  <Link to={study.href} onClick={() => play("click")} className={wrapperClass}>
+                  <Link
+                    to={study.href}
+                    onClick={() => play("click")}
+                    className={wrapperClass}
+                    data-parallax-block-zone
+                  >
                     {cardInner}
                   </Link>
                 ) : (
-                  <a href={study.href} className={wrapperClass}>
+                  <a href={study.href} className={wrapperClass} data-parallax-block-zone>
                     {cardInner}
                   </a>
                 )}

@@ -61,6 +61,7 @@ const doodles: Doodle[] = [
 const PARALLAX_SCROLL_RANGE = 3000;
 const CONTENT_OVERLAP_BLUR_PX = 2;
 const BLUR_ZONE_SELECTOR = "[data-parallax-blur-zone]";
+const BLOCK_ZONE_SELECTOR = "[data-parallax-block-zone]";
 
 const rectsOverlap = (a: DOMRect, b: DOMRect) =>
   a.bottom > b.top && a.top < b.bottom && a.right > b.left && a.left < b.right;
@@ -73,6 +74,14 @@ const getVisibleBlurZones = () => {
   });
 };
 
+const getVisibleBlockZones = () => {
+  const viewportHeight = window.innerHeight;
+  return Array.from(document.querySelectorAll<HTMLElement>(BLOCK_ZONE_SELECTOR)).filter((zone) => {
+    const rect = zone.getBoundingClientRect();
+    return rect.bottom > 0 && rect.top < viewportHeight;
+  });
+};
+
 const overlapsAnyZone = (doodleRect: DOMRect, zones: HTMLElement[]) =>
   zones.some((zone) => rectsOverlap(doodleRect, zone.getBoundingClientRect()));
 
@@ -80,6 +89,7 @@ const DoodleItem = ({
   d,
   scrollY,
   blurPx,
+  hitOpacity,
   onPlay,
   loading,
   soundEnabled,
@@ -90,6 +100,7 @@ const DoodleItem = ({
   d: Doodle;
   scrollY: MotionValue<number>;
   blurPx: MotionValue<number>;
+  hitOpacity: MotionValue<number>;
   onPlay: (device: DeviceKey) => void;
   loading: boolean;
   soundEnabled: boolean;
@@ -99,6 +110,7 @@ const DoodleItem = ({
 }) => {
   const y = useTransform(scrollY, [0, PARALLAX_SCROLL_RANGE], [0, d.speed]);
   const filter = useMotionTemplate`blur(${blurPx}px)`;
+  const pointerEvents = useTransform(hitOpacity, (value) => (value < 0.5 ? "none" : "auto"));
 
   return (
     <motion.button
@@ -123,9 +135,11 @@ const DoodleItem = ({
         right: d.side === "right" ? d.offset : undefined,
         width: d.size,
         height: d.size,
+        opacity: hitOpacity,
+        pointerEvents,
         willChange: "transform",
       }}
-      className="doodle-hit absolute pointer-events-auto cursor-pointer p-0 border-0 bg-transparent select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+      className="doodle-hit absolute cursor-pointer p-0 border-0 bg-transparent select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
     >
       <motion.div
         className={`doodle-art absolute inset-0${loading ? " doodle-art--loading" : ""}`}
@@ -167,56 +181,66 @@ const ParallaxDoodles = () => {
 
   const doodleRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const blurValues = useRef(doodles.map(() => motionValue(0)));
+  const hitOpacityValues = useRef(doodles.map(() => motionValue(1)));
 
-  const updateBlurs = useCallback(() => {
+  const updateDoodleLayers = useCallback(() => {
     const blurs = blurValues.current;
+    const hitOpacity = hitOpacityValues.current;
+
+    const blockZones = getVisibleBlockZones();
 
     if (!isNarrowViewport) {
       blurs.forEach((blur) => blur.set(0));
+      doodleRefs.current.forEach((node, index) => {
+        const doodleRect = node?.getBoundingClientRect();
+        const blocked = doodleRect ? overlapsAnyZone(doodleRect, blockZones) : false;
+        hitOpacity[index]?.set(blocked ? 0 : 1);
+      });
       return;
     }
 
     const zones = getVisibleBlurZones();
-    if (zones.length === 0) {
-      blurs.forEach((blur) => blur.set(0));
-      return;
-    }
 
     doodleRefs.current.forEach((node, index) => {
       const blur = blurs[index];
-      if (!node) {
-        blur.set(0);
+      const opacity = hitOpacity[index];
+      if (!node || !blur || !opacity) {
+        blur?.set(0);
+        opacity?.set(1);
         return;
       }
 
       const doodleRect = node.getBoundingClientRect();
-      blur.set(overlapsAnyZone(doodleRect, zones) ? CONTENT_OVERLAP_BLUR_PX : 0);
+      const blocked = overlapsAnyZone(doodleRect, blockZones);
+      opacity.set(blocked ? 0 : 1);
+      blur.set(!blocked && zones.length > 0 && overlapsAnyZone(doodleRect, zones) ? CONTENT_OVERLAP_BLUR_PX : 0);
     });
   }, [isNarrowViewport]);
 
-  useMotionValueEvent(scrollY, "change", updateBlurs);
+  useMotionValueEvent(scrollY, "change", updateDoodleLayers);
 
   useEffect(() => {
-    updateBlurs();
-    window.addEventListener("resize", updateBlurs);
-    window.addEventListener("scroll", updateBlurs, { passive: true });
+    updateDoodleLayers();
+    window.addEventListener("resize", updateDoodleLayers);
+    window.addEventListener("scroll", updateDoodleLayers, { passive: true });
     return () => {
-      window.removeEventListener("resize", updateBlurs);
-      window.removeEventListener("scroll", updateBlurs);
+      window.removeEventListener("resize", updateDoodleLayers);
+      window.removeEventListener("scroll", updateDoodleLayers);
     };
-  }, [updateBlurs]);
+  }, [updateDoodleLayers]);
 
   useEffect(() => {
     if (!isNarrowViewport) {
       blurValues.current.forEach((blur) => blur.set(0));
     }
-  }, [isNarrowViewport]);
+    updateDoodleLayers();
+  }, [isNarrowViewport, updateDoodleLayers]);
 
   if (reduceMotion) return null;
 
   return (
     <div
-      className="absolute inset-0 pointer-events-none hidden md:block z-0"
+      className="absolute inset-0 pointer-events-none hidden md:block z-20"
       style={{ contain: "layout style" }}
     >
       {doodles.map((d, i) => (
@@ -225,6 +249,7 @@ const ParallaxDoodles = () => {
           d={d}
           scrollY={scrollY}
           blurPx={blurValues.current[i]!}
+          hitOpacity={hitOpacityValues.current[i]!}
           doodleRef={(node) => {
             doodleRefs.current[i] = node;
           }}
