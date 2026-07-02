@@ -633,28 +633,73 @@ svg.sketch-filters {
   }
 
   @media (max-width: 767px) {
+    .about-page .city-journey-copy {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .about-page .city-journey-copy::before {
+      content: "";
+      position: absolute;
+      inset: -0.75rem -0.5rem -2rem;
+      z-index: -1;
+      background: linear-gradient(
+        180deg,
+        hsl(var(--background)) 0%,
+        hsl(var(--background)) 88%,
+        hsl(var(--background) / 0.55) 100%
+      );
+      pointer-events: none;
+    }
+
+    .about-page .chapter-journey-copy {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .about-page .chapter-journey-copy::before {
+      content: "";
+      position: absolute;
+      inset: -0.75rem -0.5rem -1.5rem;
+      z-index: -1;
+      background: linear-gradient(
+        180deg,
+        hsl(var(--background)) 0%,
+        hsl(var(--background)) 90%,
+        hsl(var(--background) / 0.5) 100%
+      );
+      pointer-events: none;
+    }
+
     .about-page .morph-chapter-illustration {
       opacity: 1;
-      transform: translateY(10%);
+      transform: translateY(18%);
     }
 
     .about-page .morph-chapter-illustration svg {
-      width: min(80vw, 320px);
-      filter: blur(6px);
-      opacity: 0.42;
+      width: min(76vw, 300px);
+      filter: blur(7px);
+      opacity: 0.32;
     }
 
     .about-page .landmark-illustration--mobile-bg {
-      width: min(92vw, 400px);
+      display: block;
+      width: auto;
+      max-width: min(82vw, 300px);
+      max-height: 100%;
       height: auto;
-      max-height: none;
       object-fit: contain;
-      filter: blur(5px);
-      opacity: 0.38;
+      object-position: center bottom;
+      filter: blur(7px);
+      opacity: 0.28;
+    }
+
+    html:not(.dark) .about-page .landmark-illustration--mobile-bg {
+      filter: blur(7px);
     }
 
     html.dark .about-page .landmark-illustration--mobile-bg {
-      filter: blur(5px) invert(1) brightness(1.05);
+      filter: blur(7px) invert(1) brightness(1.05);
     }
   }
 

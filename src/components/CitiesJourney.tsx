@@ -121,15 +121,15 @@ const CityPanel = ({
       {/* Mobile — blurred landmark behind copy */}
       {city.landmark ? (
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-24 top-32 z-0 flex items-center justify-center px-4 md:hidden"
+          className="pointer-events-none absolute inset-x-0 top-[60%] bottom-[7rem] z-0 flex items-end justify-center px-3 md:hidden"
           aria-hidden="true"
         >
-          <LandmarkArt city={city} className="landmark-illustration landmark-illustration--mobile-bg" />
+          <LandmarkArt city={city} className="landmark-illustration--mobile-bg" />
         </div>
       ) : null}
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-52 md:pb-36 md:py-0 grid md:grid-cols-2 gap-6 md:gap-8 items-center min-h-full md:min-h-0">
-        <div className="min-w-0">
+        <div className="city-journey-copy min-w-0">
           <div className="flex items-center gap-2 mb-3">
             <MapPin size={14} className="text-primary shrink-0" />
             <p className="font-heading text-[10px] sm:text-[11px] text-primary tracking-widest uppercase">
