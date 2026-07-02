@@ -59,10 +59,10 @@ const ChapterText = ({
 
   return (
     <motion.div
-      className="absolute inset-y-0 left-0 z-10 w-full flex items-start justify-center px-6 pt-24 md:w-1/2 md:items-center md:px-16 md:pt-0"
+      className="absolute top-24 left-0 right-0 z-[2] flex justify-center px-6 md:inset-y-0 md:left-0 md:w-1/2 md:items-center md:px-16 md:pt-0"
       style={{ opacity, y, zIndex: 10 + index }}
     >
-      <div className="chapter-journey-copy max-w-md max-md:pointer-events-auto max-md:bg-transparent">
+      <div className="max-w-md bg-transparent max-md:pointer-events-auto">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl">{chapter.icon}</span>
           <p className="font-heading text-xs text-primary tracking-widest uppercase">
@@ -104,10 +104,10 @@ const StickyChapters = () => {
           </p>
         </div>
 
-        {/* Backdrop — transparent on mobile so blurred art reads through */}
-        <div className="absolute inset-0 bg-background max-md:bg-transparent" />
+        {/* Desktop-only backdrop layers — mobile uses page background so art stays visible */}
+        <div className="absolute inset-0 hidden bg-background md:block" />
         <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          className="pointer-events-none absolute inset-0 hidden opacity-[0.04] md:block"
           style={{
             backgroundImage:
               "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
@@ -115,15 +115,15 @@ const StickyChapters = () => {
           }}
         />
 
-        {/* Single morphing illustration — blurred backdrop on mobile */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none md:inset-y-0 md:right-0 md:left-auto md:w-1/2">
+        {/* Morphing illustration — blurred behind copy on mobile */}
+        <div className="absolute inset-0 z-[1] flex items-center justify-center pointer-events-none md:inset-y-0 md:right-0 md:left-auto md:w-1/2">
           <div className="morph-chapter-illustration pointer-events-auto">
             <MorphIllustration progress={chapterProgress} rotate={illusRotate} />
           </div>
         </div>
 
-        {/* Text slots cross-fade on the left */}
-        <div className="relative z-10 h-full w-full max-md:pointer-events-none">
+        {/* Text slots cross-fade */}
+        <div className="absolute inset-0 z-[2] max-md:pointer-events-none md:relative md:z-10 md:h-full md:w-full">
           {stickyChapters.map((ch, i) => (
             <ChapterText
               key={ch.title}

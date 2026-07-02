@@ -633,73 +633,37 @@ svg.sketch-filters {
   }
 
   @media (max-width: 767px) {
-    .about-page .city-journey-copy {
-      position: relative;
-      isolation: isolate;
-    }
-
-    .about-page .city-journey-copy::before {
-      content: "";
-      position: absolute;
-      inset: -0.75rem -0.5rem -2rem;
-      z-index: -1;
-      background: linear-gradient(
-        180deg,
-        hsl(var(--background)) 0%,
-        hsl(var(--background)) 88%,
-        hsl(var(--background) / 0.55) 100%
-      );
-      pointer-events: none;
-    }
-
-    .about-page .chapter-journey-copy {
-      position: relative;
-      isolation: isolate;
-    }
-
-    .about-page .chapter-journey-copy::before {
-      content: "";
-      position: absolute;
-      inset: -0.75rem -0.5rem -1.5rem;
-      z-index: -1;
-      background: linear-gradient(
-        180deg,
-        hsl(var(--background)) 0%,
-        hsl(var(--background)) 90%,
-        hsl(var(--background) / 0.5) 100%
-      );
-      pointer-events: none;
-    }
-
     .about-page .morph-chapter-illustration {
       opacity: 1;
-      transform: translateY(18%);
+      transform: translateY(12%);
     }
 
     .about-page .morph-chapter-illustration svg {
-      width: min(76vw, 300px);
-      filter: blur(7px);
-      opacity: 0.32;
+      width: min(80vw, 320px);
+      filter: blur(3px);
+      opacity: 0.58;
     }
 
-    .about-page .landmark-illustration--mobile-bg {
+    .about-page .landmark-illustration--mobile {
       display: block;
-      width: auto;
-      max-width: min(82vw, 300px);
-      max-height: 100%;
+      width: 100%;
+      max-width: 100%;
+      max-height: min(30svh, 240px);
       height: auto;
       object-fit: contain;
-      object-position: center bottom;
-      filter: blur(7px);
-      opacity: 0.28;
+      object-position: center;
+      margin-inline: auto;
+      filter: blur(2px);
+      opacity: 0.82;
     }
 
-    html:not(.dark) .about-page .landmark-illustration--mobile-bg {
-      filter: blur(7px);
+    html:not(.dark) .about-page .landmark-illustration--mobile {
+      filter: blur(2px);
     }
 
-    html.dark .about-page .landmark-illustration--mobile-bg {
-      filter: blur(7px) invert(1) brightness(1.05);
+    html.dark .about-page .landmark-illustration--mobile {
+      filter: blur(2px) invert(1) brightness(1.05);
+      opacity: 0.78;
     }
   }
 
