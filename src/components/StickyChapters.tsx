@@ -62,7 +62,7 @@ const ChapterText = ({
       className="absolute inset-y-0 left-0 z-10 w-full flex items-start justify-center px-6 pt-24 md:w-1/2 md:items-center md:px-16 md:pt-0"
       style={{ opacity, y, zIndex: 10 + index }}
     >
-      <div className="max-w-md">
+      <div className="max-w-md max-md:pointer-events-auto max-md:bg-transparent">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl">{chapter.icon}</span>
           <p className="font-heading text-xs text-primary tracking-widest uppercase">
@@ -104,8 +104,8 @@ const StickyChapters = () => {
           </p>
         </div>
 
-        {/* Backdrop */}
-        <div className="absolute inset-0 bg-background" />
+        {/* Backdrop — transparent on mobile so blurred art reads through */}
+        <div className="absolute inset-0 bg-background max-md:bg-transparent" />
         <div
           className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{
@@ -123,7 +123,7 @@ const StickyChapters = () => {
         </div>
 
         {/* Text slots cross-fade on the left */}
-        <div className="relative z-10 h-full w-full">
+        <div className="relative z-10 h-full w-full max-md:pointer-events-none">
           {stickyChapters.map((ch, i) => (
             <ChapterText
               key={ch.title}

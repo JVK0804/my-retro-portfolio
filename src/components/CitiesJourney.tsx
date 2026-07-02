@@ -115,10 +115,20 @@ const CityPanel = ({
 
   return (
     <motion.div
-      className="absolute inset-0 flex items-start md:items-center md:overflow-hidden"
+      className="absolute inset-0 flex items-start md:items-center"
       style={{ opacity, y, zIndex: index }}
     >
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-52 md:pb-36 md:py-0 grid md:grid-cols-2 gap-6 md:gap-8 items-center min-h-full md:min-h-0">
+      {/* Mobile — blurred landmark behind copy */}
+      {city.landmark ? (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-24 top-32 z-0 flex items-center justify-center px-4 md:hidden"
+          aria-hidden="true"
+        >
+          <LandmarkArt city={city} className="landmark-illustration landmark-illustration--mobile-bg" />
+        </div>
+      ) : null}
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-52 md:pb-36 md:py-0 grid md:grid-cols-2 gap-6 md:gap-8 items-center min-h-full md:min-h-0">
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-3">
             <MapPin size={14} className="text-primary shrink-0" />
@@ -148,7 +158,6 @@ const CityPanel = ({
               </p>
             )}
           </div>
-          <LandmarkArt city={city} className="landmark-illustration landmark-illustration--mobile mt-8 max-w-md md:hidden" />
         </div>
 
         <div className="hidden md:flex relative items-center justify-center min-h-[520px]">

@@ -634,18 +634,27 @@ svg.sketch-filters {
 
   @media (max-width: 767px) {
     .about-page .morph-chapter-illustration {
-      filter: blur(5px);
-      opacity: 0.3;
-      transform: translateY(8%);
+      opacity: 1;
+      transform: translateY(10%);
     }
 
     .about-page .morph-chapter-illustration svg {
-      width: min(72vw, 300px);
+      width: min(80vw, 320px);
+      filter: blur(6px);
+      opacity: 0.42;
     }
 
-    .about-page .landmark-illustration--mobile {
-      max-height: 38svh;
-      opacity: 0.72;
+    .about-page .landmark-illustration--mobile-bg {
+      width: min(92vw, 400px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      filter: blur(5px);
+      opacity: 0.38;
+    }
+
+    html.dark .about-page .landmark-illustration--mobile-bg {
+      filter: blur(5px) invert(1) brightness(1.05);
     }
   }
 
