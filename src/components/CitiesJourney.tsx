@@ -118,8 +118,17 @@ const CityPanel = ({
       className="absolute inset-0 flex items-start md:items-center"
       style={{ opacity, y, zIndex: index }}
     >
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-52 md:pb-36 md:py-0 grid md:grid-cols-2 gap-6 md:gap-8 items-center min-h-full md:min-h-0">
-        <div className="min-w-0">
+      {city.landmark ? (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-[5.75rem] z-[1] flex h-[min(34svh,280px)] items-end justify-center px-3 md:hidden"
+          aria-hidden="true"
+        >
+          <LandmarkArt city={city} className="landmark-illustration--mobile-bg" />
+        </div>
+      ) : null}
+
+      <div className="relative z-[2] w-full max-w-7xl mx-auto px-6 pt-24 pb-52 md:px-12 md:pb-36 md:py-0 md:grid md:grid-cols-2 md:gap-8 md:items-center">
+        <div className="city-text-inner min-w-0 max-w-md">
           <div className="flex items-center gap-2 mb-3">
             <MapPin size={14} className="text-primary shrink-0" />
             <p className="font-heading text-[10px] sm:text-[11px] text-primary tracking-widest uppercase">
@@ -148,12 +157,6 @@ const CityPanel = ({
               </p>
             )}
           </div>
-          {city.landmark ? (
-            <LandmarkArt
-              city={city}
-              className="landmark-illustration landmark-illustration--mobile mt-8 md:hidden"
-            />
-          ) : null}
         </div>
 
         <div className="hidden md:flex relative items-center justify-center min-h-[520px]">

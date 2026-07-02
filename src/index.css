@@ -390,10 +390,12 @@ svg.sketch-filters {
     opacity: calc(var(--scanline-opacity) * 0.55);
   }
 
-  /* Sticky scroll chapters — GPU layer for smoother compositing */
-  .about-page [class*="sticky"] {
-    transform: translateZ(0);
-    backface-visibility: hidden;
+  /* Sticky scroll chapters — GPU layer for smoother compositing (desktop) */
+  @media (min-width: 768px) {
+    .about-page [class*="sticky"] {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
   }
 
   .case-study-section {
@@ -633,37 +635,53 @@ svg.sketch-filters {
   }
 
   @media (max-width: 767px) {
+    .about-page .chapter-text-panel,
+    .about-page .chapter-text-inner,
+    .about-page .city-text-inner {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    .about-page .morph-chapter-illustration-slot {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 5.25rem;
+    }
+
     .about-page .morph-chapter-illustration {
+      display: flex;
+      width: 100%;
+      justify-content: center;
       opacity: 1;
-      transform: translateY(12%);
     }
 
     .about-page .morph-chapter-illustration svg {
-      width: min(80vw, 320px);
-      filter: blur(3px);
-      opacity: 0.58;
+      width: min(94vw, 380px) !important;
+      height: auto !important;
+      max-width: none;
+      filter: blur(2px);
+      opacity: 0.72;
     }
 
-    .about-page .landmark-illustration--mobile {
+    .about-page .landmark-illustration--mobile-bg {
       display: block;
-      width: 100%;
-      max-width: 100%;
-      max-height: min(30svh, 240px);
+      width: auto;
+      max-width: min(88vw, 340px);
+      max-height: 100%;
       height: auto;
       object-fit: contain;
-      object-position: center;
-      margin-inline: auto;
-      filter: blur(2px);
-      opacity: 0.82;
+      object-position: center bottom;
+      opacity: 0.92;
     }
 
-    html:not(.dark) .about-page .landmark-illustration--mobile {
-      filter: blur(2px);
+    html:not(.dark) .about-page .landmark-illustration--mobile-bg {
+      filter: none;
     }
 
-    html.dark .about-page .landmark-illustration--mobile {
-      filter: blur(2px) invert(1) brightness(1.05);
-      opacity: 0.78;
+    html.dark .about-page .landmark-illustration--mobile-bg {
+      filter: invert(1) brightness(1.05);
+      opacity: 0.88;
     }
   }
 

@@ -59,10 +59,10 @@ const ChapterText = ({
 
   return (
     <motion.div
-      className="absolute top-24 left-0 right-0 z-[2] flex justify-center px-6 md:inset-y-0 md:left-0 md:w-1/2 md:items-center md:px-16 md:pt-0"
+      className="chapter-text-panel absolute top-24 left-0 right-0 z-[2] flex justify-center px-6 md:inset-y-0 md:left-0 md:w-1/2 md:items-center md:px-16 md:pt-0"
       style={{ opacity, y, zIndex: 10 + index }}
     >
-      <div className="max-w-md bg-transparent max-md:pointer-events-auto">
+      <div className="chapter-text-inner max-w-md max-md:pointer-events-auto max-md:min-h-[min(48svh,380px)] max-md:flex max-md:flex-col max-md:justify-start">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl">{chapter.icon}</span>
           <p className="font-heading text-xs text-primary tracking-widest uppercase">
@@ -115,15 +115,15 @@ const StickyChapters = () => {
           }}
         />
 
-        {/* Morphing illustration — blurred behind copy on mobile */}
-        <div className="absolute inset-0 z-[1] flex items-center justify-center pointer-events-none md:inset-y-0 md:right-0 md:left-auto md:w-1/2">
+        {/* Morphing illustration — rises through paragraph on mobile */}
+        <div className="morph-chapter-illustration-slot pointer-events-none absolute inset-x-0 z-[1] max-md:top-36 max-md:bottom-[7.5rem] md:inset-y-0 md:right-0 md:left-auto md:w-1/2 md:flex md:items-center md:justify-center">
           <div className="morph-chapter-illustration pointer-events-auto">
             <MorphIllustration progress={chapterProgress} rotate={illusRotate} />
           </div>
         </div>
 
-        {/* Text slots cross-fade */}
-        <div className="absolute inset-0 z-[2] max-md:pointer-events-none md:relative md:z-10 md:h-full md:w-full">
+        {/* Text slots — no full-screen layer on mobile */}
+        <div className="max-md:contents md:relative md:z-10 md:h-full md:w-full">
           {stickyChapters.map((ch, i) => (
             <ChapterText
               key={ch.title}
