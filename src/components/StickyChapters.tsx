@@ -62,7 +62,7 @@ const ChapterText = ({
       className="absolute inset-y-0 left-0 z-10 w-full flex items-start justify-center px-6 pt-24 md:w-1/2 md:items-center md:px-16 md:pt-0"
       style={{ opacity, y, zIndex: 10 + index }}
     >
-      <div className="max-w-md rounded-xl max-md:bg-background/90 max-md:px-4 max-md:py-5 max-md:shadow-sm max-md:backdrop-blur-sm md:bg-transparent md:p-0 md:shadow-none">
+      <div className="max-w-md">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl">{chapter.icon}</span>
           <p className="font-heading text-xs text-primary tracking-widest uppercase">
