@@ -627,6 +627,28 @@ svg.sketch-filters {
     opacity: 0.82;
   }
 
+  /* About — tech eras: soft blurred morph behind copy on mobile */
+  .morph-chapter-illustration {
+    @apply pointer-events-auto;
+  }
+
+  @media (max-width: 767px) {
+    .about-page .morph-chapter-illustration {
+      filter: blur(5px);
+      opacity: 0.3;
+      transform: translateY(8%);
+    }
+
+    .about-page .morph-chapter-illustration svg {
+      width: min(72vw, 300px);
+    }
+
+    .about-page .landmark-illustration--mobile {
+      max-height: 38svh;
+      opacity: 0.72;
+    }
+  }
+
   .sketch-section {
     border-style: solid;
     border-color: hsl(var(--border));
