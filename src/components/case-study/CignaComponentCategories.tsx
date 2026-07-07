@@ -406,8 +406,11 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
   const categoryProgress = useStickySectionProgress(containerRef);
 
   const scrollTabIntoStrip = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
-    const tab = tabStripRef.current?.children[index] as HTMLElement | undefined;
-    tab?.scrollIntoView({ behavior, inline: "center", block: "nearest" });
+    const strip = tabStripRef.current;
+    const tab = strip?.children[index] as HTMLElement | undefined;
+    if (!strip || !tab) return;
+    const targetLeft = tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, targetLeft), behavior });
   }, []);
 
   const setIndexFromScroll = useCallback((index: number) => {
