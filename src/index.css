@@ -13,16 +13,6 @@ html {
   color-scheme: light;
 }
 
-html.smooth-scroll {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.smooth-scroll {
-    scroll-behavior: auto;
-  }
-}
-
 html.dark {
   color-scheme: dark;
 }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { STICKY_TOP_PX, useStickySectionProgress } from "@/lib/scroll-segment-motion";
 
 type CategoryKey = "Color" | "Typography" | "Buttons" | "Forms" | "Spacing" | "Cards" | "Inputs";
 
@@ -380,41 +381,34 @@ const panelVariants = {
   }),
 };
 
-const STICKY_TOP_PX = 88;
 const CATEGORY_SEGMENT_VH = 80;
 
 const progressToIndex = (progress: number) =>
   Math.min(categories.length - 1, Math.max(0, Math.floor(progress * categories.length)));
 
-const getContainerScrollProgress = (container: HTMLElement) => {
-  const rect = container.getBoundingClientRect();
+const scrollTopForCategory = (container: HTMLElement, index: number) => {
   const scrollable = container.offsetHeight - (window.innerHeight - STICKY_TOP_PX);
-  if (scrollable <= 0) return 0;
-  return Math.min(1, Math.max(0, (STICKY_TOP_PX - rect.top) / scrollable));
+  if (scrollable <= 0) return container.offsetTop - STICKY_TOP_PX;
+
+  const segment = scrollable / categories.length;
+  const start = container.offsetTop - STICKY_TOP_PX;
+  return start + segment * index + 1;
 };
 
 const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCategoriesProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
   const panelScrollRef = useRef<HTMLDivElement>(null);
   const tabStripRef = useRef<HTMLDivElement>(null);
   const clickLockRef = useRef(false);
-  const skipTabStripScrollRef = useRef(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
 
-  const scrollTabIntoStrip = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
-    const strip = tabStripRef.current;
-    const tab = strip?.children[index] as HTMLElement | undefined;
-    if (!strip || !tab) return;
-    const targetLeft = tab.offsetLeft - (strip.clientWidth - tab.offsetWidth) / 2;
-    strip.scrollTo({ left: Math.max(0, targetLeft), behavior });
-  }, []);
+  const categoryProgress = useStickySectionProgress(containerRef);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 5.5rem", "end end"],
-  });
+  const scrollTabIntoStrip = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
+    const tab = tabStripRef.current?.children[index] as HTMLElement | undefined;
+    tab?.scrollIntoView({ behavior, inline: "center", block: "nearest" });
+  }, []);
 
   const setIndexFromScroll = useCallback((index: number) => {
     setActiveIndex((prev) => {
@@ -424,62 +418,14 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
     });
   }, []);
 
-  const updateIndexFromScroll = useCallback(() => {
-    if (clickLockRef.current) return;
-    const container = containerRef.current;
-    if (!container) return;
-    setIndexFromScroll(progressToIndex(getContainerScrollProgress(container)));
-  }, [setIndexFromScroll]);
-
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+  useMotionValueEvent(categoryProgress, "change", (progress) => {
     if (clickLockRef.current) return;
     setIndexFromScroll(progressToIndex(progress));
   });
 
   useEffect(() => {
-    const onScroll = () => updateIndexFromScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [updateIndexFromScroll]);
-
-  useEffect(() => {
-    if (skipTabStripScrollRef.current) {
-      skipTabStripScrollRef.current = false;
-      return;
-    }
-    scrollTabIntoStrip(activeIndex);
+    scrollTabIntoStrip(activeIndex, "instant");
   }, [activeIndex, scrollTabIntoStrip]);
-
-  useEffect(() => {
-    panelScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
-  }, [activeIndex]);
-
-  useEffect(() => {
-    const sticky = stickyRef.current;
-    if (!sticky) return;
-
-    const onWheel = (event: WheelEvent) => {
-      if (clickLockRef.current || Math.abs(event.deltaY) < 1) return;
-
-      const panel = panelScrollRef.current;
-      const target = event.target as Node | null;
-
-      if (panel && target && panel.contains(target) && panel.scrollHeight > panel.clientHeight + 1) {
-        const atTop = panel.scrollTop <= 0;
-        const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1;
-
-        if (event.deltaY > 0 && !atBottom) return;
-        if (event.deltaY < 0 && !atTop) return;
-      }
-
-      window.scrollBy({ top: event.deltaY, behavior: "auto" });
-      event.preventDefault();
-    };
-
-    sticky.addEventListener("wheel", onWheel, { passive: false });
-    return () => sticky.removeEventListener("wheel", onWheel);
-  }, []);
 
   const scrollToCategory = useCallback((index: number) => {
     const container = containerRef.current;
@@ -491,17 +437,12 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
       return index;
     });
 
-    const scrollable = container.offsetHeight - (window.innerHeight - STICKY_TOP_PX);
-    const start = container.offsetTop - STICKY_TOP_PX;
-    const segment = scrollable / categories.length;
-    const target = start + segment * index + 2;
-
-    window.scrollTo({ top: target, behavior: "smooth" });
-    scrollTabIntoStrip(index);
+    scrollTabIntoStrip(index, "smooth");
+    window.scrollTo({ top: scrollTopForCategory(container, index), behavior: "instant" });
 
     window.setTimeout(() => {
       clickLockRef.current = false;
-    }, 800);
+    }, 120);
   }, [scrollTabIntoStrip]);
 
   const activeCategory = categories[activeIndex];
@@ -513,10 +454,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
         className="relative isolate"
         style={{ height: `${categories.length * CATEGORY_SEGMENT_VH}vh` }}
       >
-        <div
-          ref={stickyRef}
-          className="sticky top-[5.5rem] z-10 w-full pt-2 md:pt-3"
-        >
+        <div className="sticky top-[5.5rem] z-10 w-full pt-2 md:pt-3">
           <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">
             Browse by category
           </p>
@@ -527,7 +465,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
           <div className="flex w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
             <div
               ref={tabStripRef}
-              className="mb-6 flex shrink-0 gap-2 overflow-x-auto border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="mb-6 flex shrink-0 snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               role="tablist"
               aria-label="Component categories"
             >
@@ -543,7 +481,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
                   }}
                   onMouseEnter={onTabHover}
                   className={cn(
-                    "shrink-0 font-body text-[11px] tracking-widest uppercase px-4 py-2 transition-all",
+                    "shrink-0 snap-center font-body text-[11px] tracking-widest uppercase px-4 py-2 transition-all",
                     activeCategory === cat
                       ? "bg-primary text-primary-foreground"
                       : "text-foreground/60 hover:text-primary border border-border/60",

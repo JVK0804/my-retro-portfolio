@@ -4,7 +4,7 @@ const stats = [
   { value: "1M+", label: "Global Users" },
   { value: "300+", label: "Tasks Resolved" },
   { value: "15+", label: "Projects" },
-  { value: "6+", label: "Years Experience" },
+  { value: "7", label: "Years Experience" },
 ];
 
 const StatsBar = () => {
