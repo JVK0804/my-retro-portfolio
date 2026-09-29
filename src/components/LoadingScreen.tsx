@@ -1,10 +1,105 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InterfaceReadyProvider } from "@/contexts/InterfaceReadyContext";
+import { useSound } from "@/contexts/SoundContext";
 
-const LOADING_DURATION = 3200;
+/** Safety net in case the boot sequence never reports completion. */
+const MAX_LOADING_DURATION = 9000;
 const RESET_INTERVAL = 10 * 60 * 1000;
 const STORAGE_KEY = "lastLoadingTimestamp";
+
+const BOOT_START_DELAY_MS = 700;
+const CHARS_PER_SECOND = 38;
+const LINE_PAUSE_MS = 260;
+const FINAL_HOLD_MS = 650;
+
+const BOOT_LINES = [
+  "> initializing interface...",
+  "> guest authenticated",
+  "> remote link: established",
+  "> connection established",
+];
+
+const LINE_LENGTHS = BOOT_LINES.map((line) => line.length);
+const TOTAL_CHARS = LINE_LENGTHS.reduce((sum, n) => sum + n, 0);
+
+const keystrokeDelay = () => (1000 / CHARS_PER_SECOND) * (0.55 + Math.random() * 0.9);
+
+const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
+  const { playTyping } = useSound();
+  const [lineIndex, setLineIndex] = useState(0);
+  const [charCount, setCharCount] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const startTimer = window.setTimeout(() => setStarted(true), BOOT_START_DELAY_MS);
+    return () => window.clearTimeout(startTimer);
+  }, []);
+
+  const isLastLine = lineIndex === LINE_LENGTHS.length - 1;
+  const lineDone = charCount >= LINE_LENGTHS[lineIndex];
+
+  useEffect(() => {
+    if (!started) return;
+    if (!lineDone) {
+      const timer = window.setTimeout(() => setCharCount((c) => c + 1), keystrokeDelay());
+      return () => window.clearTimeout(timer);
+    }
+    if (isLastLine) {
+      const timer = window.setTimeout(onComplete, FINAL_HOLD_MS);
+      return () => window.clearTimeout(timer);
+    }
+    const timer = window.setTimeout(() => {
+      setLineIndex((i) => i + 1);
+      setCharCount(0);
+    }, LINE_PAUSE_MS);
+    return () => window.clearTimeout(timer);
+  }, [started, lineDone, isLastLine, charCount, onComplete]);
+
+  useLayoutEffect(() => {
+    if (!started || charCount === 0) return;
+    if (BOOT_LINES[lineIndex][charCount - 1] !== " ") playTyping();
+  }, [started, lineIndex, charCount, playTyping]);
+
+  const typedChars = LINE_LENGTHS.slice(0, lineIndex).reduce((sum, n) => sum + n, 0) + charCount;
+  const progress = started ? typedChars / TOTAL_CHARS : 0;
+
+  return (
+    <>
+      <div className="mt-10 w-64 h-[2px] bg-border overflow-hidden z-20">
+        <div
+          className="h-full bg-primary transition-[width] duration-150 ease-linear"
+          style={{ width: `${progress * 100}%` }}
+        />
+      </div>
+
+      <div
+        className="mt-5 w-64 min-h-[6rem] font-mono-space text-[10px] leading-relaxed z-20"
+        role="status"
+        aria-live="polite"
+      >
+        {BOOT_LINES.slice(0, lineIndex + 1).map((line, i) => {
+          const isCurrent = i === lineIndex;
+          const text = isCurrent ? line.slice(0, charCount) : line;
+          const isFinal = i === LINE_LENGTHS.length - 1;
+          return (
+            <p
+              key={i}
+              className={
+                isFinal ? "text-primary" : isCurrent ? "text-foreground/80" : "text-muted-foreground/60"
+              }
+            >
+              {text}
+              {isCurrent && started && (
+                <span className="terminal-cursor" data-typing={!lineDone} aria-hidden="true" />
+              )}
+            </p>
+          );
+        })}
+      </div>
+    </>
+  );
+};
 
 const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(() => {
@@ -13,14 +108,16 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
     return Date.now() - parseInt(last, 10) > RESET_INTERVAL;
   });
 
+  const finishLoading = useCallback(() => {
+    sessionStorage.setItem(STORAGE_KEY, Date.now().toString());
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
     if (!loading) return;
-    const timer = setTimeout(() => {
-      sessionStorage.setItem(STORAGE_KEY, Date.now().toString());
-      setLoading(false);
-    }, LOADING_DURATION);
+    const timer = setTimeout(finishLoading, MAX_LOADING_DURATION);
     return () => clearTimeout(timer);
-  }, [loading]);
+  }, [loading, finishLoading]);
 
   return (
     <InterfaceReadyProvider value={!loading}>
@@ -102,25 +199,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
               Product Designer / Design Engineer
             </motion.p>
 
-            {/* Loading bar — retro style */}
-            <motion.div className="mt-10 w-48 h-[2px] bg-border overflow-hidden z-20">
-              <motion.div
-                className="h-full bg-primary"
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 0.6, duration: 2.2, ease: "linear" }}
-              />
-            </motion.div>
-
-            {/* System text */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5, duration: 0.4 }}
-              className="font-heading text-[8px] tracking-[0.3em] uppercase text-muted-foreground/50 mt-3 z-20"
-            >
-              INITIALIZING INTERFACE...
-            </motion.p>
+            <BootSequence onComplete={finishLoading} />
           </motion.div>
         )}
       </AnimatePresence>

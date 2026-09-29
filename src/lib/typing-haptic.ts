@@ -1,6 +1,3 @@
-/** Index before "✦" — haptics only while typing "Kaushik here " */
-export const KAUSHIK_HERE_HAPTIC_END = "Kaushik here ✦".indexOf("✦");
-
 const isTouchMobile = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(pointer: coarse) and (hover: none)").matches;

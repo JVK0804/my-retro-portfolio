@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import StatsBar from "@/components/StatsBar";
 import CaseStudyTiles from "@/components/CaseStudyTiles";
 import TestimonialTicker from "@/components/TestimonialTicker";
 import Footer from "@/components/Footer";
@@ -15,7 +14,6 @@ const Index = () => {
         <div className="relative z-10">
           <Navbar />
           <HeroSection />
-          <StatsBar />
           <CaseStudyTiles />
           <TestimonialTicker />
           <Footer />

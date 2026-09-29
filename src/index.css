@@ -774,3 +774,41 @@ svg.sketch-filters {
 .doodle-pulse-hint--play {
   animation: doodle-glow-once 3.5s ease-out forwards;
 }
+
+.terminal-cursor {
+  display: inline-block;
+  width: 1.4ch;
+  height: 1em;
+  margin-bottom: -0.15em;
+  margin-left: 2px;
+  background: hsl(var(--primary));
+  animation: terminal-cursor-blink 1.05s steps(1, end) infinite;
+}
+
+.terminal-cursor[data-typing="true"] {
+  animation-duration: 0.6s;
+}
+
+.terminal-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  animation: terminal-cursor-blink 2s steps(1, end) infinite;
+}
+
+@keyframes terminal-cursor-blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor,
+  .terminal-status-dot {
+    animation: none;
+  }
+}

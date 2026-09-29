@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSound } from "@/contexts/SoundContext";
 import { useInterfaceReady } from "@/contexts/InterfaceReadyContext";
-import {
-  KAUSHIK_HERE_HAPTIC_END,
-  pulseTypingHaptic,
-} from "@/lib/typing-haptic";
+import { pulseTypingHaptic } from "@/lib/typing-haptic";
+import HeroStatusLine from "@/components/HeroStatusLine";
 
-const WELCOME_TEXT = "Kaushik here ✦ Welcome to my internet corner";
+const WELCOME_TEXT = "Hello Guest, I'm Kaushik";
+const WELCOME_NAME_START = WELCOME_TEXT.indexOf("Kaushik");
 const TYPING_INTERVAL_MS = 32;
 const TYPING_START_DELAY_MS = 500;
 
@@ -49,10 +48,8 @@ const TypingWelcome = () => {
 
   useLayoutEffect(() => {
     if (!started || count === 0) return;
-    playTyping();
-    if (count < KAUSHIK_HERE_HAPTIC_END) {
-      pulseTypingHaptic();
-    }
+    if (WELCOME_TEXT[count - 1] !== " ") playTyping();
+    pulseTypingHaptic();
   }, [count, started, playTyping]);
 
   const shown = WELCOME_TEXT.slice(0, count);
@@ -67,10 +64,12 @@ const TypingWelcome = () => {
       aria-label={WELCOME_TEXT}
     >
       <span className="text-primary mr-1">$</span>
-      <span className="teal-shimmer font-bold">{shown.split("✦")[0]}</span>
-      {shown.includes("✦") && <span>{"✦" + shown.split("✦")[1]}</span>}
+      <span>{shown.slice(0, WELCOME_NAME_START)}</span>
+      {shown.length > WELCOME_NAME_START && (
+        <span className="teal-shimmer font-bold">{shown.slice(WELCOME_NAME_START)}</span>
+      )}
       <span
-        className={`inline-block w-[0.55ch] h-[1em] -mb-[0.15em] ml-[1px] bg-primary ${
+        className={`inline-block w-[1.4ch] h-[1em] -mb-[0.15em] ml-[2px] bg-primary ${
           isDone ? "animate-pulse" : ""
         }`}
         aria-hidden="true"
@@ -83,7 +82,8 @@ const HeroSection = () => {
   const { play } = useSound();
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16" data-parallax-blur-zone>
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16" data-parallax-blur-zone>
+      <HeroStatusLine />
       <TypingWelcome />
 
       <motion.h1
@@ -135,7 +135,7 @@ const HeroSection = () => {
             document.getElementById("letsconnect")?.scrollIntoView({ behavior: "smooth" });
           }}
           onMouseEnter={() => play("hover")}
-          className="rounded-[var(--radius-md)] border border-foreground bg-background px-8 py-3 font-heading text-xs font-bold tracking-wider text-foreground uppercase cursor-pointer transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
+          className="rounded-[var(--radius-md)] border border-foreground bg-background px-8 py-3 font-body text-xs font-medium tracking-wider text-foreground uppercase cursor-pointer transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
         >
           Let&apos;s Connect
         </a>
@@ -143,7 +143,7 @@ const HeroSection = () => {
           to="/about"
           onClick={() => play("whoosh")}
           onMouseEnter={() => play("hover")}
-          className="rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold tracking-wider text-primary-foreground shadow-md uppercase transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
+          className="rounded-[var(--radius-md)] bg-primary px-8 py-3 font-body text-xs font-medium tracking-wider text-primary-foreground shadow-md uppercase transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
         >
           About me →
         </Link>
