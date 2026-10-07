@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSound } from "@/contexts/SoundContext";
 import CaseStudyCardMedia from "@/components/CaseStudyCardMedia";
@@ -63,8 +63,153 @@ const caseStudies: CaseStudy[] = [
   },
 ];
 
+type TerminalLine = {
+  text: string;
+  msPerChar: number;
+  className: string;
+  prefix?: string;
+  prefixClassName?: string;
+};
+
+const LINE_PAUSE_MS = 90;
+const COMMAND_MS_PER_CHAR = 37;
+const BODY_MS_PER_CHAR = 7;
+
+const buildLines = (study: CaseStudy): TerminalLine[] => {
+  const slug = study.href.split("/").filter(Boolean).pop() ?? study.projectName;
+  return [
+    {
+      prefix: "~/work $ ",
+      prefixClassName: "text-primary",
+      text: `open ${slug}`,
+      msPerChar: COMMAND_MS_PER_CHAR,
+      className: "font-mono-space text-xs md:text-sm text-foreground/70",
+    },
+    {
+      text: study.projectName,
+      msPerChar: 28,
+      className:
+        "type-h3 group-hover:text-primary transition-colors pt-2",
+    },
+    {
+      text: `${study.subtitle} · ${study.readTime}`,
+      msPerChar: BODY_MS_PER_CHAR,
+      className: "type-eyebrow",
+    },
+    {
+      text: study.title,
+      msPerChar: BODY_MS_PER_CHAR,
+      className: "type-h4 pt-1",
+    },
+    {
+      text: study.description,
+      msPerChar: BODY_MS_PER_CHAR,
+      className: "type-body",
+    },
+    {
+      prefix: "tags    ",
+      prefixClassName: "text-foreground/45",
+      text: study.tags.map((tag) => `[${tag}]`).join(" "),
+      msPerChar: BODY_MS_PER_CHAR,
+      className: "font-mono-space text-[11px] text-foreground/70 pt-1 whitespace-pre-wrap",
+    },
+    {
+      prefix: "impact  ",
+      prefixClassName: "text-foreground/45",
+      text: study.impact,
+      msPerChar: BODY_MS_PER_CHAR,
+      className: "font-mono-space text-[11px] text-primary whitespace-pre-wrap",
+    },
+    {
+      prefix: "> ",
+      prefixClassName: "text-primary",
+      text: "read case study ↵",
+      msPerChar: 20,
+      className: "font-mono-space text-xs text-foreground/80 pt-2 group-hover:text-primary transition-colors",
+    },
+  ];
+};
+
+/** Start time (ms) of each line, so progress can be derived from elapsed time alone. */
+const buildSchedule = (lines: TerminalLine[]) => {
+  let t = 0;
+  return lines.map((line) => {
+    const start = t;
+    t += line.text.length * line.msPerChar + LINE_PAUSE_MS;
+    return start;
+  });
+};
+
+const TerminalProject = ({ study, lines }: { study: CaseStudy; lines: TerminalLine[] }) => {
+  const reduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.35 });
+  const schedule = useMemo(() => buildSchedule(lines), [lines]);
+  const [counts, setCounts] = useState<number[]>(() => lines.map(() => 0));
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!inView) return;
+    if (reduceMotion) {
+      setCounts(lines.map((line) => line.text.length));
+      setDone(true);
+      return;
+    }
+
+    let raf = 0;
+    const startedAt = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - startedAt;
+      const next = lines.map((line, i) => {
+        const n = Math.floor((elapsed - schedule[i]) / line.msPerChar);
+        return Math.max(0, Math.min(line.text.length, n));
+      });
+
+      setCounts(next);
+      if (next.every((n, i) => n >= lines[i].text.length)) {
+        setDone(true);
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, reduceMotion, lines, schedule]);
+
+  const activeLine = done ? lines.length - 1 : Math.max(0, counts.findIndex((n, i) => n < lines[i].text.length));
+
+  return (
+    <div ref={ref} className="flex flex-col gap-2.5 md:gap-3 mt-5 md:mt-0 md:py-1">
+      <span className="sr-only">
+        {lines.map((line) => `${line.prefix ?? ""}${line.text}`).join(". ")}
+      </span>
+      {lines.map((line, i) => {
+        const shown = counts[i];
+        const started = inView && (shown > 0 || i === activeLine);
+        return (
+          <p key={i} aria-hidden="true" className={line.className}>
+            {line.prefix && (
+              <span className={`${line.prefixClassName ?? ""} ${started ? "" : "invisible"}`}>
+                {line.prefix}
+              </span>
+            )}
+            <span>{line.text.slice(0, shown)}</span>
+            {inView && i === activeLine && (
+              <span className="terminal-cursor" data-typing={done ? undefined : "true"} />
+            )}
+            <span className="invisible">{line.text.slice(shown)}</span>
+          </p>
+        );
+      })}
+    </div>
+  );
+};
+
 const CaseStudyTiles = () => {
   const { play } = useSound();
+  const terminalLines = useMemo(() => caseStudies.map(buildLines), []);
 
   useEffect(() => {
     const links: HTMLLinkElement[] = [];
@@ -84,10 +229,10 @@ const CaseStudyTiles = () => {
     <section id="work" className="py-24 px-6" data-parallax-blur-zone>
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="mb-14 md:mb-16">
-          <h2 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-3">
+          <h2 className="type-h2 mb-3">
             Selected Work
           </h2>
-          <p className="font-body text-foreground/60 max-w-lg leading-relaxed">
+          <p className="type-body max-w-lg">
             Case studies spanning healthcare, AI, and enterprise, where craft meets complexity.
           </p>
         </div>
@@ -96,57 +241,22 @@ const CaseStudyTiles = () => {
           {caseStudies.map((study, idx) => {
             const isInternal = study.href.startsWith("/");
             const cardInner = (
-              <div className="grid md:grid-cols-[1.3fr_0.7fr] lg:grid-cols-[3fr_2fr] md:gap-6 lg:gap-8 md:items-center p-3 sm:p-4 md:p-4">
+              <div className="grid md:grid-cols-[1.3fr_0.7fr] lg:grid-cols-[3fr_2fr] md:gap-6 lg:gap-8 md:items-center">
                 <div className="min-w-0">
                   <CaseStudyCardMedia
                     src={study.image}
                     alt={`${study.projectName} prototype preview`}
                     mediaType={study.mediaType}
                     priority={study.priority ?? idx === 0}
-                    className="rounded-lg"
+                    className="transition-colors group-hover:border-primary/50"
                   />
                 </div>
 
-                <div className="flex flex-col gap-2.5 md:gap-3 mt-5 md:mt-0 md:py-1">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <p className="mono-heading text-xl md:text-2xl lg:text-3xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
-                      {study.projectName}
-                    </p>
-                    <span className="font-body text-[10px] text-foreground/45 shrink-0">
-                      ⏱ {study.readTime}
-                    </span>
-                  </div>
-
-                  <p className="font-heading text-[10px] text-primary tracking-widest uppercase">
-                    {study.subtitle}
-                  </p>
-
-                  <h3 className="mono-heading text-base md:text-lg font-bold text-foreground leading-snug pt-1">
-                    {study.title}
-                  </h3>
-
-                  <p className="font-body text-foreground/65 text-sm leading-relaxed">
-                    {study.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {study.tags.map((tag) => (
-                      <span key={tag} className="retro-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="font-body text-[11px] pt-1">
-                    <span className="text-foreground/50 mr-2">IMPACT</span>
-                    <span className="text-primary font-medium">{study.impact}</span>
-                  </p>
-                </div>
+                <TerminalProject study={study} lines={terminalLines[idx]} />
               </div>
             );
 
-            const wrapperClass =
-              "glass-card group relative z-10 block w-full cursor-pointer overflow-hidden transition-colors hover:border-primary/30";
+            const wrapperClass = "group relative z-10 block w-full cursor-pointer border-t border-border/50 pt-8 md:pt-10";
 
             return (
               <motion.article

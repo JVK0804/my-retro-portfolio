@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { useSound } from "@/contexts/SoundContext";
 import { useInterfaceReady } from "@/contexts/InterfaceReadyContext";
 import { pulseTypingHaptic } from "@/lib/typing-haptic";
@@ -8,10 +7,57 @@ import HeroStatusLine from "@/components/HeroStatusLine";
 
 const WELCOME_TEXT = "Hello Guest, I'm Kaushik";
 const WELCOME_NAME_START = WELCOME_TEXT.indexOf("Kaushik");
-const TYPING_INTERVAL_MS = 32;
+const TYPING_INTERVAL_MS = 37;
 const TYPING_START_DELAY_MS = 500;
 
-const TypingWelcome = () => {
+const SUBTITLE_INTERVAL_MS = 14;
+const SUBTITLE_GAP_MS = 250;
+const SUBTITLE_TEXT =
+  "I design B2B SaaS, design system & AI products. I design in Figma and ship in React, built around data privacy and user trust.";
+const PREVIOUSLY_TEXT = "Previously designed @ Deloitte, Cigna, Anthem, Commonwealth of Massachusetts & Slack";
+
+const useTypewriter = (text: string, active: boolean, intervalMs: number, startDelayMs = 0) => {
+  const reduceMotion = useReducedMotion();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!active) setCount(0);
+    else if (reduceMotion) setCount(text.length);
+  }, [active, reduceMotion, text]);
+
+  useEffect(() => {
+    if (!active || reduceMotion || count >= text.length) return;
+    const timer = window.setTimeout(
+      () => setCount((current) => current + 1),
+      count === 0 ? startDelayMs : intervalMs,
+    );
+    return () => window.clearTimeout(timer);
+  }, [active, reduceMotion, count, text, intervalMs, startDelayMs]);
+
+  return count;
+};
+
+const TypedParagraph = ({
+  text,
+  count,
+  showCursor,
+  className,
+}: {
+  text: string;
+  count: number;
+  showCursor: boolean;
+  className: string;
+}) => (
+  <p className={className} aria-label={text}>
+    <span aria-hidden="true">{text.slice(0, count)}</span>
+    {showCursor && <span className="terminal-cursor" data-typing="true" aria-hidden="true" />}
+    <span className="invisible" aria-hidden="true">
+      {text.slice(count)}
+    </span>
+  </p>
+);
+
+const TypingWelcome = ({ onDone }: { onDone: () => void }) => {
   const { playTyping, prepareTypingAudio } = useSound();
   const interfaceReady = useInterfaceReady();
   const [count, setCount] = useState(0);
@@ -55,6 +101,10 @@ const TypingWelcome = () => {
   const shown = WELCOME_TEXT.slice(0, count);
   const isDone = count >= WELCOME_TEXT.length;
 
+  useEffect(() => {
+    if (isDone) onDone();
+  }, [isDone, onDone]);
+
   return (
     <motion.p
       initial={{ opacity: 0, y: 10 }}
@@ -79,18 +129,23 @@ const TypingWelcome = () => {
 };
 
 const HeroSection = () => {
-  const { play } = useSound();
+  const [welcomeDone, setWelcomeDone] = useState(false);
+  const handleWelcomeDone = useCallback(() => setWelcomeDone(true), []);
+  const subtitleCount = useTypewriter(SUBTITLE_TEXT, welcomeDone, SUBTITLE_INTERVAL_MS, SUBTITLE_GAP_MS);
+  const subtitleDone = subtitleCount >= SUBTITLE_TEXT.length;
+  const previouslyCount = useTypewriter(PREVIOUSLY_TEXT, subtitleDone, SUBTITLE_INTERVAL_MS, SUBTITLE_GAP_MS);
+  const previouslyTyping = subtitleDone && previouslyCount < PREVIOUSLY_TEXT.length;
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16" data-parallax-blur-zone>
       <HeroStatusLine />
-      <TypingWelcome />
+      <TypingWelcome onDone={handleWelcomeDone} />
 
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="font-heading text-4xl md:text-6xl font-bold text-center overflow-visible"
+        className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold text-center overflow-visible leading-[1.05]"
       >
         <span className="thinking-shimmer" aria-label="Product Designer">
           <span className="thinking-shimmer-base" aria-hidden="true">
@@ -102,52 +157,19 @@ const HeroSection = () => {
         </span>
       </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.6 }}
-        className="font-body text-foreground/90 text-base md:text-lg text-center max-w-2xl mt-8 leading-relaxed"
-      >
-        I design B2B SaaS, design system & AI products. I design in Figma and ship in React,
-        built around data privacy and user trust.
-      </motion.p>
+      <TypedParagraph
+        text={SUBTITLE_TEXT}
+        count={subtitleCount}
+        showCursor={welcomeDone && !subtitleDone}
+        className="type-lead text-center max-w-3xl mt-10"
+      />
 
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.6 }}
-        className="font-body text-foreground/70 text-sm md:text-base text-center max-w-2xl mt-6 italic"
-      >
-        Previously designed @ Deloitte, Cigna, Anthem, Commonwealth of Massachusetts & Slack
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.3, duration: 0.6 }}
-        className="flex flex-wrap justify-center gap-4 mt-12"
-      >
-        <a
-          href="#letsconnect"
-          onClick={(e) => {
-            e.preventDefault();
-            play("click");
-            document.getElementById("letsconnect")?.scrollIntoView({ behavior: "smooth" });
-          }}
-          onMouseEnter={() => play("hover")}
-          className="rounded-[var(--radius-md)] border border-foreground bg-background px-8 py-3 font-body text-xs font-medium tracking-wider text-foreground uppercase cursor-pointer transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
-        >
-          Let&apos;s Connect
-        </a>
-        <Link
-          to="/about"
-          onClick={() => play("whoosh")}
-          onMouseEnter={() => play("hover")}
-          className="rounded-[var(--radius-md)] bg-primary px-8 py-3 font-body text-xs font-medium tracking-wider text-primary-foreground shadow-md uppercase transition-[opacity,transform] hover:opacity-90 active:scale-[var(--scale-press)]"
-        >
-          About me →
-        </Link>
-      </motion.div>
+      <TypedParagraph
+        text={PREVIOUSLY_TEXT}
+        count={previouslyCount}
+        showCursor={previouslyTyping}
+        className="type-body text-foreground/60 text-center max-w-3xl mt-6"
+      />
     </section>
   );
 };

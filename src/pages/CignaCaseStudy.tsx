@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Lock } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import CaseStudySideNav, { type CaseStudyNavItem } from "@/components/case-study/CaseStudySideNav";
@@ -62,8 +61,8 @@ const SectionHeader = ({ kicker, title }: { kicker: string; title: React.ReactNo
     transition={{ duration: 0.6 }}
     className="mb-12"
   >
-    <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">{kicker}</p>
-    <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
+    <p className="type-eyebrow mb-4">{kicker}</p>
+    <h2 className="type-h2 max-w-3xl">
       {title}
     </h2>
   </motion.div>
@@ -75,7 +74,6 @@ const CignaCaseStudy = () => {
   return (
     <CaseStudyShell>
       <SketchFilter />
-      <Navbar />
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
@@ -91,7 +89,7 @@ const CignaCaseStudy = () => {
               to="/#work"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="font-body text-xs text-foreground/70 hover:text-primary transition-colors inline-flex items-center gap-2"
+              className="type-link type-link--muted"
             >
               <ArrowLeft size={14} /> Back to work
             </Link>
@@ -101,7 +99,7 @@ const CignaCaseStudy = () => {
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => play("click")}
-                  className="font-body text-[10px] tracking-widest uppercase text-foreground/50 hover:text-primary transition-colors"
+                  className="type-label hover:text-primary transition-colors"
                 >
                   {item.label}
                 </a>
@@ -113,7 +111,7 @@ const CignaCaseStudy = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-8"
+            className="type-eyebrow mb-8"
           >
             Case Study · Design Systems · Enterprise Healthcare
           </motion.p>
@@ -122,7 +120,7 @@ const CignaCaseStudy = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="mono-heading text-4xl md:text-7xl font-bold text-foreground leading-[1.05] mb-8"
+            className="type-display mb-8"
           >
             One design system. <br />
             Three organisations. <br />
@@ -133,7 +131,7 @@ const CignaCaseStudy = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="font-body text-foreground/70 text-base md:text-lg max-w-2xl leading-relaxed mb-10"
+            className="type-lead max-w-2xl mb-10"
           >
             While at <strong>Deloitte</strong>, I extended the Mednext design system for Cigna, building 20+ components and shipping into a live healthcare platform without breaking production.
           </motion.p>
@@ -159,14 +157,14 @@ const CignaCaseStudy = () => {
               href="#solutions"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+              className="retro-btn retro-btn--primary"
             >
               Feature Breakdown
             </a>
             <a
               href="#context"
               onClick={() => play("click")}
-              className="font-body text-sm text-primary hover:underline inline-flex items-center gap-2"
+              className="type-link"
             >
               Read Our Story <ArrowRight size={14} />
             </a>
@@ -198,11 +196,11 @@ const CignaCaseStudy = () => {
           />
           <div className="grid md:grid-cols-5 gap-8 items-start">
             <div className="md:col-span-2">
-              <p className="mono-heading text-7xl md:text-8xl font-bold text-primary leading-none mb-3">3</p>
-              <p className="font-body text-foreground/70 text-sm tracking-wide uppercase">Organisations. One shared product.</p>
+              <p className="type-stat mb-3">3</p>
+              <p className="type-label">Organisations. One shared product.</p>
             </div>
             <div className="md:col-span-3 glass-card p-8 md:p-10">
-              <p className="font-body text-foreground/80 leading-relaxed mb-6">
+              <p className="type-body mb-6">
                 Cigna needed new features on <strong>Mednext</strong>, Munich Re's live platform, delivered through <strong>Deloitte</strong>. Three teams, one product, no regressions.
               </p>
               <div className="inline-flex items-center gap-2 retro-tag">
@@ -221,7 +219,7 @@ const CignaCaseStudy = () => {
             title={<>I was the person who <span className="teal-shimmer">spoke everyone's language</span>.</>}
           />
           <div className="glass-card p-6 md:p-8">
-            <p className="font-body text-foreground/80 text-sm md:text-base leading-relaxed mb-5">
+            <p className="type-body mb-5">
               UX Engineer at Deloitte. Design in Figma, ship in React. I bridged Cigna, Munich Re, and engineering so components shipped once and stayed consistent.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -242,17 +240,17 @@ const CignaCaseStudy = () => {
           />
           <div className="grid md:grid-cols-5 gap-8 items-start">
             <div className="md:col-span-2">
-              <p className="mono-heading text-7xl md:text-8xl font-bold text-primary leading-none mb-3">20+</p>
-              <p className="font-body text-foreground/70 text-sm tracking-wide uppercase">Reusable components. One source of truth.</p>
+              <p className="type-stat mb-3">20+</p>
+              <p className="type-label">Reusable components. One source of truth.</p>
             </div>
             <div className="md:col-span-3 glass-card p-8 md:p-10">
-              <p className="font-body text-foreground/80 leading-relaxed mb-6">
+              <p className="type-body mb-6">
                 Design systems live or die by adoption. My approach was to build components so well-documented, well-named, and precisely scoped that the path of least resistance was also the path of consistency, the only way to keep three teams from diverging into three different products.
               </p>
               <a
                 href="#system"
                 onClick={() => play("click")}
-                className="font-body text-sm text-primary hover:underline inline-flex items-center gap-2"
+                className="type-link"
               >
                 Explore the library <ArrowRight size={14} />
               </a>
@@ -268,7 +266,7 @@ const CignaCaseStudy = () => {
             kicker="04 Prototypes"
             title={<>Auth flows shipped into a <span className="teal-shimmer">live platform</span>.</>}
           />
-          <p className="font-body text-foreground/65 max-w-2xl mb-12 leading-relaxed">
+          <p className="type-body max-w-2xl mb-12">
             Login and registration screens built against Mednext patterns, prototyped in Figma, validated with stakeholders, then implemented in React.
           </p>
           <div className="flex flex-col gap-14">
@@ -281,7 +279,7 @@ const CignaCaseStudy = () => {
                 transition={{ delay: i * 0.08, duration: 0.6 }}
                 className="flex flex-col gap-4"
               >
-                <p className="font-body text-[10px] tracking-[0.3em] uppercase text-foreground/50">{proto.title}</p>
+                <p className="type-label">{proto.title}</p>
                 <PrototypeMedia
                   src={proto.src}
                   label={proto.label}
@@ -319,7 +317,7 @@ const CignaCaseStudy = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5 }}
-            className="font-body text-foreground/65 text-sm md:text-base leading-relaxed max-w-2xl mb-10 md:mb-12 -mt-4"
+            className="type-body max-w-2xl mb-10 md:mb-12 -mt-4"
           >
             Built for production healthcare flows. The interactive collage shows components working together. Scroll below to explore tokens and patterns by category.
           </motion.p>
@@ -345,9 +343,9 @@ const CignaCaseStudy = () => {
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 className="glass-card p-8"
               >
-                <p className="mono-heading text-6xl md:text-7xl font-bold text-primary leading-none mb-4">{s.value}</p>
-                <p className="font-heading text-sm font-bold text-foreground tracking-wider uppercase mb-2">{s.label}</p>
-                <p className="font-body text-foreground/65 text-sm leading-relaxed">{s.note}</p>
+                <p className="type-stat mb-4">{s.value}</p>
+                <p className="type-label mb-2 text-foreground">{s.label}</p>
+                <p className="type-body">{s.note}</p>
               </motion.div>
             ))}
           </div>
@@ -375,8 +373,8 @@ const CignaCaseStudy = () => {
                   <p className="mono-heading text-5xl font-bold text-primary leading-none">{l.no}</p>
                 </div>
                 <div className="md:col-span-4">
-                  <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-4 leading-snug">{l.title}</h3>
-                  <p className="font-body text-foreground/80 leading-relaxed">{l.body}</p>
+                  <h3 className="type-h3 mb-4">{l.title}</h3>
+                  <p className="type-body">{l.body}</p>
                 </div>
               </motion.article>
             ))}
@@ -389,7 +387,7 @@ const CignaCaseStudy = () => {
             transition={{ duration: 0.6 }}
             className="glass-card p-8 md:p-12 mt-12 text-center"
           >
-            <p className="mono-heading text-xl md:text-2xl font-bold text-foreground leading-snug max-w-3xl mx-auto">
+            <p className="type-h3 max-w-3xl mx-auto">
               "The most underrated UX skill isn't craft, it's making everyone in the room feel like the design outcome was also their idea. <span className="teal-shimmer">That's how you actually ship things in enterprise.</span>"
             </p>
           </motion.blockquote>
@@ -405,7 +403,7 @@ const CignaCaseStudy = () => {
               to="/#work"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="inline-flex items-center gap-3 rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+              className="retro-btn retro-btn--primary"
             >
               <ArrowLeft size={14} /> Back to all projects
             </Link>

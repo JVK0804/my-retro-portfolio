@@ -85,15 +85,15 @@ const LandmarkArt = ({ city, className }: { city: City; className?: string }) =>
 
   return (
     <div
-      className={`flex aspect-[3/2] w-full max-w-md items-center justify-center rounded-xl border border-dashed border-border/70 bg-muted/20 px-6 text-center ${className ?? ""}`}
+      className={`flex aspect-[3/2] w-full max-w-md items-center justify-center rounded-none border border-dashed border-border/70 bg-muted/20 px-6 text-center ${className ?? ""}`}
       aria-label={`${city.city} landmark illustration placeholder`}
     >
       <div>
-        <p className="font-heading text-[10px] tracking-[0.3em] uppercase text-primary mb-2">
+        <p className="type-eyebrow mb-2">
           Bay Area
         </p>
-        <p className="mono-heading text-2xl font-bold text-foreground/80">{city.city}</p>
-        <p className="font-body text-xs text-muted-foreground mt-2">Illustration coming soon</p>
+        <p className="type-h3">{city.city}</p>
+        <p className="type-caption mt-2">Illustration coming soon</p>
       </div>
     </div>
   );
@@ -131,14 +131,14 @@ const CityPanel = ({
         <div className="city-text-inner min-w-0 max-w-md">
           <div className="flex items-center gap-2 mb-3">
             <MapPin size={14} className="text-primary shrink-0" />
-            <p className="font-heading text-[10px] sm:text-[11px] text-primary tracking-widest uppercase">
+            <p className="type-eyebrow">
               {city.era} · {city.years}
             </p>
           </div>
-          <h3 className="mono-heading text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-2 leading-tight">
+          <h3 className="type-display mb-2">
             {city.city}
           </h3>
-          <p className="font-body text-[10px] sm:text-xs text-muted-foreground tracking-wider uppercase mb-5 md:mb-6">
+          <p className="type-label mb-5 md:mb-6">
             {city.region}
           </p>
           <div className="space-y-4 max-w-md">
@@ -146,13 +146,13 @@ const CityPanel = ({
               city.paragraphs.map((paragraph) => (
                 <p
                   key={paragraph.slice(0, 32)}
-                  className="font-body text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed"
+                  className="type-lead"
                 >
                   {renderEmphasis(paragraph)}
                 </p>
               ))
             ) : (
-              <p className="font-body text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed">
+              <p className="type-lead">
                 {city.text}
               </p>
             )}
@@ -182,10 +182,10 @@ const CitiesJourney = () => {
     >
       <div className="sticky top-[5.5rem] h-[calc(100svh-5.5rem)] w-full overflow-hidden">
         <div className="absolute top-4 md:top-8 inset-x-0 z-20 px-6 pointer-events-none">
-          <p className="font-heading text-[10px] md:text-[11px] text-primary tracking-widest uppercase text-center">
+          <p className="type-eyebrow text-center">
             Where I&apos;m From
           </p>
-          <p className="hidden sm:block font-body text-xs text-foreground/60 mt-1 text-center">
+          <p className="type-caption hidden sm:block mt-1 text-center">
             Visakhapatnam · Hyderabad · Bloomington · San Francisco
           </p>
         </div>
@@ -213,7 +213,7 @@ const CitiesJourney = () => {
             {cities.map((c) => (
               <span
                 key={c.city}
-                className="font-heading text-[8px] sm:text-[10px] text-foreground/50 tracking-wider text-center truncate"
+                className="type-label text-[9px] sm:text-[11px] text-center truncate"
                 title={c.city}
               >
                 <span className="sm:hidden">{c.shortName}</span>

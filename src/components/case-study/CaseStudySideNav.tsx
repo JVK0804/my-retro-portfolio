@@ -63,7 +63,7 @@ const CaseStudySideNav = ({ items, onNavigate }: CaseStudySideNavProps) => {
             />
             <span
               className={cn(
-                "font-body text-[10px] tracking-widest uppercase transition-opacity",
+                "type-label transition-opacity",
                 isActive ? "opacity-100" : "opacity-0 group-hover:opacity-70",
               )}
             >

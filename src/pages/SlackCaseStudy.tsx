@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import LazyVideo from "@/components/LazyVideo";
@@ -217,7 +216,7 @@ const SlackFeatureVideo = ({ src, label }: { src: string; label: string }) => {
   }, []);
 
   return (
-    <div className="w-full min-w-0 overflow-hidden rounded-lg border border-border/50 bg-muted/10">
+    <div className="w-full min-w-0 overflow-hidden rounded-none border border-border/50 bg-muted/10">
       <div className="w-full" style={{ aspectRatio }}>
         <LazyVideo
           src={src}
@@ -241,12 +240,12 @@ const SlackFeatureBlock = ({ feature }: { feature: SlackFeature }) => (
   >
     <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
       <div className="min-w-0">
-        <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{feature.no}</p>
-        <h3 className="mono-heading text-2xl font-bold text-foreground leading-snug md:text-3xl lg:text-4xl">
+        <p className="type-eyebrow mb-3">{feature.no}</p>
+        <h3 className="type-h2">
           {feature.title}
         </h3>
       </div>
-      <p className="font-body max-w-xl text-sm italic leading-relaxed text-foreground/60 md:text-right md:text-base shrink-0">
+      <p className="type-body italic max-w-xl md:text-right shrink-0">
         {feature.quote}
       </p>
     </div>
@@ -267,12 +266,12 @@ const SlackFeatureBlock = ({ feature }: { feature: SlackFeature }) => (
             feature.details.length === 1 && "max-w-3xl",
           )}
         >
-          <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-2 md:text-xs">
+          <p className="type-eyebrow mb-2">
             {detail.title}
           </p>
-          <p className="font-body text-sm md:text-base text-foreground/80 leading-relaxed">{detail.body}</p>
+          <p className="type-body">{detail.body}</p>
           {detail.quote && (
-            <p className="font-body text-sm italic text-primary mt-4 leading-relaxed border-l-2 border-primary/40 pl-4">
+            <p className="type-quote mt-4 border-l-2 border-primary/40 pl-4">
               {detail.quote}
             </p>
           )}
@@ -305,8 +304,8 @@ const SectionHeader = ({
     transition={{ duration: 0.6 }}
     className={cn("mb-12", className)}
   >
-    <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">{kicker}</p>
-    <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
+    <p className="type-eyebrow mb-4">{kicker}</p>
+    <h2 className="type-h2 max-w-3xl">
       {title}
     </h2>
   </motion.div>
@@ -318,7 +317,6 @@ const SlackCaseStudy = () => {
   return (
     <CaseStudyShell>
       <SketchFilter />
-      <Navbar />
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
@@ -334,7 +332,7 @@ const SlackCaseStudy = () => {
               to="/#work"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="font-body text-xs text-foreground/70 hover:text-primary transition-colors inline-flex items-center gap-2"
+              className="type-link type-link--muted"
             >
               <ArrowLeft size={14} /> Back to work
             </Link>
@@ -344,7 +342,7 @@ const SlackCaseStudy = () => {
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => play("click")}
-                  className="font-body text-[10px] tracking-widest uppercase text-foreground/50 hover:text-primary transition-colors"
+                  className="type-label hover:text-primary transition-colors"
                 >
                   {item.label}
                 </a>
@@ -356,7 +354,7 @@ const SlackCaseStudy = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-8"
+            className="type-eyebrow mb-8"
           >
             Salesforce Externship · Slack
           </motion.p>
@@ -365,7 +363,7 @@ const SlackCaseStudy = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="mono-heading text-4xl md:text-7xl font-bold text-foreground leading-[1.05] mb-6"
+            className="type-display mb-6"
           >
             73% wanted AI help. <br />
             0% trusted it.
@@ -375,7 +373,7 @@ const SlackCaseStudy = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="mono-heading text-3xl md:text-5xl font-bold mb-10"
+            className="type-h2 mb-10"
           >
             We built the <span className="teal-shimmer">bridge</span>.
           </motion.h2>
@@ -384,7 +382,7 @@ const SlackCaseStudy = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="font-body text-foreground/70 text-base md:text-lg max-w-2xl leading-relaxed mb-12"
+            className="type-lead max-w-2xl mb-12"
           >
             AI was already inside Slack. Students were already using it. But nobody told them what it was doing with their conversations. This is how we designed transparency into every interaction.
           </motion.p>
@@ -401,8 +399,8 @@ const SlackCaseStudy = () => {
               { v: "3", l: "Features Shipped" },
             ].map((s) => (
               <div key={s.l} className="glass-card p-5">
-                <p className="mono-heading text-3xl md:text-4xl font-bold text-primary">{s.v}</p>
-                <p className="font-body text-[11px] text-foreground/60 mt-1">{s.l}</p>
+                <p className="type-stat type-stat--sm">{s.v}</p>
+                <p className="type-caption mt-1">{s.l}</p>
               </div>
             ))}
           </motion.div>
@@ -421,14 +419,14 @@ const SlackCaseStudy = () => {
                 scrollToCaseSection("solutions");
               }}
               onMouseEnter={() => play("hover")}
-              className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+              className="retro-btn retro-btn--primary"
             >
               Feature Breakdown
             </a>
             <a
               href="#problem"
               onClick={() => play("click")}
-              className="font-body text-sm text-primary hover:underline inline-flex items-center gap-2"
+              className="type-link"
             >
               Read the Story <ArrowRight size={14} />
             </a>
@@ -462,7 +460,7 @@ const SlackCaseStudy = () => {
               </>
             }
           />
-          <p className="font-body text-foreground/60 max-w-2xl mb-12">
+          <p className="type-body max-w-2xl mb-12">
             We didn't guess at problems. We ran Black Mirror brainstorming sessions to surface the worst realistic scenarios, then designed for each one.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
@@ -476,9 +474,9 @@ const SlackCaseStudy = () => {
                 className="glass-card p-7 flex flex-col"
               >
                 <span className="mono-heading text-5xl font-bold text-primary/30 mb-4">{p.no}</span>
-                <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{p.label}</p>
-                <h3 className="mono-heading text-lg font-bold text-foreground mb-4 leading-snug">{p.headline}</h3>
-                <p className="font-body text-sm text-foreground/70 leading-relaxed">{p.body}</p>
+                <p className="type-eyebrow mb-3">{p.label}</p>
+                <h3 className="type-h4 mb-4">{p.headline}</h3>
+                <p className="type-body">{p.body}</p>
               </motion.article>
             ))}
           </div>
@@ -492,7 +490,7 @@ const SlackCaseStudy = () => {
             kicker="The Evidence"
             title={<>We tested it ourselves. This is what AI thought a <span className="teal-shimmer">joke</span> looked like.</>}
           />
-          <p className="font-body text-foreground/60 mb-12 max-w-2xl">
+          <p className="type-body mb-12 max-w-2xl">
             We ran our own team&apos;s Slack banter through ChatGPT with and without context. The results became the core proof point for our Engagement Style feature.
           </p>
           <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
@@ -503,7 +501,7 @@ const SlackCaseStudy = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="w-full min-w-0 overflow-hidden rounded-lg border border-border/50 bg-muted/10"
+                className="w-full min-w-0 overflow-hidden rounded-none border border-border/50 bg-muted/10"
               >
                 <img
                   src={img.src}
@@ -520,7 +518,7 @@ const SlackCaseStudy = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="font-body text-foreground/70 mt-12 max-w-3xl leading-relaxed italic"
+            className="type-body italic mt-12 max-w-3xl"
           >
             Same message. Same conversation. Completely different AI understanding.
             <br />
@@ -536,7 +534,7 @@ const SlackCaseStudy = () => {
             kicker="Design Process"
             title={<>What we tried. What we killed. What <span className="teal-shimmer">survived</span>.</>}
           />
-          <p className="font-body text-foreground/60 max-w-2xl mb-12">
+          <p className="type-body max-w-2xl mb-12">
             Every concept below went through Wizard of Oz testing with 40 real students before we decided its fate.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
@@ -550,9 +548,9 @@ const SlackCaseStudy = () => {
                 className="glass-card p-7 flex flex-col"
               >
                 <span className="retro-tag self-start mb-4">{t.status}</span>
-                <h3 className="mono-heading text-xl font-bold text-foreground mb-3">{t.title}</h3>
-                <p className="font-body text-sm text-foreground/70 mb-4 leading-relaxed">{t.body}</p>
-                <p className="font-body text-xs italic text-primary leading-snug">{t.quote}</p>
+                <h3 className="type-h4 mb-3">{t.title}</h3>
+                <p className="type-body mb-4">{t.body}</p>
+                <p className="type-quote">{t.quote}</p>
               </motion.div>
             ))}
           </div>
@@ -565,19 +563,19 @@ const SlackCaseStudy = () => {
             transition={{ duration: 0.6 }}
             className="glass-card p-10 mt-16"
           >
-            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">Method</p>
-            <h3 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-2">
+            <p className="type-eyebrow mb-3">Method</p>
+            <h3 className="type-h2 mb-2">
               We couldn't access Slack AI. <span className="teal-shimmer">So we became it.</span> 🧙‍♂️
             </h3>
-            <p className="font-body text-foreground/70 max-w-3xl mt-4 leading-relaxed">
+            <p className="type-body max-w-3xl mt-4">
               <span className="text-primary font-bold">Wizard of Oz Testing.</span> A human moderator simulated AI responses in real-time while 40 students believed they were interacting with the actual system. Their emotional reactions were completely authentic.
             </p>
             <div className="grid md:grid-cols-3 gap-6 mt-10">
               {findings.map((f, i) => (
                 <div key={f.no} className="border-l-2 border-primary/40 pl-5">
                   <span className="mono-heading text-3xl font-bold text-primary/40">{f.no}</span>
-                  <h4 className="mono-heading text-base font-bold text-foreground mt-2 mb-2">{f.title}</h4>
-                  <p className="font-body text-sm text-foreground/70 leading-relaxed">{f.body}</p>
+                  <h4 className="type-h4 mt-2 mb-2">{f.title}</h4>
+                  <p className="type-body">{f.body}</p>
                 </div>
               ))}
             </div>
@@ -605,9 +603,9 @@ const SlackCaseStudy = () => {
             transition={{ duration: 0.6 }}
             className="glass-card mt-4 p-8 md:p-10"
           >
-            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{oneMoreThing.kicker}</p>
-            <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-4">{oneMoreThing.title}</h3>
-            <p className="font-body text-foreground/80 leading-relaxed max-w-3xl mb-8">{oneMoreThing.body}</p>
+            <p className="type-eyebrow mb-3">{oneMoreThing.kicker}</p>
+            <h3 className="type-h3 mb-4">{oneMoreThing.title}</h3>
+            <p className="type-body max-w-3xl mb-8">{oneMoreThing.body}</p>
             <SlackFeatureVideo src={oneMoreThing.video} label="Custom Alerts prototype" />
           </motion.div>
         </CaseStudyContent>
@@ -620,7 +618,7 @@ const SlackCaseStudy = () => {
             kicker="From Rough to Real"
             title={<>Lo-Fi sketches. <span className="teal-shimmer">Mid-Fi</span> prototypes.</>}
           />
-          <p className="font-body text-foreground/60 max-w-2xl mb-12">
+          <p className="type-body max-w-2xl mb-12">
             Every concept iterated through Wizard of Oz testing with 40 real students before earning its place in the final designs.
           </p>
           {/* Two explicit grid columns (plain divs); min-w-0 + overflow on cards stops wide art from bleeding into the other column. */}
@@ -632,8 +630,8 @@ const SlackCaseStudy = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6 }}
               >
-                <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Lo-Fi Sketches</h3>
-                <p className="font-body text-sm text-foreground/50 mb-6">Paper and whiteboard explorations before higher fidelity.</p>
+                <h3 className="type-h3 mb-2">Lo-Fi Sketches</h3>
+                <p className="type-body mb-6">Paper and whiteboard explorations before higher fidelity.</p>
               </motion.div>
               <div className="flex min-w-0 w-full flex-col gap-4">
                 {slackSketchImages.map((img, i) => (
@@ -648,7 +646,7 @@ const SlackCaseStudy = () => {
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className="block w-full max-w-full h-auto rounded-md object-contain bg-muted/20"
+                      className="block w-full max-w-full h-auto rounded-none object-contain bg-muted/20"
                       loading="lazy"
                       decoding="async"
                     />
@@ -663,8 +661,8 @@ const SlackCaseStudy = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ delay: 0.1, duration: 0.6 }}
               >
-                <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-2">Mid-Fi Prototypes</h3>
-                <p className="font-body text-sm text-foreground/50 mb-6">Screen-level flows aligned with Slack patterns.</p>
+                <h3 className="type-h3 mb-2">Mid-Fi Prototypes</h3>
+                <p className="type-body mb-6">Screen-level flows aligned with Slack patterns.</p>
               </motion.div>
               <div className="flex min-w-0 w-full flex-col gap-4">
                 {slackMidFiImages.map((img, i) => (
@@ -679,7 +677,7 @@ const SlackCaseStudy = () => {
                     <img
                       src={img.src}
                       alt={img.alt}
-                      className="block w-full max-w-full h-auto rounded-md object-contain bg-muted/20"
+                      className="block w-full max-w-full h-auto rounded-none object-contain bg-muted/20"
                       loading="lazy"
                       decoding="async"
                     />
@@ -698,7 +696,7 @@ const SlackCaseStudy = () => {
             kicker="Design System"
             title={<>We didn't design <em>with</em> Slack. We designed <span className="teal-shimmer">inside it</span>.</>}
           />
-          <p className="font-body text-foreground/60 max-w-2xl mb-12">
+          <p className="type-body max-w-2xl mb-12">
             Every component we shipped had to feel like it could have come from Slack's own product team. Same tokens. Same interaction grammar. Same component anatomy.
           </p>
 
@@ -716,8 +714,8 @@ const SlackCaseStudy = () => {
                   className="w-full aspect-square mb-3 border border-border"
                   style={{ background: c.hex }}
                 />
-                <p className="mono-heading text-sm font-bold text-foreground">{c.name}</p>
-                <p className="font-body text-[10px] text-foreground/50">{c.hex}</p>
+                <p className="type-label text-foreground">{c.name}</p>
+                <p className="type-caption">{c.hex}</p>
               </motion.div>
             ))}
           </div>
@@ -737,8 +735,8 @@ const SlackCaseStudy = () => {
                 className="glass-card p-6"
               >
                 <span className="retro-tag mb-3 inline-block">{d.tag}</span>
-                <h4 className="mono-heading text-lg font-bold text-foreground mb-3">{d.title}</h4>
-                <p className="font-body text-sm text-foreground/70 leading-relaxed">{d.body}</p>
+                <h4 className="type-h4 mb-3">{d.title}</h4>
+                <p className="type-body">{d.body}</p>
               </motion.div>
             ))}
           </div>
@@ -762,8 +760,8 @@ const SlackCaseStudy = () => {
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 className="glass-card p-8 md:p-10"
               >
-                <h3 className="mono-heading text-xl md:text-2xl font-bold text-foreground mb-3 leading-snug">{r.title}</h3>
-                <p className="font-body text-foreground/70 leading-relaxed">{r.body}</p>
+                <h3 className="type-h3 mb-3">{r.title}</h3>
+                <p className="type-body">{r.body}</p>
               </motion.div>
             ))}
           </div>
@@ -779,7 +777,7 @@ const SlackCaseStudy = () => {
               to="/#work"
               onClick={() => play("click")}
               onMouseEnter={() => play("hover")}
-              className="inline-flex items-center gap-3 rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+              className="retro-btn retro-btn--primary"
             >
               <ArrowLeft size={14} /> Back to all projects
             </Link>

@@ -458,7 +458,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
         style={{ height: `${categories.length * CATEGORY_SEGMENT_VH}vh` }}
       >
         <div className="sticky top-[5.5rem] z-10 w-full pt-2 md:pt-3">
-          <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">
+          <p className="type-eyebrow mb-4">
             Browse by category
           </p>
           <p className="font-body text-foreground/60 text-sm mb-6 max-w-2xl leading-relaxed">
@@ -508,14 +508,14 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.22, ease: "easeOut" }}
-                  className="w-full"
+                  className="w-full font-body"
                 >
                   <CategoryPanel category={activeCategory} />
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            <p className="mt-4 shrink-0 font-body text-[10px] tracking-widest uppercase text-foreground/40 text-center">
+            <p className="type-label mt-4 shrink-0 text-center">
               {activeIndex + 1} / {categories.length} · {activeCategory}
             </p>
           </div>

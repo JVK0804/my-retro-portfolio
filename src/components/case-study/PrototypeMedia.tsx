@@ -40,7 +40,7 @@ const PrototypeMedia = ({
     return (
       <div className={cn("glass-card glass-card--media w-full max-w-full shrink-0 p-1", className)}>
         <div
-          className="case-study-media-frame case-study-media-frame--uniform relative w-full overflow-hidden rounded-[1.1rem] border border-border/60 bg-muted/20"
+          className="case-study-media-frame case-study-media-frame--uniform relative w-full overflow-hidden rounded-none border border-border/60 bg-muted/20"
           style={{
             height: `clamp(16rem, 50vw, ${frameHeightPx}px)`,
             width: "100%",
@@ -76,7 +76,7 @@ const PrototypeMedia = ({
     >
       <div
         className={cn(
-          "case-study-media-frame w-full overflow-hidden rounded-[1.1rem] border border-border/60 bg-muted/20",
+          "case-study-media-frame w-full overflow-hidden rounded-none border border-border/60 bg-muted/20",
           landscape && "case-study-media-frame--landscape",
           portrait && "case-study-media-frame--portrait",
         )}

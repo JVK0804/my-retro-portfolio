@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Briefcase } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollFadeSection from "@/components/ScrollFadeSection";
 import StickyChapters from "@/components/StickyChapters";
@@ -11,7 +10,6 @@ import CitiesJourney from "@/components/CitiesJourney";
 const About = () => {
   return (
     <div className="about-page noise-overlay min-h-screen bg-background">
-      <Navbar />
 
       {/* ===== HERO INTRO ===== */}
       <ScrollFadeSection>
@@ -20,7 +18,7 @@ const About = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="font-heading text-xs text-primary mb-4 tracking-widest uppercase"
+            className="type-eyebrow mb-4"
           >
             About
           </motion.p>
@@ -28,7 +26,7 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="mono-heading text-5xl md:text-7xl font-bold text-center max-w-4xl mb-6"
+            className="type-display text-center max-w-4xl mb-6"
           >
             JVK&apos;s Portfolio
           </motion.h1>
@@ -36,7 +34,7 @@ const About = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="font-body text-foreground/70 text-lg text-center max-w-lg"
+            className="type-lead text-center max-w-lg"
           >
             Where I grew up, what I learned all the way from Bay of Bengal to Bay Area, and the devices that taught me how to design.
           </motion.p>
@@ -79,7 +77,7 @@ const About = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="font-heading text-xs text-primary mb-4 tracking-widest uppercase"
+              className="type-eyebrow mb-4"
             >
               Who I Am · Where I'm From
             </motion.p>
@@ -88,7 +86,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="mono-heading text-3xl md:text-5xl font-bold text-foreground mb-6"
+              className="type-h2 mb-6"
             >
               Hey, I'm <span className="teal-shimmer">Kaushik JV</span>
             </motion.h2>
@@ -111,7 +109,7 @@ const About = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="font-body text-foreground/70 leading-relaxed"
+              className="type-body"
             >
               6+ years designing at the intersection of craft and code, shipping enterprise products at Deloitte for clients like Anthem, Cigna, and the Commonwealth of Massachusetts. Scroll to trace the four places that shaped me.
             </motion.p>
@@ -147,10 +145,10 @@ const About = () => {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                 >
-                  <p className="mono-heading text-3xl md:text-4xl font-bold text-primary mb-2">
+                  <p className="type-stat type-stat--sm mb-2">
                     {stat.value}
                   </p>
-                  <p className="font-body text-xs text-muted-foreground tracking-wider uppercase">
+                  <p className="type-label">
                     {stat.label}
                   </p>
                 </motion.div>
@@ -172,27 +170,27 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <p className="font-heading text-xs text-primary mb-4 tracking-widest uppercase">
+            <p className="type-eyebrow mb-4">
               What Drives Me
             </p>
-            <h2 className="mono-heading text-3xl md:text-5xl font-bold text-foreground mb-8">
+            <h2 className="type-h2 mb-8">
               Designing for <span className="teal-shimmer">humans first</span>,<br />
               engineering for scale.
             </h2>
-            <p className="font-body text-foreground/70 text-lg leading-relaxed mb-10">
+            <p className="type-lead mb-10">
               Every project I take on starts with empathy and ends with precision. I believe great design is invisible: it just <em>works</em>. Whether it's a design system used by hundreds of engineers or a privacy-first AI feature, the goal is always the same: make technology feel human.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/#work"
-                className="inline-flex items-center justify-center gap-3 glass-card px-8 py-4 font-heading text-sm text-primary hover:gap-5 transition-all duration-300 group"
+                className="retro-btn retro-btn--primary group"
               >
                 See my work
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="mailto:kaushikjv@example.com"
-                className="inline-flex items-center justify-center gap-3 glass-card px-8 py-4 font-heading text-sm text-foreground/70 hover:text-foreground transition-all duration-300"
+                className="retro-btn retro-btn--outline"
               >
                 Say hello →
               </a>

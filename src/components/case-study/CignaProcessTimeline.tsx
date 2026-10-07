@@ -119,7 +119,7 @@ const CignaProcessTimeline = () => {
                 }}
                 data-step-index={i}
                 className={cn(
-                  "relative rounded-[var(--radius-md)] border-2 p-6 md:p-8 transition-[opacity,transform,border-color,background-color,box-shadow] duration-700 ease-out",
+                  "relative rounded-none border-2 p-6 md:p-8 transition-[opacity,transform,border-color,background-color,box-shadow] duration-700 ease-out",
                   isActive
                     ? "opacity-100 border-primary bg-primary/5 shadow-md scale-100"
                     : isFuture
@@ -143,7 +143,7 @@ const CignaProcessTimeline = () => {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
                   <div
                     className={cn(
-                      "flex size-12 shrink-0 items-center justify-center rounded-lg border transition-all duration-700",
+                      "flex size-12 shrink-0 items-center justify-center rounded-none border transition-all duration-700",
                       isActive
                         ? "border-primary/40 bg-primary/10 text-primary"
                         : "border-border/40 text-foreground/30",
@@ -154,7 +154,7 @@ const CignaProcessTimeline = () => {
                   <div className="min-w-0 flex-1 text-left">
                     <p
                       className={cn(
-                        "font-body text-[10px] tracking-widest uppercase mb-2 transition-colors duration-700",
+                        "type-label mb-2 transition-colors duration-700",
                         isActive ? "text-primary" : "text-primary/40",
                       )}
                     >
@@ -162,7 +162,7 @@ const CignaProcessTimeline = () => {
                     </p>
                     <h3
                       className={cn(
-                        "mono-heading text-xl md:text-2xl font-bold leading-snug mb-2 transition-colors duration-700",
+                        "type-h3 mb-2 transition-colors duration-700",
                         isActive ? "text-foreground" : "text-foreground/45",
                       )}
                     >
@@ -170,7 +170,7 @@ const CignaProcessTimeline = () => {
                     </h3>
                     <p
                       className={cn(
-                        "font-body text-sm leading-relaxed transition-colors duration-700",
+                        "type-body transition-colors duration-700",
                         isActive ? "text-foreground/75" : "text-foreground/40",
                       )}
                     >

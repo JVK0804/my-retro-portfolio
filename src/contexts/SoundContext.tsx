@@ -194,12 +194,14 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
           break;
         case "typing": {
           const startAt = ctx.currentTime;
+          const tick = 1180 + Math.random() * 180;
           osc.type = "square";
-          osc.frequency.setValueAtTime(1400 + Math.random() * 2200, startAt);
+          osc.frequency.setValueAtTime(tick, startAt);
+          osc.frequency.exponentialRampToValueAtTime(tick * 0.72, startAt + 0.022);
           gain.gain.setValueAtTime(0.028, startAt);
-          gain.gain.exponentialRampToValueAtTime(0.0008, startAt + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.001, startAt + 0.028);
           osc.start(startAt);
-          osc.stop(startAt + 0.035);
+          osc.stop(startAt + 0.03);
           break;
         }
       }

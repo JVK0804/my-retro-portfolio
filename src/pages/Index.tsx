@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import CaseStudyTiles from "@/components/CaseStudyTiles";
 import TestimonialTicker from "@/components/TestimonialTicker";
@@ -12,7 +11,6 @@ const Index = () => {
       <div className="noise-overlay min-h-screen bg-background relative">
         <ParallaxDoodles />
         <div className="relative z-10">
-          <Navbar />
           <HeroSection />
           <CaseStudyTiles />
           <TestimonialTicker />

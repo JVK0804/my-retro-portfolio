@@ -10,7 +10,6 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SketchFilter from "@/components/SketchFilter";
 import PrototypeMedia from "@/components/case-study/PrototypeMedia";
@@ -219,11 +218,11 @@ const LineBreakCopy = ({
 );
 
 const SectionKicker = ({ children }: { children: React.ReactNode }) => (
-  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-4">{children}</p>
+  <p className="type-eyebrow mb-4">{children}</p>
 );
 
 const SectionTitle = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <h2 className={cn("mono-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight", className)}>
+  <h2 className={cn("type-h2", className)}>
     {children}
   </h2>
 );
@@ -272,14 +271,14 @@ const ScreenBlock = ({
           reverse && !isLandscape && "lg:pl-8 xl:pl-12",
         )}
       >
-        <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{no}</p>
-        <h3 className="mono-heading text-2xl md:text-3xl font-bold text-foreground mb-3 leading-snug">
+        <p className="type-eyebrow mb-3">{no}</p>
+        <h3 className="type-h3 mb-3">
           {titleLines ? <LineBreakCopy lines={titleLines} /> : title}
         </h3>
-        {kicker && <p className="font-body text-sm text-foreground/60 mb-3 leading-relaxed">{kicker}</p>}
-        <p className="font-body text-foreground/80 leading-relaxed max-w-xl">{body}</p>
+        {kicker && <p className="type-body mb-3">{kicker}</p>}
+        <p className="type-body max-w-xl">{body}</p>
         {quote && (
-          <p className="font-body text-sm italic text-primary mt-5 leading-relaxed border-l-2 border-primary/40 pl-4 max-w-lg">
+          <p className="type-quote mt-5 border-l-2 border-primary/40 pl-4 max-w-lg">
             {quote}
           </p>
         )}
@@ -304,7 +303,6 @@ const SmartAlignCaseStudy = () => {
   return (
     <CaseStudyShell>
       <SketchFilter />
-      <Navbar />
       <CaseStudySideNav items={caseStudyNav} onNavigate={() => play("click")} />
 
       {/* === HERO === */}
@@ -321,7 +319,7 @@ const SmartAlignCaseStudy = () => {
                 to="/#work"
                 onClick={() => play("click")}
                 onMouseEnter={() => play("hover")}
-                className="font-body text-xs text-foreground/70 hover:text-primary transition-colors inline-flex items-center gap-2"
+                className="type-link type-link--muted"
               >
                 <ArrowLeft size={14} /> Back to work
               </Link>
@@ -331,7 +329,7 @@ const SmartAlignCaseStudy = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15, duration: 0.5 }}
-              className="font-body text-[10px] tracking-[0.28em] uppercase text-primary mb-4"
+              className="type-eyebrow mb-4"
             >
               Smart Align
             </motion.p>
@@ -340,7 +338,7 @@ const SmartAlignCaseStudy = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25, duration: 0.65 }}
-              className="mono-heading text-[1.65rem] sm:text-3xl md:text-[2rem] lg:text-[2.35rem] font-bold text-foreground text-balance leading-[1.2] mb-5 max-w-[19em]"
+              className="type-h2 text-balance mb-5 max-w-[19em]"
             >
               The photography app that teaches composition{" "}
               <span className="teal-shimmer">while you're adjusting the frame.</span>
@@ -350,7 +348,7 @@ const SmartAlignCaseStudy = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.55 }}
-              className="font-body text-sm md:text-base text-foreground/70 max-w-md leading-relaxed mb-7"
+              className="type-body max-w-md mb-7"
             >
               Designed solo. Built to iOS native standards. Validated with 30 real users.
             </motion.p>
@@ -365,14 +363,14 @@ const SmartAlignCaseStudy = () => {
                 href="#final-prototypes"
                 onClick={() => play("click")}
                 onMouseEnter={() => play("hover")}
-                className="rounded-[var(--radius-md)] bg-primary px-7 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+                className="retro-btn retro-btn--primary"
               >
                 Final Designs
               </a>
               <a
                 href="#tldr"
                 onClick={() => play("click")}
-                className="font-body text-sm text-primary hover:underline inline-flex items-center gap-2"
+                className="type-link"
               >
                 Read the Story <ArrowRight size={14} />
               </a>
@@ -405,19 +403,19 @@ const SmartAlignCaseStudy = () => {
         <div className="grid md:grid-cols-3 gap-5 mb-8">
           {tldrBlocks.map((b) => (
             <motion.div key={b.label} {...fadeInView} className="glass-card p-6 flex flex-col h-full">
-              <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">{b.label}</p>
-              <p className="font-body text-sm text-foreground/80 leading-relaxed flex-1">{b.body}</p>
+              <p className="type-eyebrow mb-3">{b.label}</p>
+              <p className="type-body flex-1">{b.body}</p>
               {b.sub && (
-                <p className="font-body text-[10px] text-foreground/50 mt-4 tracking-wider uppercase">{b.sub}</p>
+                <p className="type-label mt-4">{b.sub}</p>
               )}
             </motion.div>
           ))}
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           <motion.div {...fadeInView} className="glass-card p-7">
-            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">Research</p>
-            <p className="mono-heading text-5xl font-bold text-primary mb-2">30</p>
-            <p className="font-body text-sm text-foreground/70 leading-relaxed">
+            <p className="type-eyebrow mb-3">Research</p>
+            <p className="type-stat mb-2">30</p>
+            <p className="type-body">
               <LineBreakCopy
                 lines={[
                   "Users tested across two photographer profiles (Beginners and Professionals),",
@@ -427,8 +425,8 @@ const SmartAlignCaseStudy = () => {
             </p>
           </motion.div>
           <motion.div {...fadeInView} className="glass-card p-7">
-            <p className="font-body text-[10px] tracking-widest uppercase text-primary mb-3">Results</p>
-            <p className="font-body text-sm text-foreground/80 leading-relaxed">
+            <p className="type-eyebrow mb-3">Results</p>
+            <p className="type-body">
               <LineBreakCopy
                 lines={[
                   "Usability tests showed 6 out of 10 users oriented frames faster within 1 minute",
@@ -439,7 +437,7 @@ const SmartAlignCaseStudy = () => {
             <a
               href="#final-prototypes"
               onClick={() => play("click")}
-              className="inline-block mt-4 font-body text-sm text-primary hover:underline"
+              className="type-link mt-4"
             >
               See Final Designs →
             </a>
@@ -453,7 +451,7 @@ const SmartAlignCaseStudy = () => {
           {...fadeInView}
           className="mx-auto max-w-4xl text-center"
         >
-          <p className="mono-heading text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-foreground leading-[1.15]">
+          <p className="type-h2">
             <LineBreakCopy
               lines={[
                 "I've missed shots. Not because of light or timing, because I didn't know where to look.",
@@ -467,10 +465,10 @@ const SmartAlignCaseStudy = () => {
       {/* === CONTEXT (differentiated — not another card section) === */}
       <CaseStudyViewport id="context" variant="emphasis">
         <motion.div {...fadeInView} className="mx-auto max-w-4xl text-center">
-          <p className="font-body text-[10px] tracking-[0.35em] uppercase text-foreground/50 mb-8">
+          <p className="type-label mb-8">
             Mobile Photography
           </p>
-          <h2 className="mono-heading text-3xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.12]">
+          <h2 className="type-h2">
             <LineBreakCopy
               className="text-foreground"
               lines={[
@@ -502,10 +500,10 @@ const SmartAlignCaseStudy = () => {
           {personas.map((p) => (
             <motion.article key={p.name} {...fadeInView} className="glass-card p-8 h-full">
               <span className="retro-tag mb-4 inline-block">{p.role}</span>
-              <h3 className="mono-heading text-2xl font-bold text-foreground mb-1">{p.name}</h3>
-              <p className="font-body text-xs text-foreground/50 mb-4">{p.meta}</p>
-              <p className="font-body text-sm text-foreground/80 leading-relaxed mb-4">{p.body}</p>
-              <p className="font-body text-xs italic text-primary leading-snug">{p.impact}</p>
+              <h3 className="type-h3 mb-1">{p.name}</h3>
+              <p className="type-caption mb-4">{p.meta}</p>
+              <p className="type-body mb-4">{p.body}</p>
+              <p className="type-quote">{p.impact}</p>
             </motion.article>
           ))}
         </div>
@@ -523,7 +521,7 @@ const SmartAlignCaseStudy = () => {
               ]}
             />
           </SectionTitle>
-          <p className="font-body text-foreground/60 max-w-2xl leading-relaxed">
+          <p className="type-body max-w-2xl">
             <LineBreakCopy
               lines={[
                 "Every frustration pointed to the same moment, guidance that arrives after the shot is already gone.",
@@ -538,12 +536,12 @@ const SmartAlignCaseStudy = () => {
             return (
               <motion.div key={c.title} {...fadeInView} className="glass-card p-6">
                 <div className="mb-4 flex items-center gap-3">
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-primary/12 text-primary">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-none bg-primary/12 text-primary">
                     <Icon size={28} strokeWidth={1.65} aria-hidden />
                   </span>
-                  <h4 className="mono-heading text-lg font-bold text-foreground leading-snug">{c.title}</h4>
+                  <h4 className="type-h4">{c.title}</h4>
                 </div>
-                <p className="font-body text-sm text-foreground/70 leading-relaxed">{c.body}</p>
+                <p className="type-body">{c.body}</p>
               </motion.div>
             );
           })}
@@ -562,16 +560,16 @@ const SmartAlignCaseStudy = () => {
               ]}
             />
           </SectionTitle>
-          <p className="font-body text-foreground/60 max-w-2xl mb-2">The apps already exist. Here's where they stop.</p>
-          <p className="font-body text-[10px] tracking-widest uppercase text-foreground/50">
+          <p className="type-body max-w-2xl mb-2">The apps already exist. Here's where they stop.</p>
+          <p className="type-label">
             Snapseed, Lightroom, Spectre, Halide
           </p>
         </motion.div>
         <div className="grid md:grid-cols-3 gap-5">
           {competitiveGaps.map((g) => (
             <motion.div key={g.title} {...fadeInView} className="glass-card p-6 h-full">
-              <h4 className="mono-heading text-lg font-bold text-foreground mb-3">{g.title}</h4>
-              <p className="font-body text-sm text-foreground/70 leading-relaxed">{g.body}</p>
+              <h4 className="type-h4 mb-3">{g.title}</h4>
+              <p className="type-body">{g.body}</p>
             </motion.div>
           ))}
         </div>
@@ -589,7 +587,7 @@ const SmartAlignCaseStudy = () => {
               ]}
             />
           </SectionTitle>
-          <p className="font-body text-foreground/60 max-w-2xl">
+          <p className="type-body max-w-2xl">
             <LineBreakCopy
               lines={[
                 "The goal wasn't refinement, it was getting the wrong ideas out early",
@@ -609,7 +607,7 @@ const SmartAlignCaseStudy = () => {
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="rounded-md bg-muted/15"
+                  className="rounded-none bg-muted/15"
                   loading="lazy"
                   decoding="async"
                 />
@@ -626,7 +624,7 @@ const SmartAlignCaseStudy = () => {
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="rounded-md bg-muted/15"
+                  className="rounded-none bg-muted/15"
                   loading="lazy"
                   decoding="async"
                 />
@@ -705,7 +703,7 @@ const SmartAlignCaseStudy = () => {
           <SectionTitle className="max-w-3xl mb-6">
             <LineBreakCopy lines={["Minimal UI that never competes with the shot."]} />
           </SectionTitle>
-          <p className="font-body text-foreground/70 text-lg leading-relaxed max-w-2xl">
+          <p className="type-lead max-w-2xl">
             My goal is to keep UI minimalistic with user friendly layout and not to compete with the shot.
           </p>
         </motion.div>
@@ -722,8 +720,8 @@ const SmartAlignCaseStudy = () => {
         <div className="grid md:grid-cols-3 gap-5 mb-16">
           {whatNext.map((item) => (
             <motion.div key={item.title} {...fadeInView} className="glass-card p-7 h-full">
-              <h3 className="mono-heading text-lg font-bold text-foreground mb-3">{item.title}</h3>
-              <p className="font-body text-sm text-foreground/70 leading-relaxed">{item.body}</p>
+              <h3 className="type-h4 mb-3">{item.title}</h3>
+              <p className="type-body">{item.body}</p>
             </motion.div>
           ))}
         </div>
@@ -732,7 +730,7 @@ const SmartAlignCaseStudy = () => {
             to="/#work"
             onClick={() => play("click")}
             onMouseEnter={() => play("hover")}
-            className="inline-flex items-center gap-3 rounded-[var(--radius-md)] bg-primary px-8 py-3 font-heading text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+            className="retro-btn retro-btn--primary"
           >
             <ArrowLeft size={14} /> Back to all projects
           </Link>

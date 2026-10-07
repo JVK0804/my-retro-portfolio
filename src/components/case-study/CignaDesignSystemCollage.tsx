@@ -17,7 +17,7 @@ const getFirstWeekday = (year: number, month: number) => new Date(year, month, 1
 const CollagePanel = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <div
     className={cn(
-      "rounded-xl border bg-white p-4 md:p-5 shadow-[0_1px_3px_rgba(0,0,0,0.08)]",
+      "rounded-xl border bg-white p-4 md:p-5 font-body shadow-[0_1px_3px_rgba(0,0,0,0.08)]",
       className,
     )}
     style={{ borderColor: cignaSurface.border }}
@@ -461,7 +461,7 @@ const CignaDesignSystemCollage = () => {
         </CollagePanel>
       </div>
 
-      <p className="font-body text-[10px] tracking-widest uppercase text-foreground/45 text-center mt-5">
+      <p className="type-label text-center mt-5">
         Interactive component collage · abstracted for NDA
       </p>
     </div>

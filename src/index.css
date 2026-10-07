@@ -97,43 +97,43 @@ body {
   }
 
   .dark {
-    --background: 40 11% 9%;
-    --foreground: 43 22% 93%;
+    --background: 40 10% 5%;
+    --foreground: 43 25% 96%;
 
-    --card: 40 9% 12%;
-    --card-foreground: 43 22% 93%;
+    --card: 40 8% 8.5%;
+    --card-foreground: 43 25% 96%;
 
-    --popover: 40 9% 11%;
-    --popover-foreground: 43 22% 93%;
+    --popover: 40 8% 8%;
+    --popover-foreground: 43 25% 96%;
 
-    --primary: 189 71% 50%;
-    --primary-foreground: 40 11% 9%;
+    --primary: 189 75% 55%;
+    --primary-foreground: 40 10% 5%;
 
-    --secondary: 40 8% 16%;
-    --secondary-foreground: 43 22% 93%;
+    --secondary: 40 7% 13%;
+    --secondary-foreground: 43 25% 96%;
 
-    --muted: 40 8% 15%;
-    --muted-foreground: 42 10% 62%;
+    --muted: 40 7% 12%;
+    --muted-foreground: 42 10% 72%;
 
-    --accent: 189 71% 45%;
-    --accent-foreground: 40 11% 9%;
+    --accent: 189 72% 50%;
+    --accent-foreground: 40 10% 5%;
 
     --destructive: 0 62% 48%;
     --destructive-foreground: 43 30% 97%;
 
-    --border: 40 8% 18%;
-    --input: 40 8% 18%;
+    --border: 40 7% 20%;
+    --input: 40 7% 20%;
     --ring: 189 71% 50%;
 
-    --heritage-cream: 40 11% 9%;
+    --heritage-cream: 40 10% 5%;
     --accent-warm: 189 71% 50%;
     --accent-glow: 189 85% 65%;
     --accent-muted: 192 40% 35%;
     --steel-blue: 189 71% 50%;
     --steel-blue-light: 189 85% 72%;
-    --ink-deep: 43 22% 93%;
-    --ink-medium: 42 10% 62%;
-    --glass-bg: 40 9% 12% / 0.72;
+    --ink-deep: 43 25% 96%;
+    --ink-medium: 42 10% 72%;
+    --glass-bg: 40 8% 8.5% / 0.72;
     --glass-border: 0 0% 100% / 0.12;
     --glass-shadow: 0 0% 0% / 0.35;
     --scanline-opacity: 0.05;
@@ -159,7 +159,7 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-mono-space antialiased;
   }
 
   h1,
@@ -213,7 +213,7 @@ svg.sketch-filters {
   }
 
   .dark .noise-overlay::before {
-    opacity: 0.28;
+    opacity: 0.2;
     mix-blend-mode: overlay;
   }
 
@@ -246,7 +246,7 @@ svg.sketch-filters {
     isolation: isolate;
     background: var(--color-glass-bg);
     border: var(--border-glass);
-    border-radius: var(--radius-lg);
+    border-radius: 0;
     backdrop-filter: var(--blur-glass);
     -webkit-backdrop-filter: var(--blur-glass);
     box-shadow: 0 4px 24px hsl(var(--foreground) / 0.06);
@@ -260,7 +260,7 @@ svg.sketch-filters {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-lg);
+    border-radius: 0;
     background: linear-gradient(135deg, var(--color-glass-specular-from), var(--color-glass-specular-to));
     pointer-events: none;
     z-index: 0;
@@ -602,6 +602,75 @@ svg.sketch-filters {
     font-family: var(--font-mono-space);
     font-size: 11px;
     border-radius: var(--radius-sm);
+  }
+
+  /* ─── Type scale: headings serif, body sans, labels/actions mono ─── */
+  .type-display {
+    @apply mono-heading text-4xl font-bold leading-[1.05] text-foreground md:text-6xl lg:text-7xl;
+  }
+
+  .type-h2 {
+    @apply mono-heading text-3xl font-bold leading-[1.12] text-foreground md:text-5xl;
+  }
+
+  .type-h3 {
+    @apply mono-heading text-xl font-bold leading-snug text-foreground md:text-2xl;
+  }
+
+  .type-h4 {
+    @apply mono-heading text-lg font-bold leading-snug text-foreground;
+  }
+
+  .type-lead {
+    @apply font-mono-space text-sm leading-relaxed tracking-[0.04em] text-foreground/85 md:text-base;
+  }
+
+  .type-body {
+    @apply font-mono-space text-[13px] leading-relaxed tracking-[0.03em] text-foreground/75 md:text-sm;
+  }
+
+  .type-caption {
+    @apply font-mono-space text-[11px] leading-snug tracking-[0.03em] text-foreground/60;
+  }
+
+  .type-quote {
+    @apply font-mono-space text-[13px] italic leading-relaxed tracking-[0.03em] text-primary md:text-sm;
+  }
+
+  .type-stat {
+    @apply mono-heading text-5xl font-bold leading-none text-primary md:text-6xl;
+  }
+
+  .type-stat--sm {
+    @apply text-3xl md:text-4xl;
+  }
+
+  .type-eyebrow {
+    @apply font-mono-space text-[11px] uppercase tracking-[0.2em] text-primary;
+  }
+
+  .type-label {
+    @apply font-mono-space text-[11px] uppercase tracking-[0.14em] text-foreground/60;
+  }
+
+  .type-link {
+    @apply inline-flex items-center gap-2 font-mono-space text-[11px] uppercase tracking-[0.14em] text-primary underline-offset-4 transition-colors hover:underline;
+  }
+
+  .type-link--muted {
+    @apply text-foreground/60 hover:text-primary hover:no-underline;
+  }
+
+  .retro-btn {
+    @apply inline-flex items-center justify-center gap-3 rounded-[var(--radius-md)] border px-8 py-3.5 text-center font-mono-space text-[11px] uppercase tracking-[0.14em] transition-[opacity,transform,background-color] hover:opacity-90 active:scale-[var(--scale-press)];
+  }
+
+  .retro-btn--primary {
+    @apply border-primary bg-primary text-primary-foreground;
+  }
+
+  .retro-btn--outline {
+    @apply border-foreground bg-background text-foreground hover:bg-foreground/5 hover:opacity-100;
   }
 
   /* About page city art — export PNG with black strokes on transparent background */

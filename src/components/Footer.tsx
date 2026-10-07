@@ -10,13 +10,13 @@ const Footer = () => {
   return (
     <footer id="letsconnect" className="relative py-24 px-6 border-t-2 border-border">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="mono-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+        <h2 className="type-h2 mb-4">
           Got an idea?
         </h2>
         <p className="teal-shimmer mono-heading text-2xl md:text-3xl font-bold mb-6">
           Let's make it real.
         </p>
-        <p className="font-body text-muted-foreground text-base max-w-md mx-auto mb-12">
+        <p className="type-body max-w-md mx-auto mb-12">
           I love meeting new people and hearing fresh ideas. Whether it's a project, a collaboration, or just a friendly hello, I'd love to connect.
         </p>
 
@@ -24,7 +24,7 @@ const Footer = () => {
           href="https://calendly.com/kaushik-jv6/30min"
           target="_blank"
           rel="noopener noreferrer"
-          className="mb-12 inline-flex items-center gap-3 rounded-[var(--radius-md)] border border-primary/30 bg-primary/10 px-8 py-4 font-heading text-[10px] font-bold uppercase tracking-widest text-primary shadow-sm backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          className="retro-btn retro-btn--outline mb-12"
         >
           <Calendar size={16} />
           Schedule a 30-min call
@@ -46,7 +46,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-16 pt-8 border-t-2 border-border">
-          <p className="font-heading text-[8px] tracking-[0.3em] uppercase text-muted-foreground">
+          <p className="type-label">
             © {new Date().getFullYear()} Kaushik JV · Designed & engineered with intent
           </p>
         </div>

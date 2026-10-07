@@ -30,7 +30,7 @@ const TestimonialTicker = () => {
 
   return (
     <section className="py-12 sm:py-16 overflow-hidden border-t-2 border-b-2 border-border" data-parallax-blur-zone>
-      <p className="font-heading text-[10px] text-primary text-center mb-6 sm:mb-8 tracking-widest uppercase px-4">
+      <p className="type-eyebrow text-center mb-6 sm:mb-8 px-4">
         What colleagues say
       </p>
       <div className="ticker-scroll will-change-transform">
@@ -49,13 +49,13 @@ const TestimonialTicker = () => {
                 height={36}
               />
               <div className="min-w-0">
-                <p className="font-heading text-[10px] tracking-wider uppercase font-bold text-foreground truncate">
+                <p className="type-label truncate text-foreground">
                   {t.name}
                 </p>
-                <p className="font-body text-xs text-muted-foreground leading-snug line-clamp-2">{t.role}</p>
+                <p className="type-caption line-clamp-2">{t.role}</p>
               </div>
             </div>
-            <p className="font-body text-sm text-muted-foreground leading-relaxed">"{t.text}"</p>
+            <p className="type-body">"{t.text}"</p>
           </div>
         ))}
       </div>

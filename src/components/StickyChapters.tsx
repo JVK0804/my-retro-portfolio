@@ -65,14 +65,14 @@ const ChapterText = ({
       <div className="chapter-text-inner max-w-md max-md:pointer-events-auto max-md:min-h-[min(48svh,380px)] max-md:flex max-md:flex-col max-md:justify-start">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-3xl">{chapter.icon}</span>
-          <p className="font-heading text-xs text-primary tracking-widest uppercase">
+          <p className="type-eyebrow">
             {chapter.era} · {chapter.year}
           </p>
         </div>
-        <h2 className="mono-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
+        <h2 className="type-display mb-6">
           {chapter.title}
         </h2>
-        <p className="font-body text-base md:text-lg text-foreground/80 leading-relaxed">
+        <p className="type-lead">
           {chapter.text}
         </p>
       </div>
@@ -96,10 +96,10 @@ const StickyChapters = () => {
     >
       <div className="sticky top-[5.5rem] h-[calc(100svh-5.5rem)] w-full overflow-hidden">
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 text-center">
-          <p className="font-heading text-[11px] text-primary tracking-widest uppercase">
+          <p className="type-eyebrow">
             How Tech Shaped Me
           </p>
-          <p className="font-body text-xs text-foreground/60 mt-1">
+          <p className="type-caption mt-1">
             Cassette · CD · MP3 · Streaming
           </p>
         </div>
@@ -137,7 +137,7 @@ const StickyChapters = () => {
 
         {/* Progress bar + year markers */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 w-[min(420px,80vw)]">
-          <div className="flex items-center gap-2 font-heading text-[10px] tracking-widest uppercase text-foreground/50">
+          <div className="type-label flex items-center gap-2">
             <span>Scroll to advance</span>
             <span>↓</span>
           </div>
@@ -151,7 +151,7 @@ const StickyChapters = () => {
             {stickyChapters.map((ch) => (
               <span
                 key={ch.title}
-                className="font-heading text-[10px] text-foreground/40 tracking-wider"
+                className="type-label text-foreground/40"
               >
                 {ch.year}
               </span>

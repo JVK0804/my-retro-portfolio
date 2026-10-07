@@ -12,6 +12,7 @@ import SmartAlignCaseStudy from "./pages/SmartAlignCaseStudy.tsx";
 import CignaCaseStudy from "./pages/CignaCaseStudy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ScrollToTop from "./components/ScrollToTop";
+import SiteChrome from "./components/SiteChrome";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <SiteChrome />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
