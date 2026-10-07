@@ -15,7 +15,7 @@ const TerminalPath = ({ pathname }: { pathname: string }) => {
   const navigate = useNavigate();
   const reduceMotion = useReducedMotion();
   const segments = pathname.split("/").filter(Boolean);
-  const parts = ["~", ...segments];
+  const parts = ["~", "home", ...segments];
   const fullText = `${parts.join("/")} $`;
   const [count, setCount] = useState(0);
 
@@ -61,10 +61,12 @@ const TerminalPath = ({ pathname }: { pathname: string }) => {
         const isLast = i === parts.length - 1;
         const label = visible(part);
         const slash = i < parts.length - 1 ? visible("/") : "";
-        const href = i === 0 ? "/" : segmentHref(segments, i - 1);
+        const href = i <= 1 ? "/" : segmentHref(segments, i - 2);
         return (
           <span key={`${part}-${i}`} className="whitespace-nowrap">
-            {isLast ? (
+            {i === 0 ? (
+              <span className="text-primary">{label}</span>
+            ) : isLast ? (
               <span className="text-foreground" aria-current="page">
                 {label}
               </span>
@@ -73,7 +75,7 @@ const TerminalPath = ({ pathname }: { pathname: string }) => {
                 {label}
               </a>
             ) : (
-              <Link to={href} className={i === 0 ? "text-primary hover:opacity-80" : "hover:text-primary"}>
+              <Link to={href} className="hover:text-primary">
                 {label}
               </Link>
             )}

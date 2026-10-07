@@ -131,10 +131,8 @@ const TypingWelcome = ({ onDone }: { onDone: () => void }) => {
 const HeroSection = () => {
   const [welcomeDone, setWelcomeDone] = useState(false);
   const handleWelcomeDone = useCallback(() => setWelcomeDone(true), []);
-  const subtitleCount = useTypewriter(SUBTITLE_TEXT, welcomeDone, SUBTITLE_INTERVAL_MS, SUBTITLE_GAP_MS);
-  const subtitleDone = subtitleCount >= SUBTITLE_TEXT.length;
-  const previouslyCount = useTypewriter(PREVIOUSLY_TEXT, subtitleDone, SUBTITLE_INTERVAL_MS, SUBTITLE_GAP_MS);
-  const previouslyTyping = subtitleDone && previouslyCount < PREVIOUSLY_TEXT.length;
+  const previouslyCount = useTypewriter(PREVIOUSLY_TEXT, welcomeDone, SUBTITLE_INTERVAL_MS, SUBTITLE_GAP_MS);
+  const previouslyTyping = welcomeDone && previouslyCount < PREVIOUSLY_TEXT.length;
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16" data-parallax-blur-zone>
@@ -157,12 +155,14 @@ const HeroSection = () => {
         </span>
       </motion.h1>
 
-      <TypedParagraph
-        text={SUBTITLE_TEXT}
-        count={subtitleCount}
-        showCursor={welcomeDone && !subtitleDone}
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="type-lead text-center max-w-3xl mt-10"
-      />
+      >
+        {SUBTITLE_TEXT}
+      </motion.p>
 
       <TypedParagraph
         text={PREVIOUSLY_TEXT}

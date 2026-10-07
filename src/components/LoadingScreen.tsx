@@ -3,14 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { InterfaceReadyProvider } from "@/contexts/InterfaceReadyContext";
 
 /** Safety net in case the boot sequence never reports completion. */
-const MAX_LOADING_DURATION = 9000;
+const MAX_LOADING_DURATION = 3000;
 const RESET_INTERVAL = 10 * 60 * 1000;
 const STORAGE_KEY = "lastLoadingTimestamp";
 
-const BOOT_START_DELAY_MS = 700;
-const CHARS_PER_SECOND = 38;
-const LINE_PAUSE_MS = 260;
-const FINAL_HOLD_MS = 650;
+/** Start delay + typing + line pauses + hold + exit fade should total ~2s. */
+const BOOT_START_DELAY_MS = 100;
+const CHARS_PER_SECOND = 120;
+const LINE_PAUSE_MS = 60;
+const FINAL_HOLD_MS = 140;
+const EXIT_DURATION_S = 0.4;
 
 const BOOT_LINES = [
   "> initializing interface...",
@@ -24,7 +26,7 @@ const TOTAL_CHARS = LINE_LENGTHS.reduce((sum, n) => sum + n, 0);
 
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const keystrokeDelay = () => (1000 / CHARS_PER_SECOND) * (0.55 + Math.random() * 0.9);
+const keystrokeDelay = () => (1000 / CHARS_PER_SECOND) * (0.7 + Math.random() * 0.6);
 
 const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
   const [lineIndex, setLineIndex] = useState(0);
@@ -66,7 +68,7 @@ const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
           className="h-full w-full origin-left bg-primary will-change-transform"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: progress }}
-          transition={{ type: "spring", stiffness: 60, damping: 20, mass: 0.8 }}
+          transition={{ type: "spring", stiffness: 220, damping: 30, mass: 0.6 }}
         />
       </div>
 
@@ -84,7 +86,7 @@ const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
               key={i}
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: EASE_OUT }}
+              transition={{ duration: 0.2, ease: EASE_OUT }}
               className={
                 isFinal ? "text-primary" : isCurrent ? "text-foreground/80" : "text-muted-foreground/60"
               }
@@ -128,7 +130,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
             key="loader"
             className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background overflow-hidden will-change-[opacity,filter]"
             exit={{ opacity: 0, filter: "blur(6px)" }}
-            transition={{ duration: 0.9, ease: EASE_OUT }}
+            transition={{ duration: EXIT_DURATION_S, ease: EASE_OUT }}
           >
             {/* Scanline overlay on loader */}
             <div
@@ -143,7 +145,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
               className="absolute inset-0 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.12 }}
-              transition={{ delay: 0.2, duration: 1 }}
+              transition={{ delay: 0.05, duration: 0.5 }}
             >
               {[...Array(7)].map((_, i) => (
                 <motion.div
@@ -152,7 +154,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
                   style={{ top: `${12 + i * 12}%` }}
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.1 + i * 0.08, duration: 1.4, ease: EASE_OUT }}
+                  transition={{ delay: i * 0.04, duration: 0.7, ease: EASE_OUT }}
                 />
               ))}
               {/* Vertical lines */}
@@ -163,7 +165,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
                   style={{ left: `${15 + i * 18}%` }}
                   initial={{ scaleY: 0 }}
                   animate={{ scaleY: 1 }}
-                  transition={{ delay: 0.3 + i * 0.1, duration: 1.4, ease: EASE_OUT }}
+                  transition={{ delay: 0.1 + i * 0.05, duration: 0.7, ease: EASE_OUT }}
                 />
               ))}
             </motion.div>
@@ -178,7 +180,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
             <motion.div
               initial={{ opacity: 0, scale: 0.94, filter: "blur(8px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              transition={{ delay: 0.25, duration: 1.1, ease: EASE_OUT }}
+              transition={{ delay: 0.05, duration: 0.5, ease: EASE_OUT }}
               className="relative z-20"
             >
               <h1 className="heading-font text-5xl md:text-7xl font-bold tracking-[0.3em] text-foreground">
@@ -193,7 +195,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8, ease: EASE_OUT }}
+              transition={{ delay: 0.2, duration: 0.4, ease: EASE_OUT }}
               className="type-label mt-4 z-20"
             >
               Product Designer / Design Engineer
@@ -206,7 +208,7 @@ const LoadingScreen = ({ children }: { children: React.ReactNode }) => {
       <motion.div
         initial={false}
         animate={loading ? { opacity: 0, scale: 0.985 } : { opacity: 1, scale: 1 }}
-        transition={{ delay: loading ? 0 : 0.15, duration: 0.9, ease: EASE_OUT }}
+        transition={{ duration: EXIT_DURATION_S, ease: EASE_OUT }}
         style={{ transformOrigin: "50% 30vh" }}
       >
         {children}

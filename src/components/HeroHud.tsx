@@ -5,6 +5,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { useSound } from "@/contexts/SoundContext";
 
 const navItems = [
+  { label: "Home", href: "/" },
   { label: "Work", href: "/#work" },
   { label: "About", href: "/about" },
   { label: "Photography", href: "/photography" },
@@ -117,6 +118,9 @@ const HeroHud = () => {
                         onClick={() => {
                           play("click");
                           setOpen(false);
+                          if (item.href === location.pathname) {
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }
                         }}
                         className="type-label text-foreground/80 hover:text-primary"
                       >
