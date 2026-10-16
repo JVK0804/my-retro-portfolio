@@ -14,18 +14,8 @@ type City = {
   region: string;
   years: string;
   landmark?: string;
-  text?: string;
-  paragraphs?: string[];
+  text: string;
 };
-
-const renderEmphasis = (text: string) =>
-  text.split(/(\*[^*]+\*)/g).map((part, i) =>
-    part.startsWith("*") && part.endsWith("*") ? (
-      <em key={i}>{part.slice(1, -1)}</em>
-    ) : (
-      part
-    ),
-  );
 
 const cities: City[] = [
   {
@@ -62,10 +52,7 @@ const cities: City[] = [
     region: "California, USA",
     years: "Bay Area",
     landmark: sfBridge,
-    paragraphs: [
-      "I grew up in Visakhapatnam on the Bay of Bengal, where curiosity shaped how I see the world. I started my career in frontend development, but I was drawn to a different question: not *how* interfaces were built, but *why* they were designed that way. That curiosity led me from building screens to designing products.",
-      "Photography sharpened my eye for composition and detail, while product design gave me a way to turn those observations into meaningful experiences. Today in the Bay Area, I design B2B SaaS products, AI experiences, and design systems—and still enjoy bringing ideas to life through code.",
-    ],
+    text: "Bloomington pointed me west. In the Bay Area I design B2B SaaS, AI products, and design systems, and I still ship them in React.",
   },
 ];
 
@@ -120,43 +107,30 @@ const CityPanel = ({
     >
       {city.landmark ? (
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-[5.75rem] z-[1] flex h-[min(34svh,280px)] items-end justify-center px-3 md:hidden"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] flex h-[min(34svh,280px)] items-end justify-center px-3 md:hidden"
           aria-hidden="true"
         >
           <LandmarkArt city={city} className="landmark-illustration--mobile-bg" />
         </div>
       ) : null}
 
-      <div className="relative z-[2] w-full max-w-7xl mx-auto px-6 pt-24 pb-52 md:px-12 md:pb-36 md:py-0 md:grid md:grid-cols-2 md:gap-8 md:items-center">
-        <div className="city-text-inner min-w-0 max-w-md">
+      <div className="relative z-[2] mx-auto grid w-full max-w-7xl items-center gap-8 px-6 pb-[min(34svh,280px)] pt-4 md:grid-cols-2 md:px-12 md:py-8">
+        <div className="city-text-inner min-w-0">
           <div className="flex items-center gap-2 mb-3">
             <MapPin size={14} className="text-primary shrink-0" />
             <p className="type-eyebrow">
               {city.era} · {city.years}
             </p>
           </div>
-          <h3 className="type-display mb-2">
+          <h3 className="type-display mb-2 max-w-full">
             {city.city}
           </h3>
           <p className="type-label mb-5 md:mb-6">
             {city.region}
           </p>
-          <div className="space-y-4 max-w-md">
-            {city.paragraphs ? (
-              city.paragraphs.map((paragraph) => (
-                <p
-                  key={paragraph.slice(0, 32)}
-                  className="type-lead"
-                >
-                  {renderEmphasis(paragraph)}
-                </p>
-              ))
-            ) : (
-              <p className="type-lead">
-                {city.text}
-              </p>
-            )}
-          </div>
+          <p className="type-lead max-w-md">
+            {city.text}
+          </p>
         </div>
 
         <div className="hidden md:flex relative items-center justify-center min-h-[520px]">
@@ -180,17 +154,17 @@ const CitiesJourney = () => {
       style={{ height: `${cities.length * 100}vh` }}
       aria-label="Places I've called home"
     >
-      <div className="sticky top-[5.5rem] h-[calc(100svh-5.5rem)] w-full overflow-hidden">
-        <div className="absolute top-4 md:top-8 inset-x-0 z-20 px-6 pointer-events-none">
-          <p className="type-eyebrow text-center">
+      <div className="sticky top-[5.5rem] flex h-[calc(100svh-5.5rem)] w-full flex-col overflow-hidden">
+        <div className="shrink-0 px-6 pt-4 text-center md:pt-6">
+          <p className="type-eyebrow">
             Where I&apos;m From
           </p>
-          <p className="type-caption hidden sm:block mt-1 text-center">
+          <p className="type-caption mt-1 hidden sm:block">
             Visakhapatnam · Hyderabad · Bloomington · San Francisco
           </p>
         </div>
 
-        <div className="relative h-full w-full">
+        <div className="relative min-h-0 flex-1">
           {cities.map((c, i) => (
             <CityPanel
               key={c.city}
@@ -202,7 +176,7 @@ const CitiesJourney = () => {
           ))}
         </div>
 
-        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 w-[min(480px,92vw)] px-2">
+        <div className="z-20 mx-auto flex w-[min(480px,92vw)] shrink-0 flex-col items-center gap-3 px-2 pb-6 md:pb-8">
           <div className="relative h-[2px] w-full bg-border/40">
             <motion.div
               className="absolute inset-y-0 left-0 bg-primary"

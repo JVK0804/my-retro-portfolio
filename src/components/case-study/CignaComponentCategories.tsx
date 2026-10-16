@@ -145,14 +145,11 @@ const CategoryPanel = ({ category }: { category: CategoryKey }) => {
 
     case "Typography":
       return (
-        <div className="grid auto-rows-min items-start gap-5 pb-4 md:grid-cols-2 md:gap-6">
+        <div className="grid items-start gap-4 md:grid-cols-2">
           {typographySamples.map((t) => (
-            <DemoCard key={t.label} label={t.label} usage={t.usage} className="h-auto overflow-visible">
+            <DemoCard key={t.label} label={t.label} usage={t.usage}>
               <p className="font-body text-[11px] text-[#666666] mb-3">{t.spec}</p>
-              <p
-                className="font-body break-words overflow-visible block pb-1"
-                style={{ ...t.style, paddingBottom: "0.2em" }}
-              >
+              <p className="font-body break-words" style={t.style}>
                 {t.sample}
               </p>
             </DemoCard>
@@ -367,18 +364,9 @@ const CategoryPanel = ({ category }: { category: CategoryKey }) => {
 };
 
 const panelVariants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 32 : -32,
-    opacity: 0,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -32 : 32,
-    opacity: 0,
-  }),
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
 const CATEGORY_SEGMENT_VH = 80;
@@ -465,7 +453,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
             Scroll to walk each token and pattern. Tabs advance as you move. Click any tab to jump.
           </p>
 
-          <div className="flex w-full flex-col rounded-xl border border-border/50 bg-background/95 p-4 md:p-6 shadow-sm backdrop-blur-sm">
+          <div className="flex max-h-[calc(100svh-14rem)] w-full flex-col overflow-hidden rounded-xl border border-border/50 bg-background/95 p-4 shadow-sm backdrop-blur-sm md:p-6">
             <div
               ref={tabStripRef}
               className="mb-6 flex shrink-0 snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth border-b border-border/40 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -497,7 +485,7 @@ const CignaComponentCategories = ({ onTabClick, onTabHover }: CignaComponentCate
 
             <div
               ref={panelScrollRef}
-              className="relative overflow-visible px-1 py-2 pb-4"
+              className="relative min-h-0 overflow-x-hidden overflow-y-auto px-1 py-2"
             >
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
